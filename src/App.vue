@@ -17,48 +17,50 @@
     overflow: hidden;
 }
 .layout-logo{
-    width: 100px;
-    height: 30px;
-    background: #5b6270;
+    width: 300px;
+    height: 50px;
     border-radius: 3px;
     float: left;
     position: relative;
-    top: 15px;
-    left: 20px;
+    font-size: 32px;
+    color:#fff;
+    font-weight: bold;
+    line-height:50px;
 }
 .layout-nav{
     width: 420px;
-    margin: 0 auto;
-    margin-right: 20px;
+    line-height: 50px;
+    margin:0 auto;
+}
+.layout-nav p{
+    color:#fff;
+    font-weight: bold;
+    float:right;
 }
 .ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu){
-    border-right:2px solid #ed7020;
-    color:#ed7020;
+    border-right:2px solid #e5724f;
+    color:#e5724f;
 }
 .ivu-menu-vertical.ivu-menu-light:after{
     background: #fff;
 }
 .ivu-layout-header{
-    background: #ed7020;
+    background: #cf450f;
 }
 .ivu-menu-dark{
-    background:#ed7020;
+    background:#cf450f;
 }
-.layout-logo{
-    background:#eee;
-}
+
 </style>
 
 <template>
   <div id="app" >
     <div class="layout" :style="{height:H}">
             <Layout>
-                <Header>
-                    <Menu mode="horizontal" theme="dark" active-name="1">
-                        <div class="layout-logo"></div>
+                <Header style = 'height:50px;'>
+                        <div class="layout-logo">THER PROJECT</div>
                         <div class="layout-nav">
                         </div>
-                    </Menu>
                 </Header>
                 <Layout>
                     <Sider hide-trigger :style="{background: '#fff','text-align':'left'}">
