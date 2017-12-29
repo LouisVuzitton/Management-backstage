@@ -70,7 +70,7 @@
                                     <Icon type="ios-navigate"></Icon>
                                     Item 1
                                 </template>
-                                <MenuItem name="1-1 " @click.native = "goto('/')">Option 1</MenuItem>
+                                <MenuItem na`me="1-1 " @click.native = "goto('/')">Option 1</MenuItem>
                                 <MenuItem name="1-2" @click.native = "goto('/option2')" >Option 2</MenuItem>
                                 <MenuItem name="1-3">Option 3</MenuItem>
                             </Submenu>
@@ -113,8 +113,7 @@ export default {
   name: 'app',
   data () {
     return {
-      H: '900px',
-      msg: 'Welcome to Your Vue.js App'
+      H: '900px'
     }
   },
   methods: {
@@ -127,7 +126,7 @@ export default {
     },
     goto:function(url){
         this.$router.push(url)
-    }
+    },
   },
   mounted: function () {
     this.init()
