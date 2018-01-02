@@ -70,7 +70,7 @@
                                     <Icon type="ios-navigate"></Icon>
                                     Item 1
                                 </template>
-                                <MenuItem na`me="1-1 " @click.native = "goto('/')">Option 1</MenuItem>
+                                <MenuItem name="1-1 " @click.native = "goto('/')">Option 1</MenuItem>
                                 <MenuItem name="1-2" @click.native = "goto('/option2')" >Option 2</MenuItem>
                                 <MenuItem name="1-3">Option 3</MenuItem>
                             </Submenu>
