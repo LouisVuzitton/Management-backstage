@@ -17,7 +17,7 @@
     overflow: hidden;
 }
 .layout-logo{
-    width: 300px;
+    width: 260px;
     height: 50px;
     border-radius: 3px;
     float: left;
@@ -29,6 +29,7 @@
 }
 .layout-nav{
     width: 420px;
+    height:50px;
     line-height: 50px;
     margin:0 auto;
 }
@@ -38,17 +39,82 @@
     float:right;
 }
 .ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu){
-    border-right:2px solid #e5724f;
-    color:#e5724f;
+    border-right:2px solid #118877;
+    color:#118877;
 }
 .ivu-menu-vertical.ivu-menu-light:after{
     background: #fff;
 }
 .ivu-layout-header{
-    background: #cf450f;
+    background: #118877;
 }
 .ivu-menu-dark{
-    background:#cf450f;
+    background:#118877;
+}
+
+.ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu){
+    border-right:2px solid #118877;
+    color:#118877;
+}
+
+.ivu-page-item-active{
+    background-color:#118877;
+    border-color:#118877;
+}
+
+.ivu-page-item:hover{
+    color:#118877;
+    border-color:#118877;
+}
+.ivu-btn-info{
+    background-color:#118877;
+    border-color:#118877;
+}
+
+.ivu-btn-info:hover{
+    background-color:#119977;
+    border-color:#119977;
+}
+
+.ivu-btn-error{
+    background-color:#ff6600;
+    border-color:#ff6600;
+}
+
+.ivu-btn-error:hover{
+    background-color:#ff7700;
+    border-color:#ff7700;
+}
+.toux{
+    border-radius:50px;
+    margin-top:5px;
+    float:right
+}
+.name{
+    color:#fff;
+    font-weight: bold;
+    float:right;
+    padding:0px 10px;
+    line-height:55px;
+}
+a{
+    color:#fff;
+}
+.ivu-btn-primary{
+    background-color:#ff6600;
+    border-color:#ff6600;
+}
+
+.ivu-btn-primary:hover{
+    background-color:#ff7700;
+    border-color:#ff7700;
+}
+.ivu-poptip-confirm .ivu-poptip-body .ivu-icon{
+    color:#ff6600;
+}
+
+.ivu-icon-ios-arrow-down:before{
+    content:"\F3F0"
 }
 
 </style>
@@ -58,47 +124,54 @@
     <div class="layout" :style="{height:H}">
             <Layout>
                 <Header style = 'height:50px;'>
-                        <div class="layout-logo">THER PROJECT</div>
-                        <div class="layout-nav">
-                        </div>
+                        <div class="layout-logo">THER PROJECT</div> 
+                        <Dropdown  style = 'float:right;color:#fff;line-height:55px;margin-right:15px;'>
+                            <a href="javascript:void(0)">
+                                <Icon type="arrow-down-b"></Icon>
+                            </a>
+                            <DropdownMenu slot="list">
+                                <DropdownItem>退出登陆</DropdownItem>
+                            </DropdownMenu>
+                        </Dropdown>
+                        <b class = 'name'>ZHIMING</b>
+                        <img src ='/src/assets/toux.jpg' width="40" height="40" class = 'toux'>
+                        
                 </Header>
                 <Layout>
-                    <Sider hide-trigger :style="{background: '#fff','text-align':'left'}">
-                        <Menu active-name="1-1" theme="light" width="auto" :open-names="['1']">
+                    <Sider width = '180px' hide-trigger :style="{background: '#fff','text-align':'left'}">
+                        <Menu active-name="1-1" theme="light" width="180px" :open-names="['1']">
                             <Submenu name="1">
                                 <template slot="title">
                                     <Icon type="ios-navigate"></Icon>
-                                    Item 1
+                                    智见信息管理
                                 </template>
-                                <MenuItem name="1-1 " @click.native = "goto('/')">Option 1</MenuItem>
-                                <MenuItem name="1-2" @click.native = "goto('/option2')" >Option 2</MenuItem>
-                                <MenuItem name="1-3">Option 3</MenuItem>
+                                <MenuItem name="1-1 " @click.native = "goto('/')">合伙人管理</MenuItem>
+                                <MenuItem name="1-2" @click.native = "goto('/option2')" >医院信息管理</MenuItem>
+                                <MenuItem name="1-3">医生信息管理</MenuItem>
                             </Submenu>
                             <Submenu name="2">
                                 <template slot="title">
                                     <Icon type="ios-keypad"></Icon>
-                                    Item 2
+                                    交易信息管理
                                 </template>
-                                <MenuItem name="2-1">Option 1</MenuItem>
-                                <MenuItem name="2-2">Option 2</MenuItem>
+                                <MenuItem name="2-1">资金交易日志</MenuItem>
                             </Submenu>
                             <Submenu name="3">
                                 <template slot="title">
                                     <Icon type="ios-analytics"></Icon>
-                                    Item 3
+                                    诊断信息管理
                                 </template>
-                                <MenuItem name="3-1">Option 1</MenuItem>
-                                <MenuItem name="3-2">Option 2</MenuItem>
+                                <MenuItem name="3-1">诊断记录详情</MenuItem>
                             </Submenu>
                         </Menu>
                     </Sider>
-                    <Layout :style="{padding: '0 24px 24px','text-align':'left'}">
+                    <Layout :style="{padding: '0 24px 24px','text-align':'left',background:'#fff'}">
                         <Breadcrumb :style="{margin: '24px 0'}">
-                            <BreadcrumbItem>Home</BreadcrumbItem>
-                            <BreadcrumbItem>Components</BreadcrumbItem>
-                            <BreadcrumbItem>Layout</BreadcrumbItem>
+                            <BreadcrumbItem>智见健康</BreadcrumbItem>
+                            <BreadcrumbItem>智见信息管理</BreadcrumbItem>
+                            <BreadcrumbItem>合伙人管理</BreadcrumbItem>
                         </Breadcrumb>
-                        <Content :style="{padding: '24px', minHeight: '280px', background: '#fff'}">
+                        <Content :style="{padding: '0px', minHeight: '280px', background: '#fff'}">
                             <router-view></router-view>
                         </Content>
                     </Layout>
