@@ -14,7 +14,7 @@
 .login{
   width:100%;
   height:100%;
-  background:url('../static/pexels-photo-590037.jpeg') center no-repeat; background-size:100% 100%;
+  background:url('../static/pexels-photo-590044.jpeg') center no-repeat; background-size:100% 100%;
 }
 .layout{
     border: 1px solid #d7dde4;
@@ -418,7 +418,7 @@ export default {
         },
         user_logout(){
             //清除session并退出
-            sessionStorage.setItem('name',null);
+            sessionStorage.setItem('name','no');
             this.login = false;
         }
   },
@@ -428,7 +428,7 @@ export default {
     this.actname = this.urls[name];
 
     let login_name = sessionStorage.getItem('name');
-    if(login_name){
+    if(login_name != 'no'){
         this.login = true;
     }else{
         this.login = false;
