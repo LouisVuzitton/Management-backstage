@@ -139,23 +139,19 @@ export default {
                     {
                         title: '姓名',
                         key: 'name',
-                        width:'200px',
                     },
                     {
                         title: '手机号码',
                         key: 'age',
-                        width:'200px',
 
                     },
                     {
                         title: '申请时间',
                         key: 'address',
-                        width:'300px',
                     },
                     {
                         title: '推荐人',
                         key: 'address',
-                        width:'200px',
                     },{
                         width:'80px',
                         render: (h, params) => {

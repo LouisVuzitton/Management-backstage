@@ -100,23 +100,18 @@ export default {
                     {
                         title: '手机号',
                         key: 'age',
-                        width:'200px',
-
                     },
                     {
                         title: '申请时间',
                         key: 'address',
-                        width:'200px',
                     },
                     {
                         title: '加入时间',
                         key: 'address',
-                        width:'200px',
                     },
                     {
                         title: '级别',
                         key: 'address',
-                        width:'100px',
                     },{
                         width:'100px',
                         render: (h, params) => {

@@ -109,13 +109,10 @@ export default {
                     {
                         title: '公告标题',
                         key: 'name',
-                        width:'200px',
                     },
                     {
                         title: '发布时间',
                         key: 'age',
-                        width:'200px',
-
                     },
                     {
                         title: '发布人',

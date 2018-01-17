@@ -1,4 +1,5 @@
 <style>
+::-webkit-scrollbar{width:0px;}
 #app {
   /* font-family: 'Avenir', Helvetica, Arial, sans-serif; */
   font-family: Helvetica, Tahoma, Arial, "STXihei", "华文细黑", "Microsoft YaHei",
@@ -183,9 +184,9 @@ hezi{
             <b style=  'float:right;margin: 5px 10px;font-size:13px;'>周志明</b>
             <img style=  'margin-top:10px;float:right;border-radius:50%;' width = '40' src= "../static/toux.jpg">
           </Header>
-          <Content :style="{padding: '10px 16px 16px'}">
-              <Card :style = "{'min-height':CardH}">
-                  <div >
+          <Content :style="{padding: '10px 16px 16px',overflow:'auto','margin-top':'10px'}">
+              <Card>
+                  <div>
                       <router-view></router-view>
                   </div>
               </Card>
@@ -200,7 +201,7 @@ export default {
   name: "app",
   data() {
         return {
-            login:false, //登录标识
+            login:true, //登录标识
             user:'',  //登录名
             password:'',//登录密码
             yzm:'', //登录验证码
@@ -226,9 +227,9 @@ export default {
             },//查询数据
             urls:{
                 "#/":'0-0',
-                "#/examineList":'1-0',
-                "#/ctemrAudit":'1-1',
-                "#/ctemrLeve":'1-2',
+                "#/examineList":'1-1',
+                "#/ctemrAudit":'1-2',
+                "#/ctemrLeve":'1-3',
                 "#/xorderList":'2-1',
                 "#/torderList":'2-2',
                 "#/shopList":'3-1',
@@ -377,7 +378,7 @@ export default {
   methods: {
     init: function() {
       this.H = window.innerHeight + "px";
-      this.CardH  = window.innerHeight  - 2 + 'px';
+      this.CardH  = window.innerHeight  - 3 + 'px';
     },
     goto: function(url) {
       this.$router.push(url);
@@ -421,12 +422,12 @@ export default {
     let name = window.location.hash
     this.actname = this.urls[name];
 
-    let login_name = sessionStorage.getItem('name');
-    if(login_name){
-        this.login = true;
-    }else{
-        this.login = false;
-    }
+    // let login_name = sessionStorage.getItem('name');
+    // if(login_name){
+    //     this.login = true;
+    // }else{
+    //     this.login = false;
+    // }
   },
 
 };

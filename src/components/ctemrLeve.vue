@@ -126,35 +126,29 @@ export default {
                     {
                         value: 'name',
                         label: '姓名',
-                        width:'200px',
                     },
                     {
                         value: 'phone',
                         label: '手机号',
-                        width:'200px'
                     },
       ],
       columns: [
                     {
                         title: '等级名称',
                         key: 'name',
-                        width:'200px',
                     },
                     {
                         title: '登录',
                         key: 'age',
-                        width:'200px',
 
                     },
                     {
                         title: '订货',
                         key: 'address',
-                        width:'200px',
                     },
                     {
                         title: '邀请',
                         key: 'address',
-                        width:'260px',
                     },{
                         width:'150px',
                         render: (h, params) => {

@@ -108,13 +108,10 @@ export default {
                     {
                         title: '订单号',
                         key: 'name',
-                        width:'200px',
                     },
                     {
                         title: '时间',
                         key: 'age',
-                        width:'200px',
-
                     },
                     {
                         title: '金额',
@@ -127,7 +124,7 @@ export default {
                     {
                         title: '手机号',
                         key: 'address',
-                        width:'100px',
+                        width:'150px'
                     },
       ],
       datas: [

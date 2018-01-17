@@ -107,47 +107,38 @@ export default {
                     {
                         value: 'name',
                         label: '姓名',
-                        width:'200px',
                     },
                     {
                         value: 'phone',
                         label: '手机号',
-                        width:'200px'
                     },
       ],
       columns: [
                     {
                         title: '订单号',
                         key: 'name',
-                        width:'200px',
                     },
                     {
                         title: '订单金额',
                         key: 'age',
-                        width:'200px',
-
                     },
                     {
                         title: '订单状态',
                         key: 'address',
-                        width:'200px',
                     },
                     {
                         title: '下单时间',
                         key: 'address',
-                        width:'260px',
                     },
                     {
                         title: '姓名',
                         key: 'address',
-                        width:'260px',
                     },
                     {
                         title: '手机号码',
                         key: 'address',
-                        width:'260px',
                     },{
-                        width:'150px',
+                        width:'80px',
                         render: (h, params) => {
                             return h('div', [
                                 h('Button', {

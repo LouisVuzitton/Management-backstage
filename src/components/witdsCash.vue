@@ -131,12 +131,10 @@ export default {
                     {
                         title: '订单号',
                         key: 'name',
-                        width:'200px',
                     },
                     {
                         title: '申请时间',
                         key: 'age',
-                        width:'200px',
 
                     },
                     {
@@ -154,12 +152,10 @@ export default {
                     {
                         title: '手机号',
                         key: 'address',
-                        width:'100px',
                     },
                     {
                         title: '审核时间',
                         key: 'address',
-                        width:'100px',
                     },{
                         width:'100px',
                         render: (h, params) => {
