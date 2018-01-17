@@ -33,72 +33,92 @@
   transform: translateX(10px);
   opacity: 0;
 }
+.num_color{
+    color:#119977;
+    font-size:50px;
+    font-weight: bold
+}
+.title_color{
+    color:#999;
+    font-size:16px;
+}
+.toux{
+    border-radius: 50%;
+    width:100%;
+    height:100%;
+    float:left;
+}
 
 </style>
 <template>
     <div>
-        <transition name="slide-fade">
-            <div v-if = 'show'>
-                <Input v-model="input_value" placeholder="Enter something..." style="width: 300px"></Input>
-                <Select v-model="select_value" style="width:200px;padding:5px 0px;">
-                    <Option v-for="item in select_data" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                </Select>
-                <Button type="info">搜索</Button>
-                <Table :highlight-row="true" :stripe="true" :columns="columns1" :data="data8"></Table>
-                <Page :total="100" style = 'padding:24px 0px'></Page>
-            </div>
-         </transition>
+        <Row>
+            <transition name="slide-fade">
+                <div>
+                    <Input v-model="input_value" placeholder="Enter something..." style="width: 300px"></Input>
+                    <Select v-model="select_value" style="width:200px;padding:5px 0px;">
+                        <Option v-for="item in select_data" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                    </Select>
+                    <Button  type="info" icon="ios-search">Search</Button>
+                    <Button type="info" @click = 'modal_addpar = true' style = 'display:none;'>添加合伙人</Button>
+                    <Table :highlight-row="true" :stripe="true" :columns="columns" :data="datas"></Table>
+                    <Page :total="page_total" style = 'padding:24px 0px'></Page>
+                </div>
+            </transition>
+         </Row>
     </div>
+    
 </template>
 
 <script>
 export default {
-  name: 'option2',
+  name: 'examineList',
   data () {
     return {
-      show:false,
-      select_value:'',
+      modal_addpar:false,
+      modal_loading:false,
+      select_value:'no',
       input_value:'',
+      page_total:100,
+      roles:[],
       select_data:[
                     {
-                        value: 'New York',
-                        label: 'New York'
+                        value: 'name',
+                        label: '姓名'
                     },
                     {
-                        value: 'London',
-                        label: 'London'
+                        value: 'phone',
+                        label: '手机号'
                     },
-                    {
-                        value: 'Sydney',
-                        label: 'Sydney'
-                    },
-                    {
-                        value: 'Ottawa',
-                        label: 'Ottawa'
-                    },
-                    {
-                        value: 'Paris',
-                        label: 'Paris'
-                    },
-                    {
-                        value: 'Canberra',
-                        label: 'Canberra'
-                    }
       ],
-      columns1: [
+      columns: [
                     {
-                        title: 'Name',
-                        key: 'name'
+                        title: '姓名',
+                        key: 'name',
+                        width:'200px',
                     },
                     {
-                        title: 'Age',
-                        key: 'age'
+                        title: '手机号',
+                        key: 'age',
+                        width:'200px',
+
                     },
                     {
-                        title: 'Address',
-                        key: 'address'
+                        title: '申请时间',
+                        key: 'address',
+                        width:'200px',
+                    },
+                    {
+                        title: '加入时间',
+                        key: 'address',
+                        width:'200px',
+                    },
+                    {
+                        title: '级别',
+                        key: 'address',
+                        width:'100px',
                     },{
-                        width:'160  px',
+                        width:'100px',
                         render: (h, params) => {
                             return h('div', [
                                 h('Button', {
@@ -111,26 +131,35 @@ export default {
                                     },
                                     on: {
                                         click: () => {
-                                            this.show(params.index)
+                                            this.$router.push('examineInfo/1');
                                         }
                                     }
                                 }, 'View'),
-                                h('Button', {
-                                    props: {
-                                        type: 'error',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.remove(params.index)
-                                        }
-                                    }
-                                }, 'Delete')
+
+                                // h('Poptip',{
+                                //     props: {
+                                //         confirm:true,
+                                //         title:'您确认删除这条内容吗？',
+                                //         width:'200'
+                                //     },
+                                //     on: {
+                                //         'on-ok': () => {
+                                            
+                                //         }
+                                //     }
+                                // },[
+                                //     h('Button', {
+                                //         props: {
+                                //             type: 'error',
+                                //             size: 'small'
+                                //         },
+                                //     }, 'Delete')
+                                // ])
                             ]);
                         }
                     }
       ],
-      data8: [
+      datas: [
                     {
                         name: 'John Brown',
                         age: 18,
@@ -190,8 +219,21 @@ export default {
 
     }
   },
+  methods:{
+        get_data: function (e) {
+            e?e--:e;
+            console.log("搜索条件:" + this.input_value +" -- "+ this.select_value);
+            let url = '/admin/get_usr_review_list?'+'page='+e+"&search_key="+this.select_value;
+            this.$http.get(url).then(res => {
+                // this.page_total = res.body.out.count;
+                // this.datas = res.body.out.datas;
+                // this.roles = res.body.out.map_roles;
+            })
+        },
+  },
   mounted(){
       this.show = true;
+      this.get_data(1);
   }
 }
 </script>
