@@ -8,6 +8,12 @@
     margin:0 20px;
     margin-top:30px;
 }
+.Card p{
+    color:#2d8cf0;
+}
+.Card b{
+  color:#e96900;
+}
 
 </style>
 <template>
@@ -158,7 +164,7 @@ export default {
     }
   },
   methods:{
-
+    
   },
   mounted(){
 

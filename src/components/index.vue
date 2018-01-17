@@ -22,8 +22,15 @@
 }
 
 .Card span p{
-    color:#222;
+    color:#2d8cf0;
+    font-weight: bold;
 }
+
+
+b{
+    color:#e96900;
+}
+
 
 </style>
 <template>
@@ -147,18 +154,18 @@ export default {
             },
             {
                 title: '业绩(元)',
-                key: 'rnak'
+                key: 'rnak',
+                width:'100px'
             },
         ],
         data:[]
     }
   },
   methods:{
-
   },
-  mounted(){
-
-  }
+  mounted(){  
+      
+  },
 }
 </script>
 

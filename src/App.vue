@@ -178,7 +178,7 @@ hezi{
       </Sider>
       <Layout :style="{marginLeft: '200px',height:CardH}">
           <Header :style="{background: '#fff', boxShadow: '0 2px 3px 2px rgba(0,0,0,.1)','font-weight':'bold','font-size':'20px'}">
-            根本力管理后台
+            <!-- 根本力管理后台 -->
             <a style=  'float:right;margin: 5px 10px;font-size:13px;'><b>退出</b></a>
             <b style=  'float:right;margin: 5px 10px;font-size:13px;'>周志明</b>
             <img style=  'margin-top:10px;float:right;border-radius:50%;' width = '40' src= "../static/toux.jpg">
@@ -224,6 +224,21 @@ export default {
             city:[],  //省市区三级联动
             search: {
             },//查询数据
+            urls:{
+                "#/":'0-0',
+                "#/examineList":'1-0',
+                "#/ctemrAudit":'1-1',
+                "#/ctemrLeve":'1-2',
+                "#/xorderList":'2-1',
+                "#/torderList":'2-2',
+                "#/shopList":'3-1',
+                "#/accSitu":'4-1',
+                "#/witdsCash":'4-2',
+                "#/rechRecord":'4-3',
+                "#/bonuRecord":'4-4',
+                "#/notice":'5-1',
+                "#/noticeInfo":'5-1',
+            },
             paySta:{
                 "paying":"付款中",
                 "ok":"交易完成",
@@ -403,7 +418,10 @@ export default {
   },
   mounted: function() {
     this.init();
-  }
+    let name = window.location.hash
+    this.actname = this.urls[name];
+  },
+
 };
 
 </script>
