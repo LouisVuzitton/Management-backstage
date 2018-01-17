@@ -50,10 +50,10 @@ module.exports = {
 
   build: {
     // Template for index.html
-    index: path.resolve('/home/zm/www/genbenli/public/static/admin/index.html'),
+    index: path.resolve('/home/guwen/git/genbenli/public/static/admin/index.html'),
 
     // Paths
-    assetsRoot: path.resolve('/home/zm/www/genbenli/public/static/admin'),
+    assetsRoot: path.resolve('/home/guwen/git/genbenli/public/static/admin'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '/static/admin/',
 

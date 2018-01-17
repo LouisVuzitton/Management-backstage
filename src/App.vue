@@ -128,7 +128,7 @@ hezi{
     <div class="layout" v-show = "login">
       <Sider :style="{position: 'fixed', height: '100vh', left: 0, overflow: 'auto',background:'#fff'}">
           <center><div style = 'height:90px;background:#fff;border-right:1px solid #dddee1;'><img style = 'border-radius:100%;width:80px;margin-top:10px;' src = '../static/toux.jpg'></div></center>
-          <Menu :active-name="actname" theme="light" width="auto" :open-names="['0','1','2','3','4','5']">
+          <Menu :active-name="actname" theme="light" width="auto" :open-names="['0','1','2','3']">
               <MenuItem name="0-0" @click.native = "goto('/')">
                 <Icon type="ios-navigate"></Icon>
                 首页
@@ -200,7 +200,7 @@ export default {
   name: "app",
   data() {
         return {
-            login:true, //登录标识
+            login:false, //登录标识
             user:'',  //登录名
             password:'',//登录密码
             yzm:'', //登录验证码
@@ -404,9 +404,9 @@ export default {
             this.$http.post('/admin/admin_login',{name:this.user,pwd:this.password}).then(res => {
                 if(res.body.out.role){
                     console.log(res.body.out);
-                    localStorage.setItem('role',res.body.out.role);
-                    localStorage.setItem('name',name);
+                    sessionStorage.setItem('name',name);
                     self.login = true;
+                    
                 }else{
                     this.$Notice.error({
                         title: '登录失败',
@@ -420,6 +420,13 @@ export default {
     this.init();
     let name = window.location.hash
     this.actname = this.urls[name];
+
+    let login_name = sessionStorage.getItem('name');
+    if(login_name){
+        this.login = true;
+    }else{
+        this.login = false;
+    }
   },
 
 };
