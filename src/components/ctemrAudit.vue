@@ -285,7 +285,7 @@ export default {
         req_url: function(){
             /*获取参数返回url*/
             let url='';
-            if(req_obj.select_value!=''&&req_obj.input_value!=''){
+            if(this.req_obj.select_value!=''&&this.req_obj.input_value!=''){
                 url=this.req_obj.url+"?page="+this.req_obj.page+"&search_key="+this.req_obj.select_value+"&search_value="+this.req_obj.input_value;
             }
             return url;
