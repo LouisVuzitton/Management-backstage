@@ -137,7 +137,7 @@ hezi{
               <Submenu name="1">
                   <template slot="title">
                       <Icon type="ios-navigate"></Icon>
-                      客户管理
+                      客户管理s
                   </template>
                   <MenuItem name="1-1"  @click.native = "goto('/examineList')">客户列表</MenuItem>
                   <MenuItem name="1-2"  @click.native = "goto('/ctemrAudit')">客户审核</MenuItem>
