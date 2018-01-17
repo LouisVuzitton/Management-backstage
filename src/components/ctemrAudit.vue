@@ -150,16 +150,16 @@ export default {
                     },
                     {
                         title: '手机号码',
-                        key: 'age',
+                        key: 'phone',
 
                     },
                     {
                         title: '申请时间',
-                        key: 'address',
+                        key: 'apply_time',
                     },
                     {
                         title: '推荐人',
-                        key: 'address',
+                        key: 'inviter',
                     },{
                         width:'80px',
                         render: (h, params) => {
