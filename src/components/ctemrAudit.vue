@@ -268,13 +268,14 @@ export default {
             console.log("搜索条件:" + this.input_value +" -- "+ this.select_value);
             /*初始化传参对象 */
             this.req_obj.url='/admin/get_usr_review_list';
+            console.log(this.req_obj);
             if(this.input_value!='' && this.select_value!=''){
                 this.req_obj.select_value=this.select_value;
                 this.req_obj.input_value=this.input_value;
                 this.req_obj.page=e;
             }
             this.$http.get(this.req_url()).then(res => {
-                console.log(res);
+                console.log(res.body);
                 this.page_total = res.body.out.count;
                 this.datas = res.body.out.datas;
                 this.roles = res.body.out.map_roles;
