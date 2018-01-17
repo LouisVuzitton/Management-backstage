@@ -1,4 +1,5 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
+<!-- 客户审核列表 Guwen-->
 <style scoped>
 .layout{
     border: 1px solid #d7dde4;
@@ -123,6 +124,13 @@ export default {
       modal_loading:false,
       select_value:'no',
       input_value:'',
+      req_obj:{
+            url:'',
+            page:0,
+            select_value:'no',
+            input_value:'',
+            id:'',
+      },
       page_total:100,
       roles:[],
       select_data:[
@@ -258,13 +266,29 @@ export default {
         get_data: function (e) {
             e?e--:e;
             console.log("搜索条件:" + this.input_value +" -- "+ this.select_value);
-            let url = '/admin/get_usr_review_list?'+'page='+e+"&search_key="+this.select_value;
-            this.$http.get(url).then(res => {
-                // this.page_total = res.body.out.count;
-                // this.datas = res.body.out.datas;
-                // this.roles = res.body.out.map_roles;
+            /*初始化传参对象 */
+            this.req_obj.url='/admin/get_usr_review_list';
+            if(this.input_value!='' && this.select_value!=''){
+                this.req_obj.select_value=this.select_value;
+                this.req_obj.input_value=this.input_value;
+                this.req_obj.page=e;
+            }
+            this.$http.get(this.req_url()).then(res => {
+                console.log(res);
+                this.page_total = res.body.out.count;
+                this.datas = res.body.out.datas;
+                this.roles = res.body.out.map_roles;
+                console.log(res.body.out.datas);
             })
         },
+        req_url: function(){
+            /*获取参数返回url*/
+            let url='';
+            if(req_obj.select_value!=''&&req_obj.input_value!=''){
+                url=this.req_obj.url+"?page="+this.req_obj.page+"&search_key="+this.req_obj.select_value+"&search_value="+this.req_obj.input_value;
+            }
+            return url;
+        }
   },
   mounted(){
       this.show = true;
