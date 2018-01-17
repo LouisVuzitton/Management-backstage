@@ -1,4 +1,5 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
+<!--客户列表-->
 <style scoped>
 .layout{
     border: 1px solid #d7dde4;
@@ -77,8 +78,13 @@ export default {
     return {
       modal_addpar:false,
       modal_loading:false,
-      select_value:'no',
-      input_value:'',
+      req_obj:{
+            url:'',
+            page:0,
+            select_value:'no',
+            input_value:'',
+
+      },
       page_total:100,
       roles:[],
       select_data:[
@@ -218,6 +224,11 @@ export default {
         get_data: function (e) {
             e?e--:e;
             console.log("搜索条件:" + this.input_value +" -- "+ this.select_value);
+            if(this.select_value!='' && this.input_value!=''){
+                
+            }else{
+
+            }
             let url = '/admin/get_usr_review_list?'+'page='+e+"&search_key="+this.select_value;
             this.$http.get(url).then(res => {
                 // this.page_total = res.body.out.count;
@@ -225,6 +236,12 @@ export default {
                 // this.roles = res.body.out.map_roles;
             })
         },
+        getCustomer:function(req_obj){
+            // let url
+            // for(item in req_obj){
+            //     req_obj[item]
+            // }
+        }
   },
   mounted(){
       this.show = true;
