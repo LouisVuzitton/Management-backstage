@@ -14,7 +14,7 @@
 .login{
   width:100%;
   height:100%;
-  background:url('../static/bg2.jpg') top; background-size:100% 100%;
+  background:url('../static/pexels-photo-590037.jpeg') center no-repeat; background-size:100% 100%;
 }
 .layout{
     border: 1px solid #d7dde4;
