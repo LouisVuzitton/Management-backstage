@@ -1,4 +1,4 @@
-
+<!--用户详细信息-->
 <style scoped>
 .user_table{
     margin:25px 5px;

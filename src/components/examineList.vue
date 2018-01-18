@@ -83,7 +83,13 @@ export default {
             page:0,
             select_value:'no',
             input_value:'',
-
+            req_obj:{
+                    url:'',
+                    page:0,
+                    select_value:'no',
+                    input_value:'',
+                    id:'',
+            },
       },
       page_total:100,
       roles:[],
@@ -223,24 +229,30 @@ export default {
   methods:{
         get_data: function (e) {
             e?e--:e;
-            console.log("搜索条件:" + this.input_value +" -- "+ this.select_value);
-            if(this.select_value!='' && this.input_value!=''){
-                
-            }else{
-
+            /*初始化传参对象 */
+            this.req_obj.url='/admin/get_usr_list';   //获取客户列表
+            if(this.input_value!='' && this.select_value!=''){
+                this.req_obj.select_value=this.select_value;
+                this.req_obj.input_value=this.input_value;
+                this.req_obj.page=e;
             }
-            let url = '/admin/get_usr_review_list?'+'page='+e+"&search_key="+this.select_value;
+            let url = this.req_url();
+
             this.$http.get(url).then(res => {
-                // this.page_total = res.body.out.count;
-                // this.datas = res.body.out.datas;
-                // this.roles = res.body.out.map_roles;
+                this.page_total = res.body.out.count;
+                this.datas = res.body.out.datas;
+                this.roles = res.body.out.map_roles;
             })
         },
-        getCustomer:function(req_obj){
-            // let url
-            // for(item in req_obj){
-            //     req_obj[item]
-            // }
+         req_url: function(){
+            /*获取参数返回url*/
+            let url='';
+            if(this.req_obj.select_value!=''&&this.req_obj.input_value!=''){
+                url=this.req_obj.url+"?page="+this.req_obj.page+"&search_key="+this.req_obj.select_value+"&search_value="+this.req_obj.input_value;
+            }else{
+                url=this.req_obj.url+"?page="+this.req_obj.page+"&search_key="+this.req_obj.select_value;
+            }
+            return url;
         }
   },
   mounted(){

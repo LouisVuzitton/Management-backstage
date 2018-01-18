@@ -146,7 +146,7 @@ export default {
       columns: [
                     {
                         title: '姓名',
-                        key: 'name',
+                        key: 'realname',
                     },
                     {
                         title: '手机号码',
@@ -156,11 +156,15 @@ export default {
                     {
                         title: '申请时间',
                         key: 'apply_time',
+                        render: (h, params) => {
+                        return moment(params.row.apply_time).format('YYYY-MM-DD HH:mm:ss');
+                    }
                     },
                     {
                         title: '推荐人',
                         key: 'inviter',
                     },{
+                        title:'操作',
                         width:'80px',
                         render: (h, params) => {
                             return h('div', [
@@ -178,26 +182,6 @@ export default {
                                         }
                                     }
                                 }, '审核'),
-
-                                // h('Poptip',{
-                                //     props: {
-                                //         confirm:true,
-                                //         title:'您确认删除这条内容吗？',
-                                //         width:'200'
-                                //     },
-                                //     on: {
-                                //         'on-ok': () => {
-                                            
-                                //         }
-                                //     }
-                                // },[
-                                //     h('Button', {
-                                //         props: {
-                                //             type: 'error',
-                                //             size: 'small'
-                                //         },
-                                //     }, 'Delete')
-                                // ])
                             ]);
                         }
                     }
@@ -273,10 +257,9 @@ export default {
                 this.req_obj.page=e;
             }
             let url = this.req_url();
-            console.log(url);
+           
             this.$http.get(url).then(res => {
-                alert(1);
-                // this.page_total = res.body.out.count;
+                this.page_total = res.body.out.count;
                 this.datas = res.body.out.datas;
                 this.roles = res.body.out.map_roles;
             })
@@ -286,6 +269,8 @@ export default {
             let url='';
             if(this.req_obj.select_value!=''&&this.req_obj.input_value!=''){
                 url=this.req_obj.url+"?page="+this.req_obj.page+"&search_key="+this.req_obj.select_value+"&search_value="+this.req_obj.input_value;
+            }else{
+                url=this.req_obj.url+"?page="+this.req_obj.page+"&search_key="+this.req_obj.select_value;
             }
             return url;
         }
