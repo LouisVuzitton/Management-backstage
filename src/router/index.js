@@ -3,12 +3,11 @@ import Router from 'vue-router'
 import iview from 'iview'
 import VueResource from 'vue-resource'
 import Editor from '../../static/wangEditor'
-import Moment from 'moment'
 
 Vue.use(iview)
 Vue.use(Router)
 Vue.use(VueResource)
-Vue.use(Moment)
+
 
 export default new Router({
   routes: [
