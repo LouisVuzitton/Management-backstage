@@ -39,19 +39,17 @@
         <Row>
             <transition name="slide-fade">
                 <div>
-                    <Input v-model="input_value" placeholder="Enter something..." style="width: 300px"></Input>
-                    <Select v-model="select_value" style="width:200px;padding:5px 0px;">
+                    <Input v-model="req_obj.search_value" placeholder="Enter something..." style="width: 300px"></Input>
+                    <Select v-model="req_obj.search_key" style="width:200px;padding:5px 0px;">
                         <Option v-for="item in select_data" :value="item.value" :key="item.value">{{ item.label }}</Option>
                     </Select>
-                    <Button  type="info" icon="ios-search">Search</Button>
-                    <Button type="info" @click = 'modal_addpar = true' style = 'display:none;'>添加合伙人</Button>
-                    <Table :highlight-row="true" :stripe="true" :columns="columns" :data="datas"></Table>
-                    <Page :total="page_total" style = 'padding:24px 0px'></Page>
+                    <Button  type="info" icon="ios-search"  @click="get_data(1)">Search</Button>
+                    <Table :highlight-row="true" :loading="loading" :stripe="true" :columns="columns" :data="datas"></Table>
+                    <Page :total="page_total" style = 'padding:24px 0px' @on-change="get_data"></Page>
                 </div>
             </transition>
          </Row>
     </div>
-    
 </template>
 
 <script>
@@ -59,13 +57,21 @@ export default {
   name: 'bonuRecord',
   data () {
     return {
-      modal_addpar:false,
-      modal_loading:false,
-      select_value:'no',
-      input_value:'',
+      loading:false,
       page_total:100,
       roles:[],
+      req_obj:{
+        url:'xxx.com',
+        ordersta:'',
+        search_value:'',
+        search_key:'no',
+        search_type:'no',
+      },
       select_data:[
+                    {
+                        value: 'no',
+                        label: '全部',
+                    },
                     {
                         value: 'name',
                         label: '姓名'
@@ -168,14 +174,25 @@ export default {
   },
   methods:{
         get_data: function (e) {
-            e?e--:e;
-            console.log("搜索条件:" + this.input_value +" -- "+ this.select_value);
-            let url = '/admin/get_usr_review_list?'+'page='+e+"&search_key="+this.select_value;
+            this.loading = true; //开启表格数据加载样式
+            let url = this.get_url(this.req_obj,e);
+            console.log(url);
             this.$http.get(url).then(res => {
-                // this.page_total = res.body.out.count;
-                // this.datas = res.body.out.datas;
-                // this.roles = res.body.out.map_roles;
+                this.loading = false;
+                this.page_total = res.body.out.count;
+                this.datas = res.body.out.datas;
             })
+        },
+        get_url: function(obj,e){
+            e--;
+            obj['page'] = e;
+            let url = obj.url+"?";
+            for(let item in obj){
+                if(item !='url'){
+                    obj[item]?url+=item+"="+obj[item]+"&":"";
+                }
+            }
+            return url;
         },
   },
   mounted(){

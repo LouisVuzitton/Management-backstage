@@ -121,9 +121,10 @@ export default {
     return {
         loading:false,
         modal_loading:false,
+        page_total:'',//页码
         step:50,
         Delivergoods:false,
-        logis:'无需物流',
+        logis:'无需物流', 
         order:'',
         logistics:[
             {
@@ -179,12 +180,9 @@ export default {
            }
   },
   methods:{
-      format:function(val){
-         return "订单"
-      }
   },
   mounted(){
-
+      get_data(1);
   }
 }
 </script>

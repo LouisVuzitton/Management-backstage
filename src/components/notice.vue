@@ -56,27 +56,14 @@
             <transition name="slide-fade">
                 <div>
                     <Button  type="primary" @click="goto('noticeInfo/add/0')">添加公告</Button><br>
-                    <Input v-model="input_value" placeholder="Enter something..." style="width: 300px"></Input>
-                    <Select v-model="select_value" style="width:200px;padding:5px 0px;">
+                    <Input v-model="req_obj.search_value" placeholder="Enter something..." style="width: 300px"></Input>
+                    <Select v-model="req_obj.search_key" style="width:200px;padding:5px 0px;">
                         <Option v-for="item in select_data" :value="item.value" :key="item.value">{{ item.label }}</Option>
                     </Select>
-                    <Button  type="info" icon="ios-search">Search</Button>
+                    <Button  type="info" icon="ios-search" @click="get_data(1)">Search</Button>
                     <Button type="info" @click = 'modal_addpar = true' style = 'display:none;'>添加合伙人</Button>
-                    <Table :highlight-row="true" :stripe="true" :columns="columns" :data="datas"></Table>
-                    <Page :total="page_total" style = 'padding:24px 0px'></Page>
-                    <Modal v-model="modal_addpar" width="560">
-                        <p slot="header" style="color:#118877;text-align:center">
-                            <Icon type="information-circled"></Icon>
-                            <span>Confirm the addition</span>
-                        </p>
-                        <div style="text-align:center">
-                            <p>After this task is deleted, the downstream 10 tasks will not be implemented.</p>
-                            <p>Will you delete it?</p>
-                        </div>
-                        <div slot="footer">
-                            <Button type="info" size="large" long :loading="modal_loading" >Determine</Button>
-                        </div>
-                    </Modal>
+                    <Table :highlight-row="true" :loading="loading" :stripe="true" :columns="columns" :data="datas"></Table>
+                    <Page :total="page_total" style = 'padding:24px 0px' @on-change="get_data"></Page>
                 </div>
             </transition>
          </Row>
@@ -89,21 +76,29 @@ export default {
   name: 'witdsCash',
   data () {
     return {
-      modal_addpar:false,
-      modal_loading:false,
-      select_value:'no',
-      input_value:'',
+      loading:false,
       page_total:100,
+      req_obj:{
+        url:'xxx.com',
+        ordersta:'',
+        search_value:'',
+        search_key:'no',
+        search_type:'no',
+      },
       roles:[],
       select_data:[
-                    {
-                        value: 'name',
-                        label: '姓名'
-                    },
-                    {
-                        value: 'phone',
-                        label: '手机号'
-                    },
+            {
+                value: 'no',
+                label: '全部',
+            },
+            {
+                value: 'name',
+                label: '姓名'
+            },
+            {
+                value: 'phone',
+                label: '手机号'
+            },
       ],
       columns: [
                     {
@@ -225,14 +220,25 @@ export default {
   },
   methods:{
         get_data: function (e) {
-            e?e--:e;
-            console.log("搜索条件:" + this.input_value +" -- "+ this.select_value);
-            let url = '/admin/get_usr_review_list?'+'page='+e+"&search_key="+this.select_value;
+            this.loading = true; //开启表格数据加载样式
+            let url = this.get_url(this.req_obj,e);
+            console.log(url);
             this.$http.get(url).then(res => {
-                // this.page_total = res.body.out.count;
-                // this.datas = res.body.out.datas;
-                // this.roles = res.body.out.map_roles;
+                this.loading = false;
+                this.page_total = res.body.out.count;
+                this.datas = res.body.out.datas;
             })
+        },
+        get_url: function(obj,e){
+            e--;
+            obj['page'] = e;
+            let url = obj.url+"?";
+            for(let item in obj){
+                if(item !='url'){
+                    obj[item]?url+=item+"="+obj[item]+"&":"";
+                }
+            }
+            return url;
         },
         goto:function(url){
             this.$router.push(url);
