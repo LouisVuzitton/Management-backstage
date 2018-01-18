@@ -86,7 +86,7 @@ export default {
         search_type:'no',
       },
       del_obj:{
-          url:'admin/del_notice',
+          url:'/admin/del_notice',
       },
       roles:[],
       select_data:[
@@ -133,7 +133,7 @@ export default {
                                     },
                                     on: {
                                         click: () => {
-                                            this.$router.push('noticeInfo/up/1');
+                                            this.$router.push('noticeInfo/up/'+params.row.id);
                                         }
                                     }
                                 }, '修改'),
@@ -146,7 +146,7 @@ export default {
                                     },
                                     on: {
                                         'on-ok': () => {
-                                            this.del_info(this.del_obj,params.row.id)
+                                            this.del_info(this.del_obj.url,params.row.id)
                                         }
                                     }
                                 },[
@@ -188,11 +188,13 @@ export default {
             return url;
         },
         del_info:function(url,id){
-            this.$http.get(data.url,{ids:[id]}).then(res => {
+            console.log(id+'  '+url);
+             this.$http.post(url,{ids:[id]}).then(res => {
                 if(res.body.out.status){
                     this.$Notice.info({
                         title: '公告删除成功!',
                     });
+                    this.get_data(1);
                 }else{
                     this.$Notice.error({
                         title: '公告失败!',

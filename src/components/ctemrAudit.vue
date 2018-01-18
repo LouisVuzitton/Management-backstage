@@ -1,4 +1,5 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
+import moment from 'moment'
 <!-- 客户审核列表 Guwen-->
 <style scoped>
 .layout{
@@ -49,21 +50,27 @@
     height:100%;
     float:left;
 }
-
+.footer{
+    vertical-align: middle;
+}
+.button{
+    width: 50%;
+    margin-right: 25%;
+}
 </style>
 <template>
     <div>
         <Row>
-            <transition name="slide-fade">
+            <transition name="slide-fade" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
                 <div>
-                    <Input v-model="input_value" placeholder="Enter something..." style="width: 300px"></Input>
+                    <Input v-model="input_value" placeholder="请输入姓名或手机号" style="width: 300px"></Input>
                     <Select v-model="select_value" style="width:200px;padding:5px 0px;">
                         <Option v-for="item in select_data" :value="item.value" :key="item.value">{{ item.label }}</Option>
                     </Select>
-                    <Button  type="info" icon="ios-search">Search</Button>
+                    <Button  type="info" icon="ios-search" @click="get_data(1)">Search</Button>
                     <Button type="info" @click = 'modal_addpar = true' style = 'display:none;'>添加合伙人</Button>
-                    <Table :highlight-row="true" :stripe="true" :columns="columns" :data="datas"></Table>
-                    <Page :total="page_total" style = 'padding:24px 0px'></Page>
+                    <Table :highlight-row="true" :loading="loading" :stripe="true" :columns="columns" :data="datas"></Table>
+                    <Page :total="page_total" on-change="get_data" style = 'padding:24px 0px'></Page>
                     <Modal v-model="modal_addpar" width="560">
                         <p slot="header" style="color:#2db7f5;text-align:center">
                             <Icon type="information-circled"></Icon>
@@ -73,20 +80,20 @@
                             <center>
                             <table>
                                 <tr>
-                                    <td style = 'text-align:right' width = '60px;' height = '35px;'>姓名：</td>
-                                    <td width = '130px;' height = '35px;'>吴伟龙</td>
+                                    <td style = 'text-align:right' width = '60px;' height = '35px;'>姓&nbsp;&nbsp;&nbsp;&nbsp;名：</td>
+                                    <td width = '130px;' height = '35px;' v-text="customerInfo.realname"></td>
                                     <td style = 'text-align:right' width = '80px;' height = '35px;'>手机号：</td>
-                                    <td width = '130px;' height = '35px;'>13923884707</td>
+                                    <td width = '130px;' height = '35px;' v-text="customerInfo.phone"></td>
                                 </tr>
                                 <tr>
                                     <td style = 'text-align:right' width = '60px;' height = '35px;'>身份证：</td>
-                                    <td width = '130px;' height = '35px;'>1234567891234567</td>
-                                    <td style = 'text-align:right' width = '60px;' height = '35px;'>地区：</td>
-                                    <td width = '130px;' height = '35px;'>广东省-深圳市-南山区</td>
+                                    <td width = '130px;' height = '35px;' v-text="customerInfo.idcard"></td>
+                                    <td style = 'text-align:right' width = '60px;' height = '35px;'>地&nbsp;&nbsp;&nbsp;&nbsp;区：</td>
+                                    <td width = '130px;' height = '35px;' v-text="customerInfo.province+'-'+customerInfo.city+'-'+customerInfo.district"></td>
                                 </tr>
                                 <tr>
-                                    <td style = 'text-align:right' colspan="1">地址：</td>
-                                    <td colspan="3">深圳南山粤海街道大冲商务中心B座9楼</td>
+                                    <td style = 'text-align:right' colspan="1">地&nbsp;&nbsp;&nbsp;&nbsp;址：</td>
+                                    <td colspan="3" v-text="customerInfo.detail"></td>
                                 </tr>
                                 <tr>
                                     <td colspan="4"></td>
@@ -96,16 +103,19 @@
                                     <td>无</td>
                                     <td style = 'text-align:right'>审核等级：</td>
                                     <td>
-                                        <Select v-model="select_value" style="width:200px;padding:5px 0px;">
-                                            <Option v-for="item in select_data" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                                        <Select v-model="partnerRole" style="width:200px;padding:5px 0px;">
+                                            <Option v-for="item in customerRole" :value="item.value" :key="item.value">{{ item.label }}</Option>
                                         </Select>
                                     </td>
+                                </tr>
+                                <tr>
+                                    
                                 </tr>
                             </table>
                             </center>
                         </div>
-                        <div slot="footer">
-                            <Button type="info" size="large" long :loading="modal_loading" >确认修改</Button>
+                        <div slot="footer" class="footer">
+                            <Button type="info" size="large" @click="makePartner(customerInfo.id)" class="button" :loading="modal_loading" >确认修改</Button>
                         </div>
                     </Modal>
                 </div>
@@ -122,8 +132,10 @@ export default {
     return {
       modal_addpar:false,
       modal_loading:false,
-      select_value:'no',
+      loading:false,
+      select_value:'',
       input_value:'',
+      partnerRole:'',
       req_obj:{
             url:'',
             page:0,
@@ -131,7 +143,8 @@ export default {
             input_value:'',
             id:'',
       },
-      page_total:100,
+      customerInfo:{},
+      page_total:0,
       roles:[],
       select_data:[
                     {
@@ -141,6 +154,20 @@ export default {
                     {
                         value: 'phone',
                         label: '手机号'
+                    },
+      ],
+      customerRole:[
+                    {
+                        value: 'usr_p1',
+                        label: '管理合伙人'
+                    },
+                    {
+                        value: 'usr_p2',
+                        label: '城市合伙人'
+                    },
+                    {
+                        value: 'usr_p3',
+                        label: '合伙人'
                     },
       ],
       columns: [
@@ -179,6 +206,8 @@ export default {
                                     on: {
                                         click: () => {
                                            this.modal_addpar = true;
+                                           this.customerInfo = params.row;
+                                           console.log(this.customerInfo);
                                         }
                                     }
                                 }, '审核'),
@@ -187,68 +216,21 @@ export default {
                     }
       ],
       datas: [
-                    {
-                        name: 'John Brown',
-                        age: 18,
-                        address: 'New York No. 1 Lake Park'
-                    },
-                    {
-                        name: 'Jim Green',
-                        age: 25,
-                        address: 'London No. 1 Lake Park',
-
-                    },
-                    {
-                        name: 'Joe Black',
-                        age: 30,
-                        address: 'Sydney No. 1 Lake Park'
-                    },
-                    {
-                        name: 'Jon Snow',
-                        age: 26,
-                        address: 'Ottawa No. 2 Lake Park',
-
-                    },
-                                        {
-                        name: 'John Brown',
-                        age: 18,
-                        address: 'New York No. 1 Lake Park'
-                    },
-                    {
-                        name: 'Jim Green',
-                        age: 25,
-                        address: 'London No. 1 Lake Park',
-
-                    },
-                    {
-                        name: 'Joe Black',
-                        age: 30,
-                        address: 'Sydney No. 1 Lake Park'
-                    },
-                    {
-                        name: 'Jon Snow',
-                        age: 26,
-                        address: 'Ottawa No. 2 Lake Park',
-
-                    },
-                                        {
-                        name: 'John Brown',
-                        age: 18,
-                        address: 'New York No. 1 Lake Park'
-                    },
-                    {
-                        name: 'Jim Green',
-                        age: 25,
-                        address: 'London No. 1 Lake Park',
-
-                    },
+                {
+                    name: 'John Brown',
+                    age: 18,
+                    address: 'New York No. 1 Lake Park'
+                }, 
       ]
 
     }
   },
   methods:{
+        /*初始化页面数据，查询数据渲染列表 */
         get_data: function (e) {
             e?e--:e;
+            console.log(this.select_value);
+            this.loading=true;
             /*初始化传参对象 */
             this.req_obj.url='/admin/get_usr_review_list';
             if(this.input_value!='' && this.select_value!=''){
@@ -262,22 +244,33 @@ export default {
                 this.page_total = res.body.out.count;
                 this.datas = res.body.out.datas;
                 this.roles = res.body.out.map_roles;
-            })
+                this.loading = false;
+            });
         },
+        /*获取参数返回url*/
         req_url: function(){
-            /*获取参数返回url*/
             let url='';
             if(this.req_obj.select_value!=''&&this.req_obj.input_value!=''){
                 url=this.req_obj.url+"?page="+this.req_obj.page+"&search_key="+this.req_obj.select_value+"&search_value="+this.req_obj.input_value;
             }else{
-                url=this.req_obj.url+"?page="+this.req_obj.page+"&search_key="+this.req_obj.select_value;
+                url=this.req_obj.url+"?page="+this.req_obj.page+"&search_key=no";
             }
             return url;
+        },
+        /*设置客户为合伙人 */
+        makePartner:function(id){
+            console.log(id);
+            this.modal_loading=true;
+            this.$http.post('/admin/set_usr_manage_partner',{id:id,role:this.partnerRole}).then(res => {
+                if(res.body.out.status){
+                    this.modal_loading=false;
+                }
+            })
         }
   },
   mounted(){
       this.show = true;
-      this.get_data(1);
+    //   this.get_data(1);
   }
 }
 </script>

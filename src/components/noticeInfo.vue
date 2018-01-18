@@ -54,7 +54,7 @@
                     <table class = 'tab'>
                         <tr>
                             <td>公告标题 : </td>
-                            <td><Input placeholder="Enter something..." v-model="title" style="width: 300px"></Input></td>
+                            <td><Input placeholder="Enter something..." v-model="notice_obj.title" style="width: 300px"></Input></td>
                         </tr>
                         <tr>
                             <td>公告内容 : </td>
@@ -69,7 +69,7 @@
             </Row> 
         </Card>
 
-        <Button type = 'info' size= 'large'  :loading="loading"  style  ='float:right;margin:50px 0px'>发布公告</Button>
+        <Button type = 'info' size= 'large'  :loading="loading"  style  ='float:right;margin:50px 0px' @click="publishNotice">发布公告</Button>
     </div>
 </template>
 
@@ -79,19 +79,19 @@ export default {
   data () {
     return {
         title:'',
-        loading:true,
+        loading:false,
         winEditor:'',
         editor:'',
-        goods_obj:{
-            url:'admin/add_notice',
+        notice_obj:{
+            url:'/admin/add_notice',
             id:'',
             title:'',
             content:'',
         },
         del_obj:{
-            url:"admin/del_notice"
+            url:"/admin/del_notice"
         },
-        notice_info:{
+        info_obj:{
             url:"/user/notice",
             id:"",
         }
@@ -119,8 +119,8 @@ export default {
                     self.editor.txt.html("<p style = 'color:#999;font-size:13px;'>　这里填写公告详情信息　</p>");
                 }
         },
-        publishGoods:function(){
-            let data = this.goods_obj;
+        publishNotice:function(){
+            let data = this.notice_obj;
             this.title=="添加公告"?delete data.id:"";
             data.content =  this.editor.txt.html();
             console.log("notice: "+JSON.stringify(data,0,4));
@@ -137,6 +137,25 @@ export default {
                 }
             })
         },
+    get_info:function(){
+        let url = this.get_url(this.info_obj);
+        console.log(url);
+        this.$http.get(url).then(res => {
+            console.log(res);
+            this.notice_obj.content = res.body.out.data.content;
+            this.notice_obj.title = res.body.out.data.title;
+            this.editor.txt.html(res.body.out.data.content);
+        })
+    },
+    get_url: function(obj){
+        let url = obj.url+"?";
+        for(let item in obj){
+            if(item !='url'){
+                obj[item]?url+=item+"="+obj[item]+"&":"";
+            }
+        }
+        return url;
+    },
   },
   mounted(){
       this.edit_swith();
@@ -144,7 +163,8 @@ export default {
           this.title = '添加公告'
       }else{
           this.title = '修改公告'
-          this.notice_info.id = this.$route.params.id;
+          this.info_obj.id = this.$route.params.id;
+          this.get_info();
       }
   }
 }

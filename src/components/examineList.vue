@@ -56,14 +56,14 @@
         <Row>
             <transition name="slide-fade">
                 <div>
-                    <Input v-model="input_value" placeholder="Enter something..." style="width: 300px"></Input>
+                    <Input v-model="input_value" placeholder="请输入姓名或手机号码" style="width: 300px"></Input>
                     <Select v-model="select_value" style="width:200px;padding:5px 0px;">
                         <Option v-for="item in select_data" :value="item.value" :key="item.value">{{ item.label }}</Option>
                     </Select>
-                    <Button  type="info" icon="ios-search">Search</Button>
+                    <Button  type="info" @click="get_data(1)" :loading="loading" icon="ios-search">Search</Button>
                     <Button type="info" @click = 'modal_addpar = true' style = 'display:none;'>添加合伙人</Button>
-                    <Table :highlight-row="true" :stripe="true" :columns="columns" :data="datas"></Table>
-                    <Page :total="page_total" style = 'padding:24px 0px'></Page>
+                    <Table :highlight-row="true" :stripe="true" :columns="columns" :loading="tableLoading" :data="datas"></Table>
+                    <Page :total="page_total" on-change="get_data" style = 'padding:24px 0px'></Page>
                 </div>
             </transition>
          </Row>
@@ -78,18 +78,16 @@ export default {
     return {
       modal_addpar:false,
       modal_loading:false,
+      loading:false,
+      tableLoading:false,
+      select_value:'',
+      input_value:'',
       req_obj:{
             url:'',
             page:0,
             select_value:'no',
             input_value:'',
-            req_obj:{
-                    url:'',
-                    page:0,
-                    select_value:'no',
-                    input_value:'',
-                    id:'',
-            },
+            id:'',
       },
       page_total:100,
       roles:[],
@@ -138,10 +136,10 @@ export default {
                                     },
                                     on: {
                                         click: () => {
-                                            this.$router.push('examineInfo/1');
+                                            this.$router.push('examineInfo/'+this.params.row.id);
                                         }
                                     }
-                                }, 'View'),
+                                }, '查看'),
 
                                 // h('Poptip',{
                                 //     props: {
@@ -167,61 +165,11 @@ export default {
                     }
       ],
       datas: [
-                    {
-                        name: 'John Brown',
-                        age: 18,
-                        address: 'New York No. 1 Lake Park'
-                    },
-                    {
-                        name: 'Jim Green',
-                        age: 25,
-                        address: 'London No. 1 Lake Park',
-
-                    },
-                    {
-                        name: 'Joe Black',
-                        age: 30,
-                        address: 'Sydney No. 1 Lake Park'
-                    },
-                    {
-                        name: 'Jon Snow',
-                        age: 26,
-                        address: 'Ottawa No. 2 Lake Park',
-
-                    },
-                                        {
-                        name: 'John Brown',
-                        age: 18,
-                        address: 'New York No. 1 Lake Park'
-                    },
-                    {
-                        name: 'Jim Green',
-                        age: 25,
-                        address: 'London No. 1 Lake Park',
-
-                    },
-                    {
-                        name: 'Joe Black',
-                        age: 30,
-                        address: 'Sydney No. 1 Lake Park'
-                    },
-                    {
-                        name: 'Jon Snow',
-                        age: 26,
-                        address: 'Ottawa No. 2 Lake Park',
-
-                    },
-                                        {
-                        name: 'John Brown',
-                        age: 18,
-                        address: 'New York No. 1 Lake Park'
-                    },
-                    {
-                        name: 'Jim Green',
-                        age: 25,
-                        address: 'London No. 1 Lake Park',
-
-                    },
+                {
+                    name: 'John Brown',
+                    age: 18,
+                    address: 'New York No. 1 Lake Park'
+                },
       ]
 
     }
@@ -229,9 +177,12 @@ export default {
   methods:{
         get_data: function (e) {
             e?e--:e;
+            this.tableLoading=true;
             /*初始化传参对象 */
             this.req_obj.url='/admin/get_usr_list';   //获取客户列表
             if(this.input_value!='' && this.select_value!=''){
+                /*点击查询增加loading状态 */
+                this.loading=true;
                 this.req_obj.select_value=this.select_value;
                 this.req_obj.input_value=this.input_value;
                 this.req_obj.page=e;
@@ -242,6 +193,8 @@ export default {
                 this.page_total = res.body.out.count;
                 this.datas = res.body.out.datas;
                 this.roles = res.body.out.map_roles;
+                this.loading=false;
+                this.tableLoading=false;
             })
         },
          req_url: function(){
@@ -257,7 +210,7 @@ export default {
   },
   mounted(){
       this.show = true;
-      this.get_data(1);
+    //   this.get_data(1);
   }
 }
 </script>
