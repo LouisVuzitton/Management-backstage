@@ -86,7 +86,7 @@
                                     :on-exceeded-size="handleMaxSize"
                                     :before-upload="handleBeforeUpload"
                                     multiple
-                                    type="drag"
+                                     type="drag"
                                     action="/other/upload_img"
                                     style="display: inline-block;width:58px;">
                                     <div style="width: 58px;height:58px;line-height: 58px;">
@@ -227,6 +227,7 @@ export default {
                 this.$Notice.info({
                     title: '商品上架成功!',
                 });
+                this.$router.push('/shopList');
             }else{
                 this.$Notice.error({
                     title: '商品上架失败!',

@@ -129,6 +129,7 @@ export default {
                     this.$Notice.info({
                         title: '公告发布成功!',
                     });
+                    this.$router.push('/notice');
                 }else{
                     this.$Notice.error({
                         title: '公告发布失败!',
