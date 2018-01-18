@@ -38,6 +38,10 @@
     width:100%;
     text-align: right
 }
+.button{
+    width: 50%;
+    margin-right: 25%; 
+}
 
 </style>
 
@@ -148,16 +152,16 @@
                         <Button type="primary">
                             订货订单
                         </Button>
-                        <Button type="primary">
+                        <Button type="default">
                             充值订单
                         </Button>
-                        <Button type="primary">
+                        <Button type="default">
                             体现订单
                         </Button>
-                        <Button type="primary">
+                        <Button type="default">
                             业绩奖励
                         </Button>
-                        <Button type="primary">
+                        <Button type="default">
                             云仓库
                         </Button>
                     </ButtonGroup><br><br>
@@ -184,12 +188,12 @@
                         </tr>
                         <tr>
                             <td>充值金额：</td>
-                            <td><InputNumber ></InputNumber></td>
+                            <td><InputNumber v-model="charge"></InputNumber></td>
                         </tr>
                     </table>
                 </div>
                 <div slot="footer">
-                    <Button type="info" size="large" long :loading="modal_loading" >确认充值</Button>
+                    <Button type="info" class="button" @click="recharge()" size="large" :loading="modal_loading" >确认充值</Button>
                 </div>
             </Modal>
     </div>
@@ -205,6 +209,7 @@ export default {
             data:{},
             datas:[],
             columns:[],
+            charge:0,
         }
     },
     methods:{
@@ -214,7 +219,7 @@ export default {
         get_one: function () {
             console.log('获取单条数据: ID = ' + this.$route.params.id);
             this.$http.get("/admin/get_usr"+ '?id=' + this.$route.params.id).then(res => {
-                console.log("数据　" + JSON.stringify(res.body, 0, 4));
+                console.log("数据" + JSON.stringify(res.body, 0, 4));
                 this.data = res.body.out.data;
                 // this.data.create_time = moment.unix(this.data_one.create_time).format('YYYY-MM-DD HH:mm:ss');
                 // this.data.update_time = moment.unix(this.data_one.update_time).format('YYYY-MM-DD HH:mm:ss');
@@ -226,6 +231,9 @@ export default {
                 // this.data.role = this.role_map[this.data_one.role]
             })
         },
+        recharge:function(){
+            this.$http.post("")
+        }
     },
     mounted(){
         this.get_one();
