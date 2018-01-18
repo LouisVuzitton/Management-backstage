@@ -72,11 +72,14 @@ export default {
       loading:true,
       page_total:100,
       req_obj:{
-        url:'xxx.com',
+        url:'/product/_x_get_product_list',
         ordersta:'',
         search_value:'',
         search_key:'no',
-        search_type:'no',
+        show_status:'all',
+      },
+      del_obj:{
+          url:'/product/_x_del_product',
       },
       roles:[],
       select_data:[
@@ -86,17 +89,28 @@ export default {
                     },
                     {
                         value: 'name',
-                        label: '姓名',
-                    },
-                    {
-                        value: 'phone',
-                        label: '手机号',
+                        label: '商品名称',
                     },
       ],
       columns: [
                     {
                         title: '商品图片',
-                        key: 'name',
+                        key: 'title_url',
+                        render: (h, params) => {
+                            return h('div', [
+                                h('img', {
+                                    attrs: {
+                                        src: params.row.title_url
+                                    },
+
+                                    style: {
+                                        width: '40px',
+                                        height: '40px',
+                                        margin: '3px',
+                                    },
+                                }),
+                            ]);
+                        }
                     },
                     {
                         title: '商品名称',
@@ -104,20 +118,17 @@ export default {
                     },
                     {
                         title: '零售价',
-                        key: 'age',
-
+                        key: 'sku_default',
+                        render: (h, params) => {
+                            return  params.row['sku_default'].shop.price * 100
+                        }
                     },
                     {
                         title: '上架时间',
-                        key: 'address',
-                    },
-                    {
-                        title: '下单时间',
-                        key: 'address',
-                    },
-                    {
-                        title: '手机号码',
-                        key: 'address',
+                        key: 'create_time',
+                        render: (h, params) => {
+                            return moment(params.row.create_time).format('YYYY-MM-DD HH:mm:ss');
+                        }
                     },{
                         width:'125px',
                         render: (h, params) => {
@@ -132,7 +143,7 @@ export default {
                                     },
                                     on: {
                                         click: () => {
-                                            this.$router.push('shopInfo/up/1');
+                                            this.$router.push('shopInfo/up/'+params.row.id);
                                         }
                                     }
                                 }, '编辑'),
@@ -145,7 +156,7 @@ export default {
                                     },
                                     on: {
                                         'on-ok': () => {
-                                            
+                                            this.del_info(this.del_obj.url,params.row.id)
                                         }
                                     }
                                 },[
@@ -160,63 +171,7 @@ export default {
                         }
                     }
       ],
-      datas: [
-                    {
-                        name: 'John Brown',
-                        age: 18,
-                        address: 'New York No. 1 Lake Park'
-                    },
-                    {
-                        name: 'Jim Green',
-                        age: 25,
-                        address: 'London No. 1 Lake Park',
-
-                    },
-                    {
-                        name: 'Joe Black',
-                        age: 30,
-                        address: 'Sydney No. 1 Lake Park'
-                    },
-                    {
-                        name: 'Jon Snow',
-                        age: 26,
-                        address: 'Ottawa No. 2 Lake Park',
-
-                    },
-                                        {
-                        name: 'John Brown',
-                        age: 18,
-                        address: 'New York No. 1 Lake Park'
-                    },
-                    {
-                        name: 'Jim Green',
-                        age: 25,
-                        address: 'London No. 1 Lake Park',
-
-                    },
-                    {
-                        name: 'Joe Black',
-                        age: 30,
-                        address: 'Sydney No. 1 Lake Park'
-                    },
-                    {
-                        name: 'Jon Snow',
-                        age: 26,
-                        address: 'Ottawa No. 2 Lake Park',
-
-                    },
-                                        {
-                        name: 'John Brown',
-                        age: 18,
-                        address: 'New York No. 1 Lake Park'
-                    },
-                    {
-                        name: 'Jim Green',
-                        age: 25,
-                        address: 'London No. 1 Lake Park',
-
-                    },
-      ]
+      datas: [],
 
     }
   },
@@ -241,6 +196,20 @@ export default {
                 }
             }
             return url;
+        },
+        del_info:function(url,id){
+            this.$http.post(url,{id:id}).then(res => {
+                if(res.body.out.status){
+                    this.$Notice.info({
+                        title: '商品删除成功!',
+                    });
+                    this.get_data(1);
+                }else{
+                    this.$Notice.error({
+                        title: '商品删除失败!',
+                    });
+                }
+            })
         },
         goto:function(url){
             this.$router.push(url);

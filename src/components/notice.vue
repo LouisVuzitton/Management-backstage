@@ -79,11 +79,14 @@ export default {
       loading:false,
       page_total:100,
       req_obj:{
-        url:'xxx.com',
+        url:'/admin/get_notice_list',
         ordersta:'',
         search_value:'',
         search_key:'no',
         search_type:'no',
+      },
+      del_obj:{
+          url:'admin/del_notice',
       },
       roles:[],
       select_data:[
@@ -143,7 +146,7 @@ export default {
                                     },
                                     on: {
                                         'on-ok': () => {
-                                            
+                                            this.del_info(this.del_obj,params.row.id)
                                         }
                                     }
                                 },[
@@ -239,6 +242,19 @@ export default {
                 }
             }
             return url;
+        },
+        del_info:function(url,id){
+            this.$http.get(data.url,{ids:[id]}).then(res => {
+                if(res.body.out.status){
+                    this.$Notice.info({
+                        title: '公告删除成功!',
+                    });
+                }else{
+                    this.$Notice.error({
+                        title: '公告失败!',
+                    });
+                }
+            })
         },
         goto:function(url){
             this.$router.push(url);

@@ -54,11 +54,11 @@
                     <table class = 'tab'>
                         <tr>
                             <td>商品名称 : </td>
-                            <td><Input placeholder="Enter something..." style="width: 300px"></Input></td>
+                            <td><Input placeholder="Enter something..." v-model="goods_obj.name" style="width: 300px"></Input></td>
                         </tr>
                         <tr>
                             <td>商品卖点 : </td>
-                            <td><Input type="textarea" placeholder="Enter something..." style="width: 300px"></Input></td>
+                            <td><Input type="textarea" v-model="goods_obj.intro" placeholder="Enter something..." style="width: 300px"></Input></td>
                         </tr>
                         <tr>
                             <td>商品图片 : </td>
@@ -87,14 +87,14 @@
                                     :before-upload="handleBeforeUpload"
                                     multiple
                                     type="drag"
-                                    action="//jsonplaceholder.typicode.com/posts/"
+                                    action="/other/upload_img"
                                     style="display: inline-block;width:58px;">
                                     <div style="width: 58px;height:58px;line-height: 58px;">
                                         <Icon type="camera" size="20"></Icon>
                                     </div>
                                 </Upload>
                                 <Modal title="View Image" v-model="visible">
-                                    <img :src="'https://o5wwk8baw.qnssl.com/' + imgName + '/large'" v-if="visible" style="width: 100%">
+                                    <img :src="'127.0.0.1:5013/' + imgName + '/large'" v-if="visible" style="width: 100%">
                                 </Modal>
                             </td>
                         </tr>
@@ -110,13 +110,13 @@
                 <table width = '100%'>
                     <tr>
                         <td>零售价</td>
-                        <td><InputNumber ></InputNumber> ￥</td>
+                        <td><InputNumber  v-model="goods_obj.price_default.commend"></InputNumber> ￥</td>
                         <td>管理合伙人</td>
-                        <td><InputNumber ></InputNumber> ￥</td>
+                        <td><InputNumber v-model="goods_obj.price_default.partner"></InputNumber> ￥</td>
                         <td>城市合伙人</td>
-                        <td><InputNumber ></InputNumber> ￥</td>
+                        <td><InputNumber v-model="goods_obj.price_default.shop"></InputNumber> ￥</td>
                         <td>合伙人</td>
-                        <td><InputNumber ></InputNumber> ￥</td>
+                        <td><InputNumber v-model="goods_obj.price_default.bulk"></InputNumber> ￥</td>
                     </tr>
                 </table>
             </div>
@@ -129,12 +129,12 @@
                 <table>
                     <tr>
                         <td width ='65'>最小购买</td>
-                        <td><InputNumber ></InputNumber> ￥</td>
+                        <td><InputNumber v-model="goods_obj.minprice"></InputNumber> ￥</td>
                     </tr>
                 </table>
             </div>
         </Card>
-        <Button type = 'info' size= 'large'  :loading="loading"  style  ='float:right;margin:15px 0px'>上架</Button>
+        <Button type = 'info' size= 'large'  :loading="loading"  style  ='float:right;margin:15px 0px' @click = "publishGoods">上架</Button>
     </div>
 </template>
 
@@ -144,20 +144,33 @@ export default {
   data () {
     return {
         title:'',
-        loading:true,
+        loading:false,
+        data:{},
         defaultList: [
             {
                 'name': 'a42bdcc1178e62b4694c830f028db5c0',
                 'url': 'https://o5wwk8baw.qnssl.com/a42bdcc1178e62b4694c830f028db5c0/avatar'
             },
-            {
-                'name': 'bc7521e033abdd1e92222d733590f104',
-                'url': 'https://o5wwk8baw.qnssl.com/bc7521e033abdd1e92222d733590f104/avatar'
-            }
         ],
         imgName: '',
         visible: false,
-        uploadList: []
+        uploadList: [],
+        goods_obj:{
+            url:'/product/_x_add_product',
+            id:'',
+            category:'默认分类',
+            name:'',
+            intro:'',
+            pics:[],
+            mobile_html:'暂无商品简介',
+            price_default:{commend:0,partner:0,shop:0,bulk:0},
+            minprice:0,
+            skus:[],
+        },
+        info_obj:{
+            url:'/product/_x_get_product',
+            id:'',
+        }
     }
   },
   methods:{
@@ -170,19 +183,25 @@ export default {
         this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
     },
     handleSuccess (res, file) {
-        file.url = 'https://o5wwk8baw.qnssl.com/7eb99afb9d5f317c912f08b5212fd69a/avatar';
-        file.name = '7eb99afb9d5f317c912f08b5212fd69a';
+        // file.url = 'https://o5wwk8baw.qnssl.com/7eb99afb9d5f317c912f08b5212fd69a/avatar';
+        // file.name = '7eb99afb9d5f317c912f08b5212fd69a';
+        // this.goods_obj.pics.push(file.url);
+        file.url = res.out.file.access_path;
+        file.name = '127.0.0.1:5013/';
+        this.goods_obj.pics.push(file.url);
+        console.log("文件: " + JSON.stringify(file));
+        console.log("请求: " + JSON.stringify(res));
     },
     handleFormatError (file) {
         this.$Notice.warning({
-            title: 'The file format is incorrect',
-            desc: 'File format of ' + file.name + ' is incorrect, please select jpg or png.'
+            title: '文件格式不正确',
+            desc: '图片 ' + file.name + ' 格式不正确, 请上传 JPG 或 PNG 格式的图片'
         });
     },
     handleMaxSize (file) {
         this.$Notice.warning({
-            title: 'Exceeding file size limit',
-            desc: 'File  ' + file.name + ' is too large, no more than 2M.'
+            title: '文件大小超过限制',
+            desc: '文件  ' + file.name + ' 太大, 不能超过2M.'
         });
     },
     handleBeforeUpload () {
@@ -193,16 +212,71 @@ export default {
             });
         }
         return check;
-    }
+    },
+
+    publishGoods:function(){
+        let data = this.goods_obj;
+        data.price_default.commend  = data.price_default.commend / 100;
+        data.price_default.partner = data.price_default.partner / 100;
+        data.price_default.shop = data.price_default.shop / 100;
+        data.price_default.bulk = data.price_default.bulk / 100;
+        this.title=="添加商品"?delete data.id:"";
+        console.log("goods: "+JSON.stringify(data,0,4));
+        this.$http.post(data.url,data).then(res => {
+            if(res.body.out.status){
+                this.$Notice.info({
+                    title: '商品上架成功!',
+                });
+            }else{
+                this.$Notice.error({
+                    title: '商品上架失败!',
+                });
+            }
+        })
+    },
+    get_info:function(){
+        let url = this.get_url(this.info_obj);
+        console.log(url);
+        this.$http.get(url).then(res => {
+            let shop = res.body.out.product;
+            shop.price_default.commend  = shop.price_default.commend * 100;
+            shop.price_default.partner = shop.price_default.partner * 100;
+            shop.price_default.shop = shop.price_default.shop * 100;
+            shop.price_default.bulk = shop.price_default.bulk * 100;
+            let data = {
+                url:this.goods_obj.url,
+                id:shop.id,
+                category:shop.id_f_pro_category,
+                name:shop.name,
+                intro:shop.intro,
+                pics:shop.pics,
+                mobile_html:'暂无商品简介',
+                price_default:shop.price_default,
+                minprice:0,
+                skus:[],
+            }
+            this.goods_obj = data;
+        })
+    },
+    get_url: function(obj){
+        let url = obj.url+"?";
+        for(let item in obj){
+            if(item !='url'){
+                obj[item]?url+=item+"="+obj[item]+"&":"";
+            }
+        }
+        return url;
+    },
 
   },
   mounted(){
       this.uploadList = this.$refs.upload.fileList;
-
       if(this.$route.params.type == 'add'){
           this.title = '添加商品'
       }else{
           this.title = '修改商品'
+          this.info_obj.id = this.$route.params.id;
+          this.get_info();
       }
   }
 }
