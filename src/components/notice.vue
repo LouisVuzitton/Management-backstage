@@ -56,7 +56,7 @@
             <transition name="slide-fade">
                 <div>
                     <Button  type="primary" @click="goto('noticeInfo/add/0')">添加公告</Button><br>
-                    <Input v-model="req_obj.search_value" placeholder="请您输入要搜索的内容" style="width: 300px"></Input>
+                    <Input v-model="req_obj.search_value" placeholder="请输入您要搜索的内容" style="width: 300px"></Input>
                     <Select v-model="req_obj.search_key" style="width:200px;padding:5px 0px;">
                         <Option v-for="item in select_data" :value="item.value" :key="item.value">{{ item.label }}</Option>
                     </Select>
