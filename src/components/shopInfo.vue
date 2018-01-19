@@ -235,6 +235,7 @@ export default {
         data.price_default.partner = data.price_default.partner * 100;
         data.price_default.shop = data.price_default.shop * 100;
         data.price_default.bulk = data.price_default.bulk * 100;
+        data.mobile_html =  this.editor.txt.html();
         this.title=="添加商品"?delete data.id:"";
         console.log("goods: "+JSON.stringify(data,0,4));
         this.$http.post(data.url,data).then(res => {
@@ -255,10 +256,10 @@ export default {
         let url = this.get_url(this.info_obj);
         this.$http.get(url).then(res => {
             let shop = res.body.out.product;
-            shop.price_default.commend  = shop.price_default.commend * 100;
-            shop.price_default.partner = shop.price_default.partner * 100;
-            shop.price_default.shop = shop.price_default.shop * 100;
-            shop.price_default.bulk = shop.price_default.bulk * 100;
+            shop.price_default.commend  = shop.price_default.commend / 100;
+            shop.price_default.partner = shop.price_default.partner / 100;
+            shop.price_default.shop = shop.price_default.shop / 100;
+            shop.price_default.bulk = shop.price_default.bulk / 100;
             let data = {
                 url:this.goods_obj.url,
                 id:shop.id,
@@ -271,6 +272,7 @@ export default {
                 minprice:0,
                 skus:[],
             }
+            self.editor.txt.html(shop.mobile_html);
             console.log(JSON.stringify(shop.pics,0,4));
             this.goods_obj = data;
             this.setPics(shop.pics);
@@ -286,9 +288,31 @@ export default {
         }
         return url;
     },
+    edit_swith: function () {
+        //-------------富文本编辑器-------------------
+        var self = this;
+            if (!self.winEditor || $('#edit').html() == "") {
+                console.log();
+                self.winEditor = window.wangEditor
+                self.editor = new self.winEditor('#edit')
+                self.editor.customConfig = {
+                    uploadImgServer: '/other/upload_imgs',
+                    uploadImgParams: false,
+                    showLinkImg: false,
+                }
+
+                self.editor.customConfig.uploadImgHooks = {
+                    success: function (xhr) { alert('成功'); console.log(xhr); },
+                    error: function (xhr) { alert('错误'); },
+                }
+                self.editor.create();
+                self.editor.txt.html("<p style = 'color:#999;font-size:13px;'>　这里填写商品详信息　</p>");
+            }
+        },
 
   },
   mounted(){
+      this.edit_swith();
       this.uploadList = this.$refs.upload.fileList;
       if(this.$route.params.type == 'add'){
           this.title = '添加商品'

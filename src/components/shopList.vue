@@ -211,13 +211,15 @@ export default {
                 }
             })
         },
+
         goto:function(url){
             this.$router.push(url);
-        }
+        },
   },
   mounted(){
       this.show = true;
       this.get_data(1);
+
   }
 }
 </script>
