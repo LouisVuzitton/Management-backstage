@@ -62,7 +62,7 @@
                     </Select>
                     <Button  type="info" @click="get_data(1)" :loading="loading" icon="ios-search">Search</Button>
                     <Button type="info" @click = 'modal_addpar = true' style = 'display:none;'>添加合伙人</Button>
-                    <Table :highlight-row="true" :stripe="true" :columns="columns" :loading="tableLoading" :data="datas"></Table>
+                    <Table :highlight-row="true" :stripe="true" :height='H':columns="columns" :loading="tableLoading" :data="datas"></Table>
                     <Page :total="page_total" on-change="get_data" style = 'padding:24px 0px'></Page>
                 </div>
             </transition>
@@ -72,10 +72,12 @@
 </template>
 
 <script>
+import moment from 'moment'
 export default {
   name: 'examineList',
   data () {
     return {
+      H:'',
       modal_addpar:false,
       modal_loading:false,
       loading:false,
@@ -114,7 +116,7 @@ export default {
                     },
                     {
                         title: '手机号',
-                        key: 'age',
+                        key: 'phone',
                     },
                     {
                         title: '申请时间',
@@ -125,13 +127,16 @@ export default {
                     },
                     {
                         title: '加入时间',
-                        key: 'phone',
+                        key: 'create_time',
+                        render: (h, params) => {
+                            return moment.unix(params.row.create_time).format('YYYY-MM-DD HH:mm:ss');
+                        }
                     },
                     {
                         title: '级别',
                         key: 'role',
                         render: (h, params) => {
-                        console.log(params.row.out.datas.role);
+                        console.log(params.row);
                             return h('div', [
                                 h('span', {
                                     props: {
@@ -143,10 +148,11 @@ export default {
                                     },
                                     on: {
                                     }
-                                },this.Role[params.row.out.datas.role]),
+                                },this.Role[params.row.role]),
                             ]);
                         }
                     },{
+                        title:'操作',
                         width:'100px',
                         render: (h, params) => {
                             return h('div', [
@@ -213,8 +219,9 @@ export default {
         }
   },
   mounted(){
+      this.H = window.innerHeight*0.69 + "px";
       this.show = true;
-      this.get_data(1);
+    //   this.get_data(1);
   }
 }
 </script>

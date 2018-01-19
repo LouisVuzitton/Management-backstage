@@ -69,7 +69,7 @@ import moment from 'moment'
                     </Select>
                     <Button  type="info" icon="ios-search" @click="get_data(1)">Search</Button>
                     <Button type="info" @click = 'modal_addpar = true' style = 'display:none;'>添加合伙人</Button>
-                    <Table :highlight-row="true" :loading="loading" :stripe="true" :columns="columns" :data="datas"></Table>
+                    <Table :highlight-row="true" :height='H' :loading="loading" :stripe="true" :columns="columns" :data="datas"></Table>
                     <Page :total="page_total" on-change="get_data" style = 'padding:24px 0px'></Page>
                     <Modal v-model="modal_addpar" width="560">
                         <p slot="header" style="color:#2db7f5;text-align:center">
@@ -130,6 +130,7 @@ export default {
   name: 'ctemrAudit',
   data () {
     return {
+      H:'',
       modal_addpar:false,
       modal_loading:false,
       loading:false,
@@ -273,8 +274,9 @@ export default {
         }
   },
   mounted(){
+      this.H = window.innerHeight*0.69 + "px";
       this.show = true;
-      this.get_data(1);
+    //   this.get_data(1);
   }
 }
 </script>
