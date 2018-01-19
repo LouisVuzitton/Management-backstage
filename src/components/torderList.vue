@@ -66,7 +66,7 @@
                         <Option v-for="item in order_sats" :value="item.value" :key="item.value">{{ item.label }}</Option>
                     </Select>
                     <Button  type="info" icon="ios-search" @click = "get_data(1)">Search</Button>
-                    <Table :highlight-row="true" :loading='loading' :stripe="true" :columns="columns" :data="datas"></Table>
+                    <Table :highlight-row="true" :height = 'H' :loading='loading' :stripe="true" :columns="columns" :data="datas"></Table>
                     <Page :total="page_total" style = 'padding:24px 0px' @on-change="get_data"></Page>
                 </div>
             </transition>
@@ -80,6 +80,7 @@ export default {
   name: 'ctemrAudit',
   data () {
     return {
+      H:'',
       loading:true,
       page_total:100,
       req_obj:{
@@ -263,6 +264,7 @@ export default {
         }
   },
   mounted(){
+        this.H = window.innerHeight*0.72 + "px";
       this.show = true;
       this.get_data(1);
   }

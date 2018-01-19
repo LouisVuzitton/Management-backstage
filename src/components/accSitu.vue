@@ -24,7 +24,7 @@
             </p>
             <Row style = 'width:100%;text-align:center;'>
                 <Col class = 'Card' span="6">
-                    <Card style="width:95%;height:110px;float:left;">
+                    <Card dis-hover style="width:95%;height:110px;float:left;">
                         <p slot="title">
                             销售总额(元)
                         </p>
@@ -32,7 +32,7 @@
                     </Card>   
                 </Col>
                 <Col class = 'Card' span="6">
-                    <Card style="width:95%;height:110px;float:left;">
+                    <Card dis-hover style="width:95%;height:110px;float:left;">
                         <p slot="title">
                             余额总额(元)
                         </p>
@@ -40,7 +40,7 @@
                     </Card>   
                 </Col>
                 <Col class = 'Card' span="6">
-                    <Card style="width:95%;height:110px;float:left;">
+                    <Card dis-hover style="width:95%;height:110px;float:left;">
                         <p slot="title">
                             充值总额(元)
                         </p>
@@ -48,7 +48,7 @@
                     </Card>   
                 </Col>
                 <Col class = 'Card' span="6">
-                    <Card style="width:95%;height:110px;float:left;">
+                    <Card dis-hover style="width:95%;height:110px;float:left;">
                         <p slot="title">
                             奖励总额(元)
                         </p>
@@ -64,7 +64,7 @@
             </p>
             <Row style = 'width:100%;text-align:center;'>
                 <Col class = 'Card' span="6">
-                    <Card style="width:95%;height:110px;float:left;">
+                    <Card dis-hover style="width:95%;height:110px;float:left;">
                         <p slot="title">
                             提现总额(元)
                         </p>
@@ -72,7 +72,7 @@
                     </Card>   
                 </Col>
                 <Col class = 'Card' span="6">
-                    <Card style="width:95%;height:110px;float:left;">
+                    <Card dis-hover style="width:95%;height:110px;float:left;">
                         <p slot="title">
                             提现手续费(元)
                         </p>
@@ -80,7 +80,7 @@
                     </Card>   
                 </Col>
                 <Col class = 'Card' span="6">
-                    <Card style="width:95%;height:110px;float:left;">
+                    <Card dis-hover style="width:95%;height:110px;float:left;">
                         <p slot="title">
                             提现成功(笔)
                         </p>
@@ -88,7 +88,7 @@
                     </Card>   
                 </Col>
                 <Col class = 'Card' span="6">
-                    <Card style="width:95%;height:110px;float:left;">
+                    <Card dis-hover style="width:95%;height:110px;float:left;">
                         <p slot="title">
                             提现失败(笔)
                         </p>
@@ -107,7 +107,7 @@
                 <Option v-for="item in select_data" :value="item.value" :key="item.value">{{ item.label }}</Option>
             </Select>
             <Button  type="info" icon="ios-search" @click="get_data(1)">Search</Button>
-            <Table height="200" :loading="loading":columns="columns" :data="data"></Table>
+            <Table height="500" :loading="loading":columns="columns" :data="data"></Table>
             <Page :total="page_total" style = 'padding:24px 0px' @on-change="get_data"></Page>
         </Card>
     </div>

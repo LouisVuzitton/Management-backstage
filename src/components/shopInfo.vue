@@ -45,7 +45,7 @@
 </style>
 <template>
     <div>
-        <Card>
+        <Card dis-hover>
             <p slot="title">
                 {{title}}
             </p>
@@ -101,8 +101,8 @@
                     </table>
                 </Col> 
             </Row> 
-        </Card>
-        <Card>
+        </Card><br>
+        <Card dis-hover >
             <p slot="title">
                 价格库存
             </p>
@@ -120,8 +120,8 @@
                     </tr>
                 </table>
             </div>
-        </Card>
-        <Card>
+        </Card><br>
+        <Card dis-hover>
             <p slot="title">
                 其他设置
             </p>
@@ -131,10 +131,14 @@
                         <td width ='65'>最小购买</td>
                         <td><InputNumber v-model="goods_obj.minprice"></InputNumber> ￥</td>
                     </tr>
+                    <tr>
+                        <td>商品详情:</td>
+                    </tr>
                 </table>
+                <div id = 'edit'></div>
             </div>
         </Card>
-        <Button type = 'info' size= 'large'  :loading="loading"  style  ='float:right;margin:25 px 0px' @click = "publishGoods">上架</Button>
+        <Button type = 'info' size= 'large'  :loading="loading"  style  ='float:right;margin:25px 0px' @click = "publishGoods">上架</Button>
     </div>
 </template>
 
@@ -188,7 +192,6 @@ export default {
     handleRemove (file) {
         const fileList = this.$refs.upload.fileList;
         this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
-        alert(JSON.stringify(file,0,4));
         let pics = this.goods_obj.pics;
         for(let item in pics){
             if(pics[item] == file.name){
@@ -235,6 +238,14 @@ export default {
         data.price_default.partner = data.price_default.partner * 100;
         data.price_default.shop = data.price_default.shop * 100;
         data.price_default.bulk = data.price_default.bulk * 100;
+        data.skus = [{
+            pics:data.pics,
+            price_bulk:data.price_default.bulk,
+            price_commend:data.price_default.commend,
+            price_partner:data.price_default.partner,
+            price_shop:data.price_default.shop,
+            variants:{"无规格":"无规格"}
+        }],
         data.mobile_html =  this.editor.txt.html();
         this.title=="添加商品"?delete data.id:"";
         console.log("goods: "+JSON.stringify(data,0,4));
@@ -249,6 +260,7 @@ export default {
                 this.$Notice.error({
                     title: '商品上架失败!',
                 });
+                this.loading = false;
             }
         })
     },
@@ -256,24 +268,35 @@ export default {
         let url = this.get_url(this.info_obj);
         this.$http.get(url).then(res => {
             let shop = res.body.out.product;
+            let skus = res.body.out.skus;
+            skus[0].pics = shop.pics;
             shop.price_default.commend  = shop.price_default.commend / 100;
             shop.price_default.partner = shop.price_default.partner / 100;
             shop.price_default.shop = shop.price_default.shop / 100;
             shop.price_default.bulk = shop.price_default.bulk / 100;
-            let data = {
-                url:this.goods_obj.url,
-                id:shop.id,
-                category:shop.id_f_pro_category,
-                name:shop.name,
-                intro:shop.intro,
-                pics:shop.pics,
-                mobile_html:'暂无商品简介',
-                price_default:shop.price_default,
-                minprice:0,
-                skus:[{pics:shop.pics}],
-            }
-            self.editor.txt.html(shop.mobile_html);
-            console.log(JSON.stringify(shop.pics,0,4));
+            let data = {};
+                data = {
+                    url:this.goods_obj.url,
+                    id:shop.id,
+                    category:shop.id_f_pro_category,
+                    name:shop.name,
+                    intro:shop.intro,
+                    pics:shop.pics,
+                    mobile_html:'暂无商品简介',
+                    price_default:shop.price_default,
+                    minprice:0,
+                    skus:[{
+                        pics:shop.pics,
+                        price_bulk:shop.price_default.bulk,
+                        price_commend:shop.price_default.commend,
+                        price_partner:shop.price_default.partner,
+                        price_shop:shop.price_default.shop,
+                        variants:{"无规格":"无规格"}
+                    }],
+                }
+
+            this.editor.txt.html(shop.mobile_html);
+            console.log(JSON.stringify(res.body.out,0,4));
             this.goods_obj = data;
             this.setPics(shop.pics);
 
@@ -312,7 +335,7 @@ export default {
 
   },
   mounted(){
-    //   this.edit_swith();
+      this.edit_swith();
       this.uploadList = this.$refs.upload.fileList;
       if(this.$route.params.type == 'add'){
           this.title = '添加商品'

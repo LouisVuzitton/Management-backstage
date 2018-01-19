@@ -62,7 +62,7 @@
                     </Select>
                     <Button  type="info" icon="ios-search" @click="get_data(1)">Search</Button>
                     <Button type="info" @click = 'modal_addpar = true' style = 'display:none;'>添加合伙人</Button>
-                    <Table :highlight-row="true" :loading="loading" :stripe="true" :columns="columns" :data="datas"></Table>
+                    <Table :highlight-row="true" :loading="loading" :height = 'H' :stripe="true" :columns="columns" :data="datas"></Table>
                     <Page :total="page_total" style = 'padding:24px 0px' @on-change="get_data"></Page>
                 </div>
             </transition>
@@ -76,6 +76,7 @@ export default {
   name: 'witdsCash',
   data () {
     return {
+      H:'',
       loading:false,
       page_total:100,
       req_obj:{
@@ -106,19 +107,21 @@ export default {
       columns: [
                     {
                         title: '公告标题',
-                        key: 'name',
+                        key: 'title',
                     },
                     {
                         title: '发布时间',
-                        key: 'age',
+                        key: 'time',
+                        render:(h,params) => {
+                            return moment(params.row.time).format('YYYY-MM-DD HH:mm:ss');
+                        }
                     },
                     {
                         title: '发布人',
-                        key: 'address',
-                    },
-                    {
-                        title: '内容',
-                        key: 'address',
+                        key: 'publish_admin',
+                        render:(h,params) => {
+                            return params.row.publish_admin.name;
+                        }
                     },{
                         width:'150px',
                         render: (h, params) => {
@@ -208,6 +211,7 @@ export default {
 
   },
   mounted(){
+      this.H = window.innerHeight*0.72 + "px";
       this.show = true;
       this.get_data(1);
   }

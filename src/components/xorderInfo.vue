@@ -100,7 +100,7 @@
                     </tr>
                     <tr><td colspan="1">收货地址：</td><td colspan="3">广东省 深圳市 南山区 深南大道与铜鼓路西100米大冲商务中心</td></tr>
                 </table>
-                <Table :loading="loading":columns="columns" :data="data"></Table>
+                <Table :loading="loading" height = '500px' :columns="columns" :data="data"></Table>
                 <br><b>选择物流公司</b><br>
                 <Select style="width:200px;padding:5px 0px;" v-model="logis" >
                     <Option v-for="item in logistics" :value="item.value" :key="item.value">{{ item.label }}</Option>
