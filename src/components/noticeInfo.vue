@@ -54,7 +54,7 @@
                     <table class = 'tab'>
                         <tr>
                             <td>公告标题 : </td>
-                            <td><Input placeholder="Enter something..." v-model="notice_obj.title" style="width: 300px"></Input></td>
+                            <td><Input placeholder="公告标题" v-model="notice_obj.title" style="width: 300px"></Input></td>
                         </tr>
                         <tr>
                             <td>公告内容 : </td>

@@ -51,7 +51,7 @@
                     <Select v-model="select_value" style="width:200px;padding:5px 0px;">
                         <Option v-for="item in select_data" :value="item.value" :key="item.value">{{ item.label }}</Option>
                     </Select>
-                    <Button  type="info" icon="ios-search">Search</Button>
+                    <Button  type="info" icon="ios-search">搜索</Button>
                     <Button type="info" @click = 'modal_addpar = true' style = 'display:none;'>添加合伙人</Button>
                     <Table :highlight-row="true" :stripe="true" :columns="columns" :data="datas"></Table>
                     <Page :total="page_total" style = 'padding:24px 0px'></Page>

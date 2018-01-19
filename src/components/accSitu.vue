@@ -106,7 +106,7 @@
             <Select v-model="req_obj.search_key" style="width:200px;padding:5px 0px;">
                 <Option v-for="item in select_data" :value="item.value" :key="item.value">{{ item.label }}</Option>
             </Select>
-            <Button  type="info" icon="ios-search" @click="get_data(1)">Search</Button>
+            <Button  type="info" icon="ios-search" @click="get_data(1)">搜索</Button>
             <Table height="500" :loading="loading":columns="columns" :data="data"></Table>
             <Page :total="page_total" style = 'padding:24px 0px' @on-change="get_data"></Page>
         </Card>

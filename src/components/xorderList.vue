@@ -64,14 +64,14 @@
                             交易关闭
                         </Button>
                     </ButtonGroup><br> -->
-                    <Input v-model="req_obj.search_value" placeholder="Enter something..." style="width: 300px"></Input>
+                    <Input v-model="req_obj.search_value" placeholder="请输入您要搜索的内容" style="width: 300px"></Input>
                     <Select v-model="req_obj.search_key" style="width:200px;padding:5px 0px;">
                         <Option v-for="item in select_data" :value="item.value" :key="item.value">{{ item.label }}</Option>
                     </Select>
                     <Select v-model="req_obj.search_type" style="width:200px;padding:5px 0px;">
                         <Option v-for="item in order_sats" :value="item.value" :key="item.value">{{ item.label }}</Option>
                     </Select>
-                    <Button  type="info" icon="ios-search">Search</Button>
+                    <Button  type="info" icon="ios-search">搜索</Button>
                     <Table :highlight-row="true" :height = "H" :loading='loading' :stripe="true" :columns="columns" :data="datas"></Table>
                     <Page :total="page_total" style = 'padding:24px 0px' @on-change="get_data"></Page>
                 </div>
