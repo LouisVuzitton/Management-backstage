@@ -54,11 +54,11 @@
                     <table class = 'tab'>
                         <tr>
                             <td>商品名称 : </td>
-                            <td><Input placeholder="Enter something..." v-model="goods_obj.name" style="width: 300px"></Input></td>
+                            <td><Input placeholder="商品名称" v-model="goods_obj.name" style="width: 300px"></Input></td>
                         </tr>
                         <tr>
                             <td>商品卖点 : </td>
-                            <td><Input type="textarea" v-model="goods_obj.intro" placeholder="Enter something..." style="width: 300px"></Input></td>
+                            <td><Input type="textarea" v-model="goods_obj.intro" placeholder="商品卖点" style="width: 300px"></Input></td>
                         </tr>
                         <tr>
                             <td>商品图片 : </td>
