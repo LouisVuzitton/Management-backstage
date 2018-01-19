@@ -42,7 +42,7 @@ b{
             <Row style = 'width:100%;'>
                 <center>
                 <Col class = 'Card' span="8">
-                    <Card class = 'bak' style="background:url('../../static/rawpixel-com-351765.jpg');background-size:100% 100%;">
+                    <Card dis-hover	 class = 'bak' style="background:url('../../static/rawpixel-com-351765.jpg');background-size:100% 100%;">
                     </Card>   
                     <span>
                         <p>客户总数</p>
@@ -50,7 +50,7 @@ b{
                     </span>
                 </Col>
                 <Col class = 'Card' span="8">
-                    <Card class = 'bak' style="background:url('../../static/samuel-zeller-118195.jpg');background-size:100% 100%;">
+                    <Card dis-hover	 class = 'bak' style="background:url('../../static/samuel-zeller-118195.jpg');background-size:100% 100%;">
                     </Card>   
                     <span>
                         <p>订单总数</p>
@@ -58,7 +58,7 @@ b{
                     </span>
                 </Col>
                 <Col class = 'Card' span="8">
-                    <Card class = 'bak' style="background:url('../../static/nik-macmillan-280300.jpg');background-size:100% 100%;">
+                    <Card dis-hover	 class = 'bak' style="background:url('../../static/nik-macmillan-280300.jpg');background-size:100% 100%;">
                     </Card>   
                     <span>
                         <p>销售总额</p>
@@ -75,7 +75,7 @@ b{
             </p>
             <Row style = 'width:100%;text-align:center;'>
                 <Col class = 'Card' span="6">
-                    <Card style="width:95%;height:110px;float:left;">
+                    <Card dis-hover	 style="width:95%;height:110px;float:left;">
                         <p slot="title" >
                             待审核(客户)
                         </p>
@@ -83,7 +83,7 @@ b{
                     </Card>   
                 </Col>
                 <Col class = 'Card' span="6">
-                    <Card style="width:95%;height:110px;float:left;">
+                    <Card dis-hover	 style="width:95%;height:110px;float:left;">
                         <p slot="title">
                             待审核(提现)
                         </p>
@@ -91,7 +91,7 @@ b{
                     </Card>   
                 </Col>
                 <Col class = 'Card' span="6">
-                    <Card style="width:95%;height:110px;float:left;">
+                    <Card dis-hover	 style="width:95%;height:110px;float:left;">
                         <p slot="title">
                             待发货(销售)
                         </p>
@@ -99,7 +99,7 @@ b{
                     </Card>   
                 </Col>
                 <Col class = 'Card' span="6">
-                    <Card style="width:95%;height:110px;float:left;">
+                    <Card dis-hover	 style="width:95%;height:110px;float:left;">
                         <p slot="title">
                             待发货(提货)
                         </p>
