@@ -1,4 +1,5 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
+<!--账务概况-->
 <style scoped>
 .Card{
     float:left;
@@ -28,7 +29,7 @@
                         <p slot="title">
                             销售总额(元)
                         </p>
-                        <b>50</b>
+                        <b v-text=""></b>
                     </Card>   
                 </Col>
                 <Col class = 'Card' span="6">
@@ -36,7 +37,7 @@
                         <p slot="title">
                             余额总额(元)
                         </p>
-                        <b>50</b>
+                        <b v-text=""></b>
                     </Card>   
                 </Col>
                 <Col class = 'Card' span="6">
@@ -44,7 +45,7 @@
                         <p slot="title">
                             充值总额(元)
                         </p>
-                        <b>50</b>
+                        <b v-text=""></b>
                     </Card>   
                 </Col>
                 <Col class = 'Card' span="6">
@@ -52,7 +53,7 @@
                         <p slot="title">
                             奖励总额(元)
                         </p>
-                        <b>50</b>
+                        <b v-text=""></b>
                     </Card>   
                 </Col>
             </Row>
@@ -68,7 +69,7 @@
                         <p slot="title">
                             提现总额(元)
                         </p>
-                        <b>50</b>
+                        <b v-text=""></b>
                     </Card>   
                 </Col>
                 <Col class = 'Card' span="6">
@@ -76,7 +77,7 @@
                         <p slot="title">
                             提现手续费(元)
                         </p>
-                        <b>50</b>
+                        <b v-text=""></b>
                     </Card>   
                 </Col>
                 <Col class = 'Card' span="6">
@@ -84,7 +85,7 @@
                         <p slot="title">
                             提现成功(笔)
                         </p>
-                        <b>50</b>
+                        <b v-text=""></b>
                     </Card>   
                 </Col>
                 <Col class = 'Card' span="6">
@@ -92,7 +93,7 @@
                         <p slot="title">
                             提现失败(笔)
                         </p>
-                        <b>50</b>
+                        <b v-text=""></b>
                     </Card>   
                 </Col>
             </Row>

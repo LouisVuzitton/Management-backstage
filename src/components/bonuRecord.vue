@@ -1,4 +1,5 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
+<!--奖励记录-->
 <style scoped>
 .layout{
     border: 1px solid #d7dde4;

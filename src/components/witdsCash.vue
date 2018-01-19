@@ -1,4 +1,5 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
+<!--提现管理-->
 <style scoped>
 .layout{
     border: 1px solid #d7dde4;
