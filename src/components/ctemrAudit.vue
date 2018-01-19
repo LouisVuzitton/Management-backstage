@@ -184,7 +184,7 @@ export default {
                         title: '申请时间',
                         key: 'apply_time',
                         render: (h, params) => {
-                        return moment(params.row.apply_time).format('YYYY-MM-DD HH:mm:ss');
+                        return moment.unix(params.row.apply_time).format('YYYY-MM-DD HH:mm:ss');
                     }
                     },
                     {
@@ -250,7 +250,7 @@ export default {
         /*获取参数返回url*/
         req_url: function(){
             let url='';
-            if(this.req_obj.select_value!=''&&this.req_obj.input_value!=''){
+            if(this.req_obj.select_value!='' && this.req_obj.input_value!=''){
                 url=this.req_obj.url+"?page="+this.req_obj.page+"&search_key="+this.req_obj.select_value+"&search_value="+this.req_obj.input_value;
             }else{
                 url=this.req_obj.url+"?page="+this.req_obj.page+"&search_key=no";
@@ -261,16 +261,20 @@ export default {
         makePartner:function(id){
             console.log(id);
             this.modal_loading=true;
-            this.$http.post('/admin/set_usr_manage_partner',{id:id,role:this.partnerRole}).then(res => {
+            this.$http.post('/admin/usr_review',{id:id,role:this.partnerRole,result:'success',content:'通过审核'}).then(res => {
                 if(res.body.out.status){
                     this.modal_loading=false;
+                    this.modal_addpar = false;
+                    this.$Notice.info({
+                        title: '审核已完成',
+                    });
                 }
             })
         }
   },
   mounted(){
       this.show = true;
-    //   this.get_data(1);
+      this.get_data(1);
   }
 }
 </script>

@@ -79,6 +79,11 @@ export default {
       modal_addpar:false,
       modal_loading:false,
       loading:false,
+      Role:{
+          usr_p1:'管理合伙人',
+          uer_p2:'城市合伙人',
+          use_p3:'合伙人',
+      },
       tableLoading:false,
       select_value:'',
       input_value:'',
@@ -104,7 +109,7 @@ export default {
       columns: [
                     {
                         title: '姓名',
-                        key: 'name',
+                        key: 'realname',
                         width:'200px',
                     },
                     {
@@ -113,15 +118,34 @@ export default {
                     },
                     {
                         title: '申请时间',
-                        key: 'address',
+                        key: 'create_time',
+                        render: (h, params) => {
+                            return moment.unix(params.row.apply_time).format('YYYY-MM-DD HH:mm:ss');
+                        }
                     },
                     {
                         title: '加入时间',
-                        key: 'address',
+                        key: 'phone',
                     },
                     {
                         title: '级别',
-                        key: 'address',
+                        key: 'role',
+                        render: (h, params) => {
+                        console.log(params.row.out.datas.role);
+                            return h('div', [
+                                h('span', {
+                                    props: {
+                                        type: 'info',
+                                        size: 'small'
+                                    },
+                                    style: {
+                                        marginRight: '5px'
+                                    },
+                                    on: {
+                                    }
+                                },this.Role[params.row.out.datas.role]),
+                            ]);
+                        }
                     },{
                         width:'100px',
                         render: (h, params) => {
@@ -136,30 +160,10 @@ export default {
                                     },
                                     on: {
                                         click: () => {
-                                            this.$router.push('examineInfo/'+this.params.row.id);
+                                            this.$router.push('examineInfo/'+params.row.id);
                                         }
                                     }
                                 }, '查看'),
-
-                                // h('Poptip',{
-                                //     props: {
-                                //         confirm:true,
-                                //         title:'您确认删除这条内容吗？',
-                                //         width:'200'
-                                //     },
-                                //     on: {
-                                //         'on-ok': () => {
-                                            
-                                //         }
-                                //     }
-                                // },[
-                                //     h('Button', {
-                                //         props: {
-                                //             type: 'error',
-                                //             size: 'small'
-                                //         },
-                                //     }, 'Delete')
-                                // ])
                             ]);
                         }
                     }
@@ -210,7 +214,7 @@ export default {
   },
   mounted(){
       this.show = true;
-    //   this.get_data(1);
+      this.get_data(1);
   }
 }
 </script>
