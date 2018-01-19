@@ -174,7 +174,7 @@ export default {
         for(let item in pics){
             this.uploadList.push({
                 name:pics[item],
-                url:"http://127.0.0.1:5013"+pics[item],
+                url:"https://gbl.sty.sztcmdiet.com/"+pics[item],
                 status:"finished",
                 percentage:100,
                 uid:'1234567894123'
@@ -201,7 +201,7 @@ export default {
         // file.name = '7eb99afb9d5f317c912f08b5212fd69a';
         // this.goods_obj.pics.push(file.url);
         file.url = res.out.file.access_path;
-        file.name = '127.0.0.1:5013/';
+        file.name = 'https://gbl.sty.sztcmdiet.com/';
         this.goods_obj.pics.push(file.url);
         console.log("文件: " + JSON.stringify(file));
         console.log("请求: " + JSON.stringify(res));
@@ -270,7 +270,7 @@ export default {
                 mobile_html:'暂无商品简介',
                 price_default:shop.price_default,
                 minprice:0,
-                skus:[],
+                skus:[{pics:shop.pics}],
             }
             self.editor.txt.html(shop.mobile_html);
             console.log(JSON.stringify(shop.pics,0,4));
@@ -312,7 +312,7 @@ export default {
 
   },
   mounted(){
-      this.edit_swith();
+    //   this.edit_swith();
       this.uploadList = this.$refs.upload.fileList;
       if(this.$route.params.type == 'add'){
           this.title = '添加商品'
