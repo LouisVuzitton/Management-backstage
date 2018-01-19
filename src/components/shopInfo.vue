@@ -94,7 +94,7 @@
                                     </div>
                                 </Upload>
                                 <Modal title="View Image" v-model="visible">
-                                    <img :src="'127.0.0.1:5013/' + imgName + '/large'" v-if="visible" style="width: 100%">
+                                    <img :src=" imgName" v-if="visible" style="width: 100%">
                                 </Modal>
                             </td>
                         </tr>
@@ -134,7 +134,7 @@
                 </table>
             </div>
         </Card>
-        <Button type = 'info' size= 'large'  :loading="loading"  style  ='float:right;margin:15px 0px' @click = "publishGoods">上架</Button>
+        <Button type = 'info' size= 'large'  :loading="loading"  style  ='float:right;margin:25 px 0px' @click = "publishGoods">上架</Button>
     </div>
 </template>
 
@@ -147,10 +147,6 @@ export default {
         loading:false,
         data:{},
         defaultList: [
-            {
-                'name': 'a42bdcc1178e62b4694c830f028db5c0',
-                'url': 'https://o5wwk8baw.qnssl.com/a42bdcc1178e62b4694c830f028db5c0/avatar'
-            },
         ],
         imgName: '',
         visible: false,
@@ -174,6 +170,17 @@ export default {
     }
   },
   methods:{
+    setPics:function(pics){
+        for(let item in pics){
+            this.uploadList.push({
+                name:pics[item],
+                url:"http://127.0.0.1:5013"+pics[item],
+                status:"finished",
+                percentage:100,
+                uid:'1234567894123'
+            });
+        }
+    },
     handleView (name) {
                 this.imgName = name;
                 this.visible = true;
@@ -181,6 +188,13 @@ export default {
     handleRemove (file) {
         const fileList = this.$refs.upload.fileList;
         this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
+        alert(JSON.stringify(file,0,4));
+        let pics = this.goods_obj.pics;
+        for(let item in pics){
+            if(pics[item] == file.name){
+                pics.splice(item,1);
+            }
+        }
     },
     handleSuccess (res, file) {
         // file.url = 'https://o5wwk8baw.qnssl.com/7eb99afb9d5f317c912f08b5212fd69a/avatar';
@@ -215,11 +229,12 @@ export default {
     },
 
     publishGoods:function(){
+        this.loading = true;
         let data = this.goods_obj;
-        data.price_default.commend  = data.price_default.commend / 100;
-        data.price_default.partner = data.price_default.partner / 100;
-        data.price_default.shop = data.price_default.shop / 100;
-        data.price_default.bulk = data.price_default.bulk / 100;
+        data.price_default.commend  = data.price_default.commend * 100;
+        data.price_default.partner = data.price_default.partner * 100;
+        data.price_default.shop = data.price_default.shop * 100;
+        data.price_default.bulk = data.price_default.bulk * 100;
         this.title=="添加商品"?delete data.id:"";
         console.log("goods: "+JSON.stringify(data,0,4));
         this.$http.post(data.url,data).then(res => {
@@ -227,6 +242,7 @@ export default {
                 this.$Notice.info({
                     title: '商品上架成功!',
                 });
+                this.loading = false;
                 this.$router.push('/shopList');
             }else{
                 this.$Notice.error({
@@ -237,7 +253,6 @@ export default {
     },
     get_info:function(){
         let url = this.get_url(this.info_obj);
-        console.log(url);
         this.$http.get(url).then(res => {
             let shop = res.body.out.product;
             shop.price_default.commend  = shop.price_default.commend * 100;
@@ -256,7 +271,10 @@ export default {
                 minprice:0,
                 skus:[],
             }
+            console.log(JSON.stringify(shop.pics,0,4));
             this.goods_obj = data;
+            this.setPics(shop.pics);
+
         })
     },
     get_url: function(obj){

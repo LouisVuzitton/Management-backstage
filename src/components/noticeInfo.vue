@@ -120,6 +120,7 @@ export default {
                 }
         },
         publishNotice:function(){
+            this.loading = true;
             let data = this.notice_obj;
             this.title=="添加公告"?delete data.id:"";
             data.content =  this.editor.txt.html();
@@ -129,6 +130,7 @@ export default {
                     this.$Notice.info({
                         title: '公告发布成功!',
                     });
+                    this.loading = false;
                     this.$router.push('/notice');
                 }else{
                     this.$Notice.error({

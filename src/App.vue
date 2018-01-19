@@ -428,12 +428,12 @@ export default {
     let name = window.location.hash
     this.actname = this.urls[name];
 
-    // let login_name = sessionStorage.getItem('name');
-    // if(login_name != 'no'){
-    //     this.login = true;
-    // }else{
-    //     this.login = false;
-    // }
+    let login_name = sessionStorage.getItem('name');
+    if(login_name != 'no'){
+        this.login = true;
+    }else{
+        this.login = false;
+    }
 
   },
 
