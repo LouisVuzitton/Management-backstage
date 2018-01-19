@@ -42,7 +42,11 @@
     width: 50%;
     margin-right: 25%; 
 }
-
+.user_img{
+    height: 48px;
+    width: 48px;
+    border-radius:100%;
+}
 </style>
 
 <template>
@@ -57,12 +61,12 @@
                     <table class='user_table'>
                         <tr>
                             <td width='30%'>姓名: </td>
-                            <td width='65%'>{{data.name}}</td>
+                            <td width='65%'>{{data.realname}}</td>
                             <td width='5%'></td>
                         </tr>
                         <tr>
                             <td>余额</td>
-                            <td></td>
+                            <td v-text="data.settled_money"></td>
                             <td>
                                 <center>
                                     <Button type="info" size="small" @click='update_modal = true'>充值</Button>
@@ -71,7 +75,9 @@
                         </tr>
                         <tr>
                             <td>级别:</td>
-                            <td>{{data.role}}</td>
+                            <td v-if="data.role=='usr_p1'">管理合伙人</td>
+                            <td v-else-if="data.role=='usr_p2'">城市合伙人</td>
+                            <td v-else>合伙人</td>
                             <td>
                                 
                             </td>
@@ -82,16 +88,17 @@
                         </tr>
                         <tr>
                             <td>状态：</td>
-                            <td>{{data.frozen}}</td>
+                            <td v-if="data.frozen">正常</td>
+                            <td v-else>冻结</td>
                         </tr>
                         <tr>
                             <td>上级：</td>
-                            <td>无</td>
+                            <td v-text="up_partner"></td>
                             <td></td>
                         </tr>
                     </table>
-                    <div class='user_table user_color'>开通时间：{{data.create_time}}</div>
-                    <div class='user_table user_color'>最后登录：{{data.update_time}}</div>
+                    <div class='user_table user_color'>注册时间：{{moment.unix(data.create_time).format('YYYY-MM-DD HH:mm:ss')}}</div>
+                    <div class='user_table user_color'>加入时间：{{moment.unix(data.update_time).format('YYYY-MM-DD HH:mm:ss')}}</div>
                 </Card>
                 <Card :bordered="false" style='width:65%;height:245px;float:left;margin:0 0 5px 0 '>
                     <p slot="title">业绩情况</p>
@@ -113,15 +120,15 @@
                         <Row :gutter="16">
                             <Col span="8" style='line-height:70px'>
                                 <div class='title_color'>总业绩(元)</div>
-                                <div class='num_color'>{{data.sell_all}}</div>
+                                <div class='num_color'>{{data.profit_all}}</div>
                             </Col>
                             <Col span="8" style='line-height:70px'>
                                 <div class='title_color'>年业绩(元)</div>
-                                <div class='num_color'>{{data.sell_per_y}}</div>
+                                <div class='num_color'>{{data.profit_per_y}}</div>
                             </Col>
                             <Col span="8" style='line-height:70px'>
                                 <div class='title_color'>月业绩(元)</div>
-                                <div class='num_color'>{{data.sell_per_m}}</div>
+                                <div class='num_color'>{{data.profit_per_m}}</div>
                             </Col>
                         </Row>
                     </center>
@@ -206,6 +213,7 @@ export default {
         return {
             update_modal:false,
             modal_loading:false,
+            userInfo:{},
             data:{},
             datas:[],
             columns:[],
@@ -232,7 +240,14 @@ export default {
             })
         },
         recharge:function(){
-            this.$http.post("")
+            this.$http.post("/admin/recharge",{id:this.$route.params.id,price:this.price}).then(res => {
+                if(res.body.out.status){
+                    this.$Notice.info({
+                        title: '充值成功!',
+                    });
+                    this.get_one();
+                }
+            })
         }
     },
     mounted(){

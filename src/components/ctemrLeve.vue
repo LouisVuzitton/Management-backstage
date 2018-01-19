@@ -47,7 +47,7 @@
         <Row>
             <transition name="slide-fade">
                 <div>
-                    <Input v-model="input_value" placeholder="Enter something..." style="width: 300px"></Input>
+                    <Input v-model="input_value" placeholder="Enter something..." style="width: 300px;visibility:hidden"></Input>
                     <Select v-model="select_value" style="width:200px;padding:5px 0px;">
                         <Option v-for="item in select_data" :value="item.value" :key="item.value">{{ item.label }}</Option>
                     </Select>
@@ -65,11 +65,11 @@
                             <table>
                                 <tr>
                                     <td width = '80px;' height = '35px;'>等级名称:</td>
-                                    <td width = '80px;' height = '35px;'><Input  placeholder="Enter something..." style="width: 300px"></Input></td>
+                                    <td width = '80px;' height = '35px;'><Input  v-model="editInfo.name" placeholder="Enter something..." style="width: 300px"></Input></td>
                                 </tr>
                                 <tr>
                                     <td width = '80px;' height = '35px;'>年度任务:</td>
-                                    <td width = '80px;' height = '35px;'><Input  placeholder="Enter something..." style="width: 300px"></Input></td>
+                                    <td width = '80px;' height = '35px;'><Input  placeholder="请设置年度任务量" style="width: 300px"></Input></td>
                                 </tr>
                                 <tr>
                                     <td width = '80px;' height = '35px;'>首单起订量:</td>
@@ -84,11 +84,11 @@
                                     <td>
                                     <CheckboxGroup style = 'margin:15px 0;' size='large'>
                                         <Checkbox label="twitter">
-                                            <Icon type="social-twitter"></Icon>
+                                            <Icon type="android-person"></Icon>
                                             <span>登录</span>
                                         </Checkbox>
                                         <Checkbox label="facebook">
-                                            <Icon type="social-facebook"></Icon>
+                                            <Icon type="android-cart"></Icon>
                                             <span>订货</span>
                                         </Checkbox>
                                         <Checkbox label="github">
@@ -122,6 +122,7 @@ export default {
       input_value:'',
       page_total:100,
       roles:[],
+      editInfo:{},
       select_data:[
                     {
                         value: 'name',
@@ -137,19 +138,102 @@ export default {
                         title: '等级名称',
                         key: 'name',
                     },
-                    {
+                    {  
                         title: '登录',
-                        key: 'age',
-
+                        key: 'login',
+                        render: (h, params) => {
+                            if(params.row.login>25){
+                                return h('span', [
+                                    h('Icon', {
+                                        props: {
+                                            type: 'ios-close-empty',
+                                            size: '25',
+                                        },
+                                        style: {
+                                            marginRight: '5px'
+                                        },
+                                        })
+                                    ])
+                                }else{
+                                    return h('span', [
+                                    h('Icon', {
+                                        props: {
+                                            type: 'ios-checkmark-empty',
+                                            size: '25',
+                                        },
+                                        style: {
+                                            marginRight: '5px'
+                                        },
+                                        })
+                                    ])
+                                }
+                            }
+                            
                     },
                     {
                         title: '订货',
-                        key: 'address',
+                        key: 'order',
+                        render: (h, params) => {
+                            if(params.row.login>25){
+                                return h('span', [
+                                    h('Icon', {
+                                        props: {
+                                            type: 'ios-close-empty',
+                                            size: '25',
+                                        },
+                                        style: {
+                                            marginRight: '5px'
+                                        },
+                                        })
+                                    ])
+                                }else{
+                                    return h('span', [
+                                    h('Icon', {
+                                        props: {
+                                            type: 'ios-checkmark-empty',
+                                            size: '25',
+                                        },
+                                        style: {
+                                            marginRight: '5px'
+                                        },
+                                        })
+                                    ])
+                                }
+                            }
                     },
                     {
                         title: '邀请',
-                        key: 'address',
+                        key: 'invite',
+                        render: (h, params) => {
+                            console.log(params.row.age);
+                            if(params.row.age>25){
+                                return h('span', [
+                                    h('Icon', {
+                                        props: {
+                                            type: 'ios-close-empty',
+                                            size: '25',
+                                        },
+                                        style: {
+                                            marginRight: '5px'
+                                        },
+                                        })
+                                    ])
+                                }else{
+                                    return h('span', [
+                                    h('Icon', {
+                                        props: {
+                                            type: 'ios-checkmark-empty',
+                                            size: '25',
+                                        },
+                                        style: {
+                                            marginRight: '5px'
+                                        },
+                                        })
+                                    ])
+                                }
+                            }
                     },{
+                        title: '操作',
                         width:'150px',
                         render: (h, params) => {
                             return h('div', [
@@ -164,6 +248,8 @@ export default {
                                     on: {
                                         click: () => {
                                             this.modal_addpar = true;
+                                            this.editInfo=params.row;
+                                            console.log(this.editInfo);
                                         }
                                     }
                                 }, '修改'),
@@ -192,61 +278,18 @@ export default {
                     }
       ],
       datas: [
-                    {
-                        name: 'John Brown',
-                        age: 18,
-                        address: 'New York No. 1 Lake Park'
-                    },
-                    {
-                        name: 'Jim Green',
-                        age: 25,
-                        address: 'London No. 1 Lake Park',
-
-                    },
-                    {
-                        name: 'Joe Black',
-                        age: 30,
-                        address: 'Sydney No. 1 Lake Park'
-                    },
-                    {
-                        name: 'Jon Snow',
-                        age: 26,
-                        address: 'Ottawa No. 2 Lake Park',
-
-                    },
-                                        {
-                        name: 'John Brown',
-                        age: 18,
-                        address: 'New York No. 1 Lake Park'
-                    },
-                    {
-                        name: 'Jim Green',
-                        age: 25,
-                        address: 'London No. 1 Lake Park',
-
-                    },
-                    {
-                        name: 'Joe Black',
-                        age: 30,
-                        address: 'Sydney No. 1 Lake Park'
-                    },
-                    {
-                        name: 'Jon Snow',
-                        age: 26,
-                        address: 'Ottawa No. 2 Lake Park',
-
-                    },
-                                        {
-                        name: 'John Brown',
-                        age: 18,
-                        address: 'New York No. 1 Lake Park'
-                    },
-                    {
-                        name: 'Jim Green',
-                        age: 25,
-                        address: 'London No. 1 Lake Park',
-
-                    },
+                {
+                    name: 'John Brown',
+                    login: 'John Brown',
+                    order: 18,
+                    invite: 'New York No. 1 Lake Park'
+                },
+                {
+                    name: 'John Brown',
+                    login: 'John Brown',
+                    order: 18,
+                    invite: 'New York No. 1 Lake Park'
+                }
       ]
 
     }
