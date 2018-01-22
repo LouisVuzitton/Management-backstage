@@ -68,10 +68,10 @@
                     <Select v-model="req_obj.search_key" style="width:200px;padding:5px 0px;">
                         <Option v-for="item in select_data" :value="item.value" :key="item.value">{{ item.label }}</Option>
                     </Select>
-                    <Select v-model="req_obj.search_type" style="width:200px;padding:5px 0px;">
+                    <Select v-model="req_obj.status" style="width:200px;padding:5px 0px;">
                         <Option v-for="item in order_sats" :value="item.value" :key="item.value">{{ item.label }}</Option>
                     </Select>
-                    <Button  type="info" icon="ios-search">搜索</Button>
+                    <Button  type="info" icon="ios-search" @click="get_data(1)">搜索</Button>
                     <Table :highlight-row="true" :height = "H" :loading='loading' :stripe="true" :columns="columns" :data="datas"></Table>
                     <Page :total="page_total" style = 'padding:24px 0px' @on-change="get_data"></Page>
                 </div>
@@ -90,11 +90,10 @@ export default {
       page_total:100,
       loading:true,
       req_obj:{
-        url:'xxx.com',
-        ordersta:'',
-        search_value:'',
+        url:'http://127.0.0.1:5013/order/_x_get_order_list',
+        status:'all',
         search_key:'no',
-        search_type:'no',
+        search_value:'',
       },
       roles:[],
       select_data:[
@@ -110,54 +109,80 @@ export default {
                 value: 'phone',
                 label: '手机号',
             },
+             {
+                value: 'order_num',
+                label: '订单号',
+            },
       ],
       order_sats:[
             {
-                value: 'no',
+                value: 'all',
                 label: '全部',
             },
             {
-                value: '代收款',
-                label: '代收款',
+                value: 'raw',
+                label: '待付款',
             },
             {
-                value: '代发货',
-                label: '代发货',
+                value: 'pay',
+                label: '待发货',
             },
             {
-                value: '交易完成',
+                value: 'ok',
                 label: '交易完成',
             },
             {
-                value: '交易关闭',
+                value: 'cancel',
                 label: '交易关闭',
             },
       ],
       columns: [
                     {
                         title: '订单号',
-                        key: 'name',
+                        key: 'order_num',
                     },
                     {
                         title: '订单金额',
-                        key: 'age',
+                        key: 'origin_money',
+                        render:(h,params) => {
+                            return '￥'+(params.row.origin_money/100).toFixed(2);
+                        }
                     },
                     {
                         title: '订单状态',
-                        key: 'address',
+                        key: 'status',
+                        render: (h,params) => {
+                            switch(params.row.status){
+                                case 'raw' : return '待付款';break;
+                                case 'pay' : return '待发货';break;
+                                case 'ok' : return '交易完成';break;
+                                case 'cancel' : return '交易关闭';break; 
+                                default : return '状态异常';break;
+                            }
+                        }
                     },
                     {
                         title: '下单时间',
-                        key: 'address',
+                        key: 'create_time',
+                        render: (h, params) => {
+                            return moment.unix(params.row.create_time).format('YYYY-MM-DD HH:mm:ss');
+                        }
                     },
                     {
                         title: '姓名',
-                        key: 'address',
+                        key: "info_usr",
+                        render: (h, params) => {
+                            return params.row.info_usr.realname;
+                        }
                     },
                     {
                         title: '手机号码',
-                        key: 'address',
+                        key: 'info_usr',
+                        render: (h, params) => {
+                            return params.row.info_usr.phone;
+                        }
                     },{
+                        title:'查看',
                         width:'80px',
                         render: (h, params) => {
                             return h('div', [
@@ -171,7 +196,7 @@ export default {
                                     },
                                     on: {
                                         click: () => {
-                                            this.$router.push('xorderInfo/1');
+                                            this.$router.push('xorderInfo/'+params.row.order_num);
                                         }
                                     }
                                 }, '查看'),

@@ -51,11 +51,11 @@
             </Row>
             <Row style = 'margin:10px 0;'>
                 <Col class = 'orsta'>
-                    <p>订单编号：8000000000000201</p>
-                    <p>订单状态：待发货<Button  style = 'margin-left:10px'type="info" size = 'small' @click = "Delivergoods = true" >发货</Button></p> 
-                    <p  style = 'color:#444;font-size:12px;'>如果客户在 2018-01-04 10:30:51 前未进行支付操作，系统将自动关闭该订单。</p>
-                    <p  style = 'color:#444;font-size:12px;'>客户已使用 "微信支付" 方式成功付款。</p>
-                    <p  style = 'color:#444;font-size:12px;'>订单已于 2018-01-03 10:17:06 发货完成</p>
+                    <p>订单编号：{{datas.order_num}}</p>
+                    <p>订单状态：{{datas.status}}<Button  style = 'margin-left:10px'type="info" size = 'small' @click = "Delivergoods = true" >发货</Button></p> 
+                    <p  style = 'color:#444;font-size:12px;' v-if="datas.status == '待发货'">客户已使用 "{{datas.info_money.pay_type == 'balance' ? '余额支付' : '微信支付'}}" 方式成功付款。</p>
+                    <p  style = 'color:#444;font-size:12px;' v-else-if="datas.status == '交易完成'">订单已于 {{datas.time.ok}} 发货完成</p>
+                    <p  style = 'color:#444;font-size:12px;' v-else>如果客户在 {{datas.create_time+1}} 前未进行支付操作，系统将自动关闭该订单。</p>
                 </Col> 
             </Row> 
         </Card><br>
@@ -66,11 +66,11 @@
             </p>
             <Row style = 'width:100%;'>
                 <table>
-                    <tr><td style ='float:right;'>收货人：</td><td>吴伟龙</td></tr>
-                    <tr><td>电话号码：</td><td>18826556663</td></tr>
-                    <tr><td>收货地址：</td><td>广东省 深圳市 南山区 深南大道与铜鼓路西100米大冲商务中心</td></tr>
-                    <tr><td>支付方式：</td><td>微信支付</td></tr>
-                    <tr><td>发货方式：</td><td>实际发货/云仓补货</td></tr>
+                    <tr><td style ='float:right;'>收货人：</td><td>{{datas.info_address.name}}</td></tr>
+                    <tr><td>电话号码：</td><td>{{datas.info_address.phone}}</td></tr>
+                    <tr><td>收货地址：</td><td>{{datas.info_address.province+" "+datas.info_address.city+" "+datas.info_address.district+" "+datas.info_address.detail}}</td></tr>
+                    <tr><td>支付方式：</td><td>{{datas.info_money.pay_type == 'balance' ? '余额支付' : '微信支付'}}</td></tr>
+                    <tr><td>发货方式：</td><td>{{datas.store_way == 'cloud' ? '云仓补货' : '实际发货'}}</td></tr>
                 </table>
             </Row>
         </Card><br>
@@ -79,7 +79,7 @@
             <p slot="title">
                 商品信息
             </p>
-            <Table height="400" :loading="loading":columns="columns" :data="data"></Table>
+            <Table height="400" :loading="loading" :columns="columns" :data="data"></Table>
             <div style  = 'width:250px; height:30px; float:right;margin:10px;'>订单共<span style = 'color:#f90'> 8 </span>件商品，总计：<span style = 'color:#f90'>799.92</span>元</div><br>
         </Card>
 
@@ -91,14 +91,14 @@
             <div>
                 <table class = 'ortab'>
                     <tr>
-                        <td>订单编号：</td><td>180103370261001376</td>
-                        <td>下单时间：</td><td>2018-01-03 10:17:06</td>
+                        <td>订单编号：</td><td>{{datas.order_num}}</td>
+                        <td>下单时间：</td><td>{{datas.create_time}}</td>
                     </tr>
                     <tr>
-                        <td style = 'text-align:right'>收货人：</td><td>某某某</td>
-                        <td>电话号码：</td><td>18826556663</td>
+                        <td style = 'text-align:right'>收货人：</td><td>{{datas.info_address.name}}</td>
+                        <td>电话号码：</td><td>{{datas.info_address.phone}}</td>
                     </tr>
-                    <tr><td colspan="1">收货地址：</td><td colspan="3">广东省 深圳市 南山区 深南大道与铜鼓路西100米大冲商务中心</td></tr>
+                    <tr><td colspan="1">收货地址：</td><td colspan="3">{{datas.info_address.province+" "+datas.info_address.city+" "+datas.info_address.district+" "+datas.info_address.detail}}</td></tr>
                 </table>
                 <Table :loading="loading" height = '500px' :columns="columns" :data="data"></Table>
                 <br><b>选择物流公司</b><br>
@@ -108,13 +108,14 @@
                  <Input v-model="order" placeholder="Enter 物流单号..." :disabled = "isdisabled" style="width: 300px"></Input>
             </div>
             <div slot="footer">
-                <Button type="info" size="large" long :loading="modal_loading" >确认发货</Button>
+                <Button type="info" size="large" long :loading="modal_loading" @click="consignment()">确认发货</Button>
             </div>
         </Modal>    
     </div>
 </template>
 
 <script>
+import moment from 'moment'
 export default {
   name: 'xorderInfo',
   data () {
@@ -132,14 +133,19 @@ export default {
                 label: '无需物流'
             },
             {
-                value: 'name',
+                value: 'SF',
                 label: '顺丰快递'
             },
             {
-                value: 'phone',
+                value: 'QC',
                 label: '申通快递'
             },
+            {
+                value: 'QC',
+                label: '中通快递'
+            }
         ],
+        logistic:[],
         columns:[
             {
                 title: '商品图片',
@@ -167,22 +173,82 @@ export default {
                 width:'100px'
             },
         ],
-        data:[]
+        send_arr:[],
+        data:[],
+        datas:{},
     }
   },
   computed:{
-           isdisabled:function(){
-               if(this.logis == '无需物流'){
-                   return true;
-               }else{
-                   return false;
-               }
-           }
+        isdisabled:function(){
+            if(this.logis == '无需物流'){
+                return true;
+            }else{
+                return false;
+            }
+        }
   },
   methods:{
+      get_data:function(){
+           console.log('获取单条数据: ID = ' + this.$route.params.id);
+            this.$http.get('/order/_x_get_order?num='+this.$route.params.id).then(res => {
+                // this.page_total = res.body.out.count;
+                this.datas = res.body.out.order_obj;
+                /*状态文字处理 */
+                var self=this;
+                this.datas.status=(function(){
+                    switch(self.datas.status){
+                        case 'raw' : return '待付款';break;
+                        case 'pay' : return '待发货';break;
+                        case 'ok' : return '交易完成';break;
+                        case 'cancel' : return '交易关闭';break; 
+                        default : return '状态异常';break;
+                    }
+                })();
+                console.log(this.datas.status);
+                /*时间转换 */
+                this.datas.create_time=moment.unix(self.datas.create_time).format('YYYY-MM-DD HH:mm:ss');
+                if(this.datas.time.ok){
+                    this.datas.time.ok=moment.unix(self.datas.time.ok).format('YYYY-MM-DD HH:mm:ss');
+                }
+                console.log(this.datas);
+            })
+      },
+      get_logistics:function(){
+           this.$http.get('/order/_x_get_shiplist').then(res => {
+                // this.page_total = res.body.out.count;
+                this.logistic = res.body.out.datas;
+                var self=this;
+                for(var item in self.logistic){
+                    // this.logistics[item].label=logistic[item].name;
+                    self.logistics[item].value=self.logistic[item].name;
+                }
+                console.log(this.logistics);
+            })
+      },
+      consignment:function(){
+          var self=this;
+          var code='';
+          for(var item in self.logistic ){
+              if(self.logis == self.logistic[item].value){
+                  code = self.logistic[item].code;
+              }
+          }
+          this.send_arr=[{"name":this.logis,"code":code,"num":this.order}];
+          console.log(this.send_arr);
+          this.$http.post('/order/_x_send_order',{num:this.$route.params.id,send_infos:this.send_arr}).then(res => {
+              if(res.body.out.status){
+                    this.Delivergoods=false;
+                    this.$Notice.info({
+                        title: '发货成功!',
+                    });
+                    this.get_data();
+              }
+          })
+      }
   },
   mounted(){
-      get_data(1);
+      this.get_data();
+      this.get_logistics();
   }
 }
 </script>

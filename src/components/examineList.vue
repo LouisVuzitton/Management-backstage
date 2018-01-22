@@ -83,8 +83,8 @@ export default {
       loading:false,
       Role:{
           usr_p1:'管理合伙人',
-          uer_p2:'城市合伙人',
-          use_p3:'合伙人',
+          usr_p2:'城市合伙人',
+          usr_p3:'合伙人',
       },
       tableLoading:false,
       select_value:'',
@@ -221,7 +221,7 @@ export default {
   mounted(){
       this.H = window.innerHeight*0.69 + "px";
       this.show = true;
-    //   this.get_data(1);
+      this.get_data(1);
   }
 }
 </script>
