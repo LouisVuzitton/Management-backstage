@@ -52,7 +52,7 @@
             <Row style = 'margin:10px 0;'>
                 <Col class = 'orsta'>
                     <p>订单编号：{{datas.order_num}}</p>
-                    <p>订单状态：{{datas.status}}<Button  style = 'margin-left:10px'type="info" size = 'small' @click = "Delivergoods = true" >发货</Button></p> 
+                    <p>订单状态：{{datas.status}}<Button v-if = "datas.status == '待发货'" style = 'margin-left:10px'type="info" size = 'small' @click = "Delivergoods = true" >发货</Button></p> 
                     <p  style = 'color:#444;font-size:12px;' v-if="datas.status == '待发货'">客户已使用 "{{datas.info_money.pay_type == 'balance' ? '余额支付' : '微信支付'}}" 方式成功付款。</p>
                     <p  style = 'color:#444;font-size:12px;' v-else-if="datas.status == '交易完成'">订单已于 {{datas.time.ok}} 发货完成</p>
                     <p  style = 'color:#444;font-size:12px;' v-else>如果客户在 {{datas.create_time+1}} 前未进行支付操作，系统将自动关闭该订单。</p>
@@ -100,7 +100,7 @@
                     </tr>
                     <tr><td colspan="1">收货地址：</td><td colspan="3">{{datas.info_address.province+" "+datas.info_address.city+" "+datas.info_address.district+" "+datas.info_address.detail}}</td></tr>
                 </table>
-                <Table :loading="loading" height = '500px' :columns="columns" :data="data"></Table>
+                <Table :loading="loading" :columns="columns" :data="data"></Table>
                 <br><b>选择物流公司</b><br>
                 <Select style="width:200px;padding:5px 0px;" v-model="logis" >
                     <Option v-for="item in logistics" :value="item.value" :key="item.value">{{ item.label }}</Option>
@@ -197,11 +197,11 @@ export default {
                 var self=this;
                 this.datas.status=(function(){
                     switch(self.datas.status){
-                        case 'raw' : return '待付款';break;
-                        case 'pay' : return '待发货';break;
-                        case 'ok' : return '交易完成';break;
-                        case 'cancel' : return '交易关闭';break; 
-                        default : return '状态异常';break;
+                        case 'raw' : this.stepr=1; return '待付款';break;
+                        case 'pay' : this.stepr=50; return '待发货';break;
+                        case 'ok' :  this.stepr=100; return '交易完成';break;
+                        case 'cancel':this.stepr=100; return '交易关闭';break; 
+                        default : this.stepr=1; return '状态异常';break;
                     }
                 })();
                 console.log(this.datas.status);
