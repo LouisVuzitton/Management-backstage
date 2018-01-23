@@ -56,7 +56,7 @@
     <div>
         <Row>
             <Col span="24">
-                <Card :dis-hover="true" :bordered="false" style='width:20%;height:500px;float:left;margin:0% 2%;'>
+                <Card :dis-hover="true" :bordered="false" style='width:25%;height:500px;float:left;margin:0% 2%;'>
                     <p slot="title">用户昵称</p>
                     <div class='user_content'>
                         <img :src="data.head" class='user_img'>
