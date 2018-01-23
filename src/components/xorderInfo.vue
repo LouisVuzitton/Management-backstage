@@ -197,11 +197,11 @@ export default {
                 var self=this;
                 this.datas.status=(function(){
                     switch(self.datas.status){
-                        case 'raw' : return '待付款';break;
-                        case 'pay' : return '待发货';break;
-                        case 'ok' : return '交易完成';break;
-                        case 'cancel' : return '交易关闭';break; 
-                        default : return '状态异常';break;
+                        case 'raw' : self.step = 1; return '待付款';break;
+                        case 'pay' : self.step = 50; return '待发货';break;
+                        case 'ok' : self.step = 100; return '交易完成';break;
+                        case 'cancel' : self.step = 100; return '交易关闭';break; 
+                        default : self.step = 1; return '状态异常';break;
                     }
                 })();
                 console.log(this.datas.status);
