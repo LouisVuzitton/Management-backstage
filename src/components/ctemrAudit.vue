@@ -269,6 +269,7 @@ export default {
                     this.$Notice.info({
                         title: '审核已完成',
                     });
+                    this.get_data(1);
                 }
             })
         }
