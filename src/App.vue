@@ -94,10 +94,26 @@ hezi{
 }
 
 .fix_login input{
-    background: rgba(250,250,250,0.2);
+    background: rgba(250,250,250,0.8);
     border:1px solid rgba(255,255,255,0.1);
-}
 
+}
+input::-webkit-input-placeholder { 
+    text-indent: 5px;
+    color:#000;font-size:14px;
+}
+input::-moz-placeholder { 
+    text-indent: 5px; 
+    color:#4d4d4d;font-size:14px;
+}
+input::-moz-placeholder {
+    text-indent: 5px;  
+    color:#4d4d4d;font-size:14px;
+}
+input::-ms-input-placeholder {
+    text-indent: 5px; 
+    color:#4d4d4d;font-size :14px;;
+}  
 .time2{
     font-size: 14px;
     font-weight: bold;
