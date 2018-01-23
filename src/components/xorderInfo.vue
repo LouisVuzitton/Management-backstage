@@ -201,7 +201,7 @@ export default {
       get_logistics:function(){
            this.$http.get('/order/_x_get_shiplist').then(res => {
                 let arr = res.body.out.datas;
-                this.logistics.push({'无需物流':{name:'无需物流'}});
+                this.logistics.push({value:'无需物流',label:'无需物流'});
                 var self=this;
                 for(var item in arr){
                     self.logistics.push({value:arr[item].name,label:arr[item].name})
