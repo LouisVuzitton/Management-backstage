@@ -27,19 +27,19 @@
                 <Col span="6" style ='text-align:left;'>
                         <span>
                             1.提交订单
-                        <Icon type="checkmark-circled" color="#19be6b"></Icon>
+                        <Icon type="checkmark-circled" :color="color[0]"></Icon>
                         </span>
                 </Col>
                 <Col span="11" style = 'text-align:center;'>
                     <span  >
                         2.订单付款
-                    <Icon type="checkmark-circled" color="#19be6b"></Icon>
+                    <Icon type="checkmark-circled" :color="color[1]"></Icon>
                     </span>
                 </Col>
                 <Col span="6" style ='text-align:right;'>
                     <span >
                         3.发货完成
-                    <Icon type="checkmark-circled" color="#999"></Icon>
+                    <Icon type="checkmark-circled" :color="color[2]"></Icon>
                     </span>
                 </Col>
             </Row>
@@ -105,7 +105,7 @@
                 <Select style="width:200px;padding:5px 0px;" v-model="logis" >
                     <Option v-for="item in logistics" :value="item.value" :key="item.value">{{ item.label }}</Option>
                 </Select>
-                 <Input v-model="order" placeholder="Enter 物流单号..." :disabled = "isdisabled" style="width: 300px"></Input>
+                 <Input v-model="order" placeholder="请输入物流单号" :disabled = "isdisabled" style="width: 300px"></Input>
             </div>
             <div slot="footer">
                 <Button type="info" size="large" long :loading="modal_loading" @click="consignment()">确认发货</Button>
@@ -127,23 +127,8 @@ export default {
         Delivergoods:false,
         logis:'无需物流', 
         order:'',
+        color:['#19be6b','#19be6b','#19be6b'],
         logistics:[
-            {
-                value: '无需物流',
-                label: '无需物流'
-            },
-            {
-                value: 'SF',
-                label: '顺丰快递'
-            },
-            {
-                value: 'QC',
-                label: '申通快递'
-            },
-            {
-                value: 'QC',
-                label: '中通快递'
-            }
         ],
         logistic:[],
         columns:[
@@ -197,8 +182,8 @@ export default {
                 var self=this;
                 this.datas.status=(function(){
                     switch(self.datas.status){
-                        case 'raw' : self.step=1; return '待付款';break;
-                        case 'pay' : self.step=50; return '待发货';break;
+                        case 'raw' : self.step=1;self.color[1] = "#999";self.color[2] = "#999";  return '待付款';break;
+                        case 'pay' : self.step=50; self.color[2] = "#999";  return '待发货';break;
                         case 'ok' :  self.step=100; return '交易完成';break;
                         case 'cancel':self.step=100; return '交易关闭';break; 
                         default : self.step=1; return '状态异常';break;
@@ -217,19 +202,20 @@ export default {
            this.$http.get('/order/_x_get_shiplist').then(res => {
                 // this.page_total = res.body.out.count;
                 this.logistic = res.body.out.datas;
+                this.logistic.push({'无需物流':{name:'无需物流'}});
                 var self=this;
                 for(var item in self.logistic){
                     self.logistics[item].label=self.logistic[item].name;
                     self.logistics[item].value=self.logistic[item].name;
                 }
-                console.log(this.logistics);
+ 
             })
       },
       consignment:function(){
           var self=this;
           var code='';
           console.log(this.logistic);
-          console.log("当前的选择物流是"+self.logis);
+          console.log("当前的选择物流是"+self.logis); 
           for(var item in self.logistic ){
               if(self.logis == self.logistic[item].name){
                   code = self.logistic[item].code;
@@ -249,8 +235,9 @@ export default {
       }
   },
   mounted(){
-      this.get_data();
-      this.get_logistics();
+     this.get_logistics();
+     this.get_data();
+
   }
 }
 </script>

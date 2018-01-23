@@ -47,33 +47,36 @@
         <Row>
             <transition name="slide-fade">
                 <div>
-                    <!-- <ButtonGroup>
-                        <Button type="primary">
-                            全部
-                        </Button>
-                        <Button type="primary">
-                            待付款
-                        </Button>
-                        <Button type="primary">
-                            待发货
-                        </Button>
-                        <Button type="primary">
-                            交易完成
-                        </Button>
-                        <Button type="primary">
-                            交易关闭
-                        </Button>
-                    </ButtonGroup><br> -->
                     <Input v-model="req_obj.search_value" placeholder="请输入您要搜索的内容" style="width: 300px"></Input>
                     <Select v-model="req_obj.search_key" style="width:200px;padding:5px 0px;">
                         <Option v-for="item in select_data" :value="item.value" :key="item.value">{{ item.label }}</Option>
                     </Select>
-                    <Select v-model="req_obj.status" style="width:200px;padding:5px 0px;">
-                        <Option v-for="item in order_sats" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                    </Select>
-                    <Button  type="info" icon="ios-search" @click="get_data(1)">搜索</Button>
-                    <Table :highlight-row="true" :height = "H" :loading='loading' :stripe="true" :columns="columns" :data="datas"></Table>
-                    <Page :total="page_total" style = 'padding:24px 0px' @on-change="get_data"></Page>
+                     <Button  type="info" icon="ios-search" @click="get_data(1)">搜索</Button>
+                    <Tabs value="all" :height = 'H' @on-click="setStatus">
+                        <TabPane label="全部" name="all">
+                            <Table :highlight-row="true" :height = "H" :loading='loading' :stripe="true" :columns="columns" :data="datas"></Table>
+                            <Page :total="page_total" style = 'padding:24px 0px' @on-change="get_data"></Page>
+                        </TabPane>
+                        <TabPane label="代付款" name="raw">
+                            <Table :highlight-row="true" :height = "H" :loading='loading' :stripe="true" :columns="columns" :data="datas"></Table>
+                            <Page :total="page_total" style = 'padding:24px 0px' @on-change="get_data"></Page>
+                        </TabPane>
+                        <TabPane label="待收货" name="pay">
+                            <Table :highlight-row="true" :height = "H" :loading='loading' :stripe="true" :columns="columns" :data="datas"></Table>
+                            <Page :total="page_total" style = 'padding:24px 0px' @on-change="get_data"></Page>
+                        </TabPane>
+                        <TabPane label="交易完成" name="ok">
+                            <Table :highlight-row="true" :height = "H" :loading='loading' :stripe="true" :columns="columns" :data="datas"></Table>
+                            <Page :total="page_total" style = 'padding:24px 0px' @on-change="get_data"></Page>
+                        </TabPane>
+                        <TabPane label="交易失败" name="cancel">
+                            <Table :highlight-row="true" :height = "H" :loading='loading' :stripe="true" :columns="columns" :data="datas"></Table>
+                            <Page :total="page_total" style = 'padding:24px 0px' @on-change="get_data"></Page>
+                        </TabPane>
+                    </Tabs>
+                   
+                    
+                    
                 </div>
             </transition>
          </Row>
@@ -90,7 +93,7 @@ export default {
       page_total:100,
       loading:true,
       req_obj:{
-        url:'http://127.0.0.1:5013/order/_x_get_order_list',
+        url:'/order/_x_get_order_list',
         status:'all',
         search_key:'no',
         search_value:'',
@@ -229,6 +232,10 @@ export default {
                 }
             }
             return url;
+        },
+        setStatus:function(name){
+            this.req_obj.status = name;
+            this.get_data(1);
         }
   },
   mounted(){
