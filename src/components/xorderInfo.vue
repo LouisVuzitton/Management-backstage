@@ -80,7 +80,7 @@
                 商品信息
             </p>
             <Table height="400" :loading="loading" :columns="columns" :data="data"></Table>
-            <div style  = 'width:250px; height:30px; float:right;margin:10px;'>订单共<span style = 'color:#f90'> 8 </span>件商品，总计：<span style = 'color:#f90'>799.92</span>元</div><br>
+            <div style  = 'width:250px; height:30px; float:right;margin:10px;'>订单共<span style = 'color:#f90'> {{total}} </span>件商品，总计：<span style = 'color:#f90'>{{totalnum}}</span>元</div><br>
         </Card>
 
         <Modal v-model="Delivergoods" width="560">
@@ -126,36 +126,66 @@ export default {
         step:50,
         Delivergoods:false,
         logis:'无需物流', 
+        total:2,
+        totalnum:1000,
         order:'',
         color:['#19be6b','#19be6b','#19be6b'],
         logistics:[
         ],
         logistic:[],
         columns:[
-            {
-                title: '商品图片',
-                key: 'rnak'
-            },
+                    {
+                        title: '商品图片',
+                        key: 'title_url',
+                        render: (h, params) => {
+                            return h('div', [
+                                h('img', {
+                                    attrs: {
+                                        src: params.row.title_url
+                                    },
+
+                                    style: {
+                                        width: '40px',
+                                        height: '40px',
+                                        margin: '3px',
+                                    },
+                                }),
+                            ]);
+                        }
+                    },
             {
                 title: '商品名称',
-                key: 'rnak'
+                key: 'name_f_product'
             },
             {
                 title: '规格',
-                key: 'rnak'
+                key: 'rnak',
+                render:function(h,params){
+                    return "盒"
+                }
             },
             {
                 title: '单价',
-                key: 'rnak'
+                key: 'per_price',
+                render:function(h,params){
+                    return "¥" +(params.row.per_price / 100);
+                }
             },
             {
                 title: '数量',
-                key: 'rnak'
+                key: 'num',
+                render:function(h,params){
+                    this.toatl = params.row.per_price / 100;
+                }
             },
             {
                 title: '小计',
                 key: 'rnak',
-                width:'100px'
+                width:'100px',
+                render:function(h,params){
+                    this.totalnum = params.row.num * params.row.per_price /100;
+                    return "¥" +(params.row.num * params.row.per_price /100);
+                }
             },
         ],
         send_arr:[],
@@ -178,6 +208,12 @@ export default {
             this.$http.get('/order/_x_get_order?num='+this.$route.params.id).then(res => {
                 // this.page_total = res.body.out.count;
                 this.datas = res.body.out.order_obj;
+                let shopdatas = [];
+                for(let item in res.body.out.order_obj.info_pros){
+                    shopdatas.push(res.body.out.order_obj.info_pros[item])
+                }
+                this.data = shopdatas;
+            
                 /*状态文字处理 */
                 var self=this;
                 this.datas.status=(function(){
