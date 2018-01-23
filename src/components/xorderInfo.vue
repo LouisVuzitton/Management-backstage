@@ -52,7 +52,16 @@
             <Row style = 'margin:10px 0;'>
                 <Col class = 'orsta'>
                     <p>订单编号：{{datas.order_num}}</p>
+<<<<<<< HEAD
                     <p>订单状态：{{datas.status}}<Button  v-if="datas.status == '待发货'" style = 'margin-left:10px'type="info" size = 'small' @click = "Delivergoods = true" >发货</Button></p> 
+=======
+<<<<<<< HEAD
+                    <p>订单状态：{{datas.status}}
+                        <Button  style = 'margin-left:10px' v-if="datas.status=='待发货'" type="info" size = 'small' @click = "Delivergoods = true" >发货</Button></p> 
+=======
+                    <p>订单状态：{{datas.status}}<Button v-if = "datas.status == '待发货'" style = 'margin-left:10px'type="info" size = 'small' @click = "Delivergoods = true" >发货</Button></p> 
+>>>>>>> 32e7f8deb32e48d80aac9548044f971b07898c9f
+>>>>>>> cbc6c12eabab86e7611ed0c573cd5bc2ebe20654
                     <p  style = 'color:#444;font-size:12px;' v-if="datas.status == '待发货'">客户已使用 "{{datas.info_money.pay_type == 'balance' ? '余额支付' : '微信支付'}}" 方式成功付款。</p>
                     <p  style = 'color:#444;font-size:12px;' v-else-if="datas.status == '交易完成'">订单已于 {{datas.time.ok}} 发货完成</p>
                     <p  style = 'color:#444;font-size:12px;' v-else>如果客户在 {{datas.create_time+1}} 前未进行支付操作，系统将自动关闭该订单。</p>
@@ -219,7 +228,7 @@ export default {
                 this.logistic = res.body.out.datas;
                 var self=this;
                 for(var item in self.logistic){
-                    // this.logistics[item].label=logistic[item].name;
+                    self.logistics[item].label=self.logistic[item].name;
                     self.logistics[item].value=self.logistic[item].name;
                 }
                 console.log(this.logistics);
@@ -228,8 +237,10 @@ export default {
       consignment:function(){
           var self=this;
           var code='';
+          console.log(this.logistic);
+          console.log("当前的选择物流是"+self.logis);
           for(var item in self.logistic ){
-              if(self.logis == self.logistic[item].value){
+              if(self.logis == self.logistic[item].name){
                   code = self.logistic[item].code;
               }
           }
