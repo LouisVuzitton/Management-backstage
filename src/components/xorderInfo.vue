@@ -52,12 +52,7 @@
             <Row style = 'margin:10px 0;'>
                 <Col class = 'orsta'>
                     <p>订单编号：{{datas.order_num}}</p>
-<<<<<<< HEAD
-                    <p>订单状态：{{datas.status}}
-                        <Button  style = 'margin-left:10px' v-if="datas.status=='待发货'" type="info" size = 'small' @click = "Delivergoods = true" >发货</Button></p> 
-=======
                     <p>订单状态：{{datas.status}}<Button v-if = "datas.status == '待发货'" style = 'margin-left:10px'type="info" size = 'small' @click = "Delivergoods = true" >发货</Button></p> 
->>>>>>> 32e7f8deb32e48d80aac9548044f971b07898c9f
                     <p  style = 'color:#444;font-size:12px;' v-if="datas.status == '待发货'">客户已使用 "{{datas.info_money.pay_type == 'balance' ? '余额支付' : '微信支付'}}" 方式成功付款。</p>
                     <p  style = 'color:#444;font-size:12px;' v-else-if="datas.status == '交易完成'">订单已于 {{datas.time.ok}} 发货完成</p>
                     <p  style = 'color:#444;font-size:12px;' v-else>如果客户在 {{datas.create_time+1}} 前未进行支付操作，系统将自动关闭该订单。</p>
