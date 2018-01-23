@@ -435,7 +435,7 @@ export default {
         },
         user_logout(){
             //清除session并退出
-            sessionStorage.setItem('name','no');
+            sessionStorage.setItem('name','');
             this.login = false;
         }
   },
@@ -445,10 +445,10 @@ export default {
     this.actname = this.urls[name];
 
     let login_name = sessionStorage.getItem('name');
-    if(login_name != 'no'){
-        this.login = true;
-    }else{
+    if(login_name = '' || !login_name){
         this.login = false;
+    }else{
+        this.login = true;
     }
 
   },
