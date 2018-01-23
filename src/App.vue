@@ -146,7 +146,7 @@ input::-ms-input-placeholder {
     <div class="layout" v-show = "login">
       <Sider :style="{position: 'fixed', height: '100vh', left: 0, overflow: 'auto',background:'#495060','border-left':'1px solid #dddee1'}">
           <center><div style = 'height:100px;background:#495060;border-right:1px solid #dddee1;'><img style = 'border-radius:100%;width:80px;margin-top:10px;' src = '../static/toux.jpg'></div></center>
-          <Menu :active-name="actname" theme="dark" width="auto" :open-names="['0','1','2','3','4','5']" style=  'border:0px;'>
+          <Menu :active-name="actname" theme="dark" width="auto" :open-names="['0','1','2','3','4','5','6']" style=  'border:0px;'>
               <MenuItem name="0-0" @click.native = "goto('/')">
                 <Icon type="ios-navigate"></Icon>
                 首页
@@ -192,13 +192,20 @@ input::-ms-input-placeholder {
                   </template>
                   <MenuItem name="5-1"  @click.native = "goto('/notice')">公告列表</MenuItem>
               </Submenu>
+             <Submenu name="6">
+                  <template slot="title">
+                      <Icon type="ios-analytics"></Icon>
+                      权限管理
+                  </template>
+                  <MenuItem name="6-1"  @click.native = "goto('/addAdmin')">添加管理员</MenuItem>
+              </Submenu>
           </Menu>
       </Sider>
       <Layout :style="{marginLeft: '200px',height:CardH}">
           <Header :style="{background: '#fff', boxShadow: '0 2px 3px 2px rgba(0,0,0,0.1)','font-weight':'bold','font-size':'20px'}">
             <!-- 根本力管理后台 -->
             <a style=  'float:right;margin: 5px 10px;font-size:13px;' @click = 'user_logout'><b>退出</b></a>
-            <b style=  'float:right;margin: 5px 10px;font-size:13px;'>周志明</b>
+            <b style=  'float:right;margin: 5px 10px;font-size:13px;'>Admin</b>
             <img style=  'margin-top:10px;float:right;border-radius:50%;' width = '40' src= "../static/toux.jpg">
           </Header>
           <Content :style="{padding: '10px 16px 16px',overflow:'auto','margin-top':'2px',background:'#eee'}">
@@ -256,6 +263,7 @@ export default {
                 "#/bonuRecord":'4-4',
                 "#/notice":'5-1',
                 "#/noticeInfo":'5-1',
+                "#/addAdmin":'6-1'
             },
             paySta:{
                 "paying":"付款中",

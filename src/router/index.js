@@ -95,6 +95,11 @@ export default new Router({
       path: '/noticeInfo/:type/:id',
       name: '添加/修改公告',
       component: resolve => require(['@/components/noticeInfo'], resolve)
+    },
+    {
+      path: '/addAdmin/',
+      name: '添加/修改管理员',
+      component: resolve => require(['@/components/addAdmin'], resolve)
     }
   ]
 })
