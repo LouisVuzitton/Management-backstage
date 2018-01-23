@@ -45,7 +45,7 @@
             </Row>
             <Row>
                 <Progress :percent="step" status="active"> 
-                    <Icon type="checkmark-circled"  ></Icon>
+                    <Icon type="checkmark-circled" ></Icon>
                     <span>成功</span>
                 </Progress>
             </Row>
@@ -102,7 +102,7 @@
                 </table>
                 <Table :loading="loading" :columns="columns" :data="data"></Table>
                 <br><b>选择物流公司</b><br>
-                <Select style="width:200px;padding:5px 0px;" v-model="logis" >
+                <Select style="width:200px;padding:5px 0px;" v-model="logis" @on-change="getLogis" >
                     <Option v-for="item in logistics" :value="item.value" :key="item.value">{{ item.label }}</Option>
                 </Select>
                  <Input v-model="order" placeholder="请输入物流单号" :disabled = "isdisabled" style="width: 300px"></Input>
@@ -115,9 +115,9 @@
 </template>
 
 <script>
-import moment from 'moment'
+import moment from 'moment';
 export default {
-  name: 'xorderInfo',
+  name : 'xorderInfo',
   data () {
     return {
         loading:false,
@@ -126,11 +126,12 @@ export default {
         step:50,
         Delivergoods:false,
         logis:'无需物流', 
+        locode:'',
         order:'',
         color:['#19be6b','#19be6b','#19be6b'],
         logistics:[
         ],
-        logistic:[],
+
         columns:[
             {
                 title: '商品图片',
@@ -204,23 +205,18 @@ export default {
                 this.logistics.push({value:'无需物流',label:'无需物流'});
                 var self=this;
                 for(var item in arr){
-                    self.logistics.push({value:arr[item].name,label:arr[item].name})
+                    self.logistics.push({value:arr[item].code,label:arr[item].name})
                 }
             })
       },
+
+      getLogis:function(name){
+          this.locode  = name;
+      },
+
       consignment:function(){
-          var self=this;
-          var code='';
-          console.log(this.logistic);
-          console.log("当前的选择物流是"+self.logis); 
-          for(var item in self.logistic ){
-              if(self.logis == self.logistic[item].name){
-                  code = self.logistic[item].code;
-              }
-          }
-          this.send_arr=[{"name":this.logis,"code":code,"num":this.order}];
-          console.log(this.send_arr);
-          this.$http.post('/order/_x_send_order',{num:this.$route.params.id,send_infos:this.send_arr}).then(res => {
+          let send_infos = [{name:this.logis,code:this.locode,num:this.order}]
+          this.$http.post('/order/_x_send_order',{num:this.$route.params.id,send_infos:send_infos}).then(res => {
               if(res.body.out.status){
                     this.Delivergoods=false;
                     this.$Notice.info({

@@ -29,7 +29,7 @@
 }
 hezi{
     display: -webkit-flex;
-    display:flex;
+    display: flex;
     justify-content:center;
     margin-top:12.5%;
     -webkit-justify-content: center;
