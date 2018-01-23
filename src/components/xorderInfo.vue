@@ -126,12 +126,9 @@ export default {
         step:50,
         Delivergoods:false,
         logis:'无需物流', 
-<<<<<<< HEAD
         total:2,
         totalnum:1000,
-=======
         locode:'',
->>>>>>> 8358d6148003c4ad6b8f48faf7a3577f4d6e7e89
         order:'',
         color:['#19be6b','#19be6b','#19be6b'],
         logistics:[
