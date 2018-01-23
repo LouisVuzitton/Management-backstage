@@ -94,10 +94,26 @@ hezi{
 }
 
 .fix_login input{
-    background: rgba(250,250,250,0.2);
+    background: rgba(250,250,250,0.8);
     border:1px solid rgba(255,255,255,0.1);
-}
 
+}
+input::-webkit-input-placeholder { 
+    text-indent: 5px;
+    color:#000;font-size:14px;
+}
+input::-moz-placeholder { 
+    text-indent: 5px; 
+    color:#4d4d4d;font-size:14px;
+}
+input::-moz-placeholder {
+    text-indent: 5px;  
+    color:#4d4d4d;font-size:14px;
+}
+input::-ms-input-placeholder {
+    text-indent: 5px; 
+    color:#4d4d4d;font-size :14px;;
+}  
 .time2{
     font-size: 14px;
     font-weight: bold;
@@ -419,7 +435,7 @@ export default {
         },
         user_logout(){
             //清除session并退出
-            sessionStorage.setItem('name','no');
+            sessionStorage.setItem('name','');
             this.login = false;
         }
   },
@@ -429,10 +445,10 @@ export default {
     this.actname = this.urls[name];
 
     let login_name = sessionStorage.getItem('name');
-    if(login_name != 'no'){
-        this.login = true;
-    }else{
+    if(login_name = '' || !login_name){
         this.login = false;
+    }else{
+        this.login = true;
     }
 
   },

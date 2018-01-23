@@ -56,7 +56,7 @@
     <div>
         <Row>
             <Col span="24">
-                <Card :dis-hover="true" :bordered="false" style='width:20%;height:500px;float:left;margin:0% 2%;'>
+                <Card :dis-hover="true" :bordered="false" style='width:25%;height:500px;float:left;margin:0% 2%;'>
                     <p slot="title">用户昵称</p>
                     <div class='user_content'>
                         <img :src="data.head" class='user_img'>
@@ -64,11 +64,11 @@
                     <table class='user_table'>
                         <tr>
                             <td width='30%'>姓名: </td>
-                            <td width='65%'>{{data.realname}}</td>
-                            <td width='5%'></td>
+                            <td width='40%'>{{data.realname}}</td>
+                            <td width='10%'></td>
                         </tr>
                         <tr>
-                            <td>余额</td>
+                            <td width='35%'>余额:</td>
                             <td v-text="data.settled_money"></td>
                             <td>
                                 <center>
@@ -77,7 +77,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>级别:</td>
+                            <td width='30%'>级别:</td>
                             <td v-if="data.role=='usr_p1'">管理合伙人</td>
                             <td v-else-if="data.role=='usr_p2'">城市合伙人</td>
                             <td v-else>合伙人</td>
@@ -86,16 +86,16 @@
                             </td>
                         </tr>
                         <tr>
-                            <td width='25%'>手机：</td>
+                            <td width='30%'>手机：</td>
                             <td>{{data.phone}}</td>
                         </tr>
                         <tr>
-                            <td width='25%'>状态：</td>
+                            <td width='30%'>状态：</td>
                             <td v-if="data.frozen">正常</td>
                             <td v-else>冻结</td>
                         </tr>
                         <tr>
-                            <td width='25%'>上级：</td>
+                            <td width='30%'>上级：</td>
                             <td v-text="data.up_partner"></td>
                             <td></td>
                         </tr>
