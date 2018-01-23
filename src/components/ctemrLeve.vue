@@ -155,7 +155,7 @@ export default {
                                             size: '25',
                                         },
                                         style: {
-                                            marginRight: '5px'
+                                            marginLeft: '10px'
                                         },
                                         })
                                     ])
@@ -165,9 +165,10 @@ export default {
                                         props: {
                                             type: 'ios-checkmark-empty',
                                             size: '25',
+                                            color: '#19be6b',
                                         },
                                         style: {
-                                            marginRight: '5px'
+                                            marginLeft: '10px'
                                         },
                                         })
                                     ])
@@ -187,7 +188,7 @@ export default {
                                             size: '25',
                                         },
                                         style: {
-                                            marginRight: '5px'
+                                            marginLeft: '10px'
                                         },
                                         })
                                     ])
@@ -197,9 +198,10 @@ export default {
                                         props: {
                                             type: 'ios-checkmark-empty',
                                             size: '25',
+                                            color: '#19be6b',
                                         },
                                         style: {
-                                            marginRight: '5px'
+                                             marginLeft: '10px'
                                         },
                                         })
                                     ])
@@ -219,7 +221,7 @@ export default {
                                             size: '25',
                                         },
                                         style: {
-                                            marginRight: '5px'
+                                             marginLeft: '10px'
                                         },
                                         })
                                     ])
@@ -229,9 +231,10 @@ export default {
                                         props: {
                                             type: 'ios-checkmark-empty',
                                             size: '25',
+                                            color: '#19be6b',
                                         },
                                         style: {
-                                            marginRight: '5px'
+                                             marginLeft: '10px'
                                         },
                                         })
                                     ])
