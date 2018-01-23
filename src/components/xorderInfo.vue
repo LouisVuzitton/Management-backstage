@@ -249,8 +249,8 @@ export default {
       }
   },
   mounted(){
-      this.get_data();
       this.get_logistics();
+      this.get_data();
   }
 }
 </script>
