@@ -200,15 +200,12 @@ export default {
       },
       get_logistics:function(){
            this.$http.get('/order/_x_get_shiplist').then(res => {
-                // this.page_total = res.body.out.count;
-                this.logistic = res.body.out.datas;
-                this.logistic.push({'无需物流':{name:'无需物流'}});
+                let arr = res.body.out.datas;
+                this.logistics.push({'无需物流':{name:'无需物流'}});
                 var self=this;
-                for(var item in self.logistic){
-                    self.logistics[item].label=self.logistic[item].name;
-                    self.logistics[item].value=self.logistic[item].name;
+                for(var item in arr){
+                    self.logistics.push({value:arr[item].name,label:arr[item].name})
                 }
- 
             })
       },
       consignment:function(){

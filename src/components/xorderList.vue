@@ -61,7 +61,7 @@
                             <Table :highlight-row="true" :height = "H" :loading='loading' :stripe="true" :columns="columns" :data="datas"></Table>
                             <Page :total="page_total" style = 'padding:24px 0px' @on-change="get_data"></Page>
                         </TabPane>
-                        <TabPane label="待收货" name="pay">
+                        <TabPane label="待发货" name="pay">
                             <Table :highlight-row="true" :height = "H" :loading='loading' :stripe="true" :columns="columns" :data="datas"></Table>
                             <Page :total="page_total" style = 'padding:24px 0px' @on-change="get_data"></Page>
                         </TabPane>
@@ -69,7 +69,7 @@
                             <Table :highlight-row="true" :height = "H" :loading='loading' :stripe="true" :columns="columns" :data="datas"></Table>
                             <Page :total="page_total" style = 'padding:24px 0px' @on-change="get_data"></Page>
                         </TabPane>
-                        <TabPane label="交易失败" name="cancel">
+                        <TabPane label="交易关闭" name="cancel">
                             <Table :highlight-row="true" :height = "H" :loading='loading' :stripe="true" :columns="columns" :data="datas"></Table>
                             <Page :total="page_total" style = 'padding:24px 0px' @on-change="get_data"></Page>
                         </TabPane>
