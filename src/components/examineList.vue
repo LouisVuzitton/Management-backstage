@@ -99,14 +99,18 @@ export default {
       page_total:100,
       roles:[],
       select_data:[
-                    {
-                        value: 'name',
-                        label: '姓名'
-                    },
-                    {
-                        value: 'phone',
-                        label: '手机号'
-                    },
+            {
+                value : 'no',
+                label : '全部'
+            },
+           {
+                value: 'name',
+                label: '姓名'
+            },
+            {
+                value: 'phone',
+                label: '手机号'
+            },
       ],
       columns: [
                     {

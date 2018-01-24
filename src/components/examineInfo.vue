@@ -69,7 +69,7 @@
                         </tr>
                         <tr>
                             <td width='20%'>余额:</td>
-                            <td v-text="data.settled_money"></td>
+                            <td >￥{{(data.balance/100).toFixed(2)}}</td>
                             <td>
                                 <center>
                                     <Button type="info" size="small" @click='update_modal = true'>充值</Button>
@@ -193,15 +193,15 @@
                       
                         <tr>
                             <td style="text-align:right">姓名：</td>
-                            <td>吴伟龙</td>
+                            <td v-text="data.realname"></td>
                         </tr>
                         <tr>
                             <td>当前余额：</td>
-                            <td>￥49500.00</td>
+                            <td>￥{{(data.balance/100).toFixed(2)}}</td>
                         </tr>
                         <tr>
                             <td>充值金额：</td>
-                            <td><InputNumber v-model="charge"></InputNumber></td>
+                            <td>￥<InputNumber v-model="charge"></InputNumber></td>
                         </tr>
                     </table>
                 </div>
@@ -374,11 +374,13 @@ export default {
             })
         },
         recharge:function(){
-            this.$http.post("/admin/recharge",{id:this.$route.params.id,price:this.price}).then(res => {
+            console.log(this.charge);
+            this.$http.post("/admin/recharge",{uid:this.$route.params.id,price:this.charge*100}).then(res => {
                 if(res.body.out.status){
                     this.$Notice.info({
                         title: '充值成功!',
                     });
+                    this.update_modal=false;
                     this.get_one();
                 }
             })
