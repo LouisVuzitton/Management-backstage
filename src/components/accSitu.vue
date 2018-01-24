@@ -180,7 +180,7 @@ export default {
             console.log(url);
             this.$http.get(url).then(res => {
                 this.loading = false;
-                this.page_total = res.body.out.count;
+                // this.page_total = res.body.out.count;
                 this.datas = res.body.out.datas;
             })
         },

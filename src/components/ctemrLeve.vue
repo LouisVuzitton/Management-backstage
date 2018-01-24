@@ -73,29 +73,29 @@
                                 </tr>
                                 <tr>
                                     <td width = '80px;' height = '35px;'>年度任务:</td>
-                                    <td width = '80px;' height = '35px;'><Input  placeholder="请设置年度任务量" style="width: 300px"></Input></td>
+                                    <td width = '80px;' height = '35px;'><Input  placeholder="请设置年度任务量" v-model="year_task" style="width: 300px"></Input></td>
                                 </tr>
                                 <tr>
                                     <td width = '80px;' height = '35px;'>首单起订量:</td>
-                                    <td width = '80px;' height = '35px;'> <InputNumber ></InputNumber></td>
+                                    <td width = '80px;' height = '35px;'> <InputNumber v-model="first_amount"></InputNumber></td>
                                 </tr>
                                 <tr>
                                     <td width = '80px;' height = '35px;'>月度起订量:</td>
-                                    <td width = '80px;' height = '35px;'> <InputNumber ></InputNumber></td>
+                                    <td width = '80px;' height = '35px;'> <InputNumber v-model="month_amount"></InputNumber></td>
                                 </tr>
                                 <tr>
                                     <td>等级权限:</td>
                                     <td>
                                     <CheckboxGroup style = 'margin:15px 0;' size='large'>
-                                        <Checkbox label="twitter">
+                                        <Checkbox v-model="canLogin">
                                             <Icon type="android-person"></Icon>
                                             <span>登录</span>
                                         </Checkbox>
-                                        <Checkbox label="facebook">
+                                        <Checkbox v-model="canOrder">
                                             <Icon type="android-cart"></Icon>
                                             <span>订货</span>
                                         </Checkbox>
-                                        <Checkbox label="github">
+                                        <Checkbox v-model="canInvite">
                                             <Icon type="android-share"></Icon>
                                             <span>邀请</span>
                                         </Checkbox>
@@ -128,6 +128,12 @@ export default {
       page_total:100,
       roles:[],
       editInfo:{},
+      year_task:5000,
+      first_amount:100,
+      month_amount:1000,
+      canLogin:true,
+      canOrder:true,
+      canInvite:true,
       select_data:[
                     {
                         value: 'name',
@@ -287,13 +293,25 @@ export default {
       ],
       datas: [
                 {
-                    name: 'John Brown',
+                    name: '粉丝',
                     login: 'John Brown',
                     order: 18,
                     invite: 'New York No. 1 Lake Park'
                 },
                 {
-                    name: 'John Brown',
+                    name: '管理合伙人',
+                    login: 'John Brown',
+                    order: 18,
+                    invite: 'New York No. 1 Lake Park'
+                },
+                {
+                    name: '城市合伙人',
+                    login: 'John Brown',
+                    order: 18,
+                    invite: 'New York No. 1 Lake Park'
+                },
+                {
+                    name: '合伙人',
                     login: 'John Brown',
                     order: 18,
                     invite: 'New York No. 1 Lake Park'

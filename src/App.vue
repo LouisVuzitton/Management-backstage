@@ -451,13 +451,20 @@ export default {
     this.init();
     let name = window.location.hash
     this.actname = this.urls[name];
-
+    /*客户端判断管理员是否登录 */
     let login_name = sessionStorage.getItem('name');
     if(login_name = '' || !login_name){
         this.login = false;
     }else{
         this.login = true;
     }
+    /*服务端判断用户是否登录 */
+    this.$http.get('/other/is_login').then(function(res){
+        console.log(res.body);
+        if(!res.body.out.result){
+            this.login = false;
+        }
+    })
 
   },
 

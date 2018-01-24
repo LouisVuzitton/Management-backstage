@@ -175,10 +175,10 @@ export default {
             {
                 title: '数量',
                 key: 'num',
-                render:function(h,params){
-                    this.toatl = num;
-                    return params.row.num;
-                }
+                // render:function(h,params){
+                //     this.toatl = num;
+                //     return params.row.num;
+                // }
             },
             {
                 title: '小计',

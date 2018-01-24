@@ -121,14 +121,14 @@ export default {
                         title: '零售价',
                         key: 'sku_default',
                         render: (h, params) => {
-                            return  params.row['sku_default'].partner.price/100
+                            return  '￥'+params.row['sku_default'].partner.price/100
                         }
                     },
                     {
                         title: '上架时间',
                         key: 'create_time',
                         render: (h, params) => {
-                            return moment(params.row.create_time).format('YYYY-MM-DD HH:mm:ss');
+                            return moment.unix(params.row.create_time).format('YYYY-MM-DD HH:mm:ss');
                         }
                     },{
                         title:'操作',
