@@ -69,6 +69,9 @@ export default {
         role:'',
         pwd:''
       },
+      delobj:{
+        url:'/admin/delete',
+      },
       req_role:{
           url:'/admin/get_admin_roles',
       },
@@ -116,31 +119,50 @@ export default {
 
                     },
                     {
-                        title: '订单金额',
-                        key: 'age',
+                        title: '管理员角色',
+                        key: 'role',
 
 
                     },
                     {
-                        title: '订单状态',
-                        key: 'address',
-
+                        title: '状态',
+                        key: 'status',
+                        render:function(h,params){
+                            return params.row.status == 'normal'?'正常':'禁封'
+                        }
                     },
                     {
-                        title: '下单时间',
-                        key: 'address',
-
+                        title: '操作',
+                        key: 'status',
                     },
                     {
-                        title: '姓名',
-                        key: 'address',
-
+                        width:'125px',
+                        render: (h, params) => {
+                            return h('div', [
+                                h('Poptip',{
+                                    props: {
+                                        confirm:true,
+                                        title:'您确认删除这条内容吗？',
+                                        width:'200'
+                                    },
+                                    on: {
+                                        'on-ok': () => {
+                                            this.del_info(params.row.id)
+                                        }
+                                    }
+                                },[
+                                    h('Button', {
+                                        props: {
+                                            type: 'error',
+                                            size: 'small'
+                                        },
+                                    }, '删除')
+                                ])
+                            ]);
+                        }
                     },
-                    {
-                        title: '手机号码',
-                        key: 'address',
-                        width:'180px',
-                    }
+                    
+                    
       ],
       datas: []
 
@@ -174,7 +196,6 @@ export default {
         },
         add_admin: function () {
             this.modal_loading = true; //开启表格数据加载样式
-            console.log(url);
             this.$http.post(this.add_obj.url,this.add_obj).then(res => {
                 this.loading = false;
                 if(res.body.out.status){
@@ -187,11 +208,25 @@ export default {
                     this.$Notice.error({
                         title: '用户添加失败!',
                     });
-                    this.loading = false;
+                    this.modal_loading = false;
                 }
                
             })
         },
+        del_info: function (id) {
+            this.$http.post(this.delobj['url'],{id:id}).then(res => {
+                if(res.body.out.status){
+                    this.$Notice.info({
+                        title: '管理员删除成功!',
+                    });
+                    this.get_data(1);
+                }else{
+                    this.$Notice.error({
+                        title: '管理员删除失败!',
+                    });
+                }
+            })
+        }
   },
   mounted(){
       this.H = window.innerHeight*0.69 + "px";
