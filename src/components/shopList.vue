@@ -131,6 +131,7 @@ export default {
                             return moment(params.row.create_time).format('YYYY-MM-DD HH:mm:ss');
                         }
                     },{
+                        title:'操作',
                         width:'125px',
                         render: (h, params) => {
                             return h('div', [

@@ -203,6 +203,7 @@ export default {
                         title: '用户添加成功!',
                     });
                     this.modal_loading = false;
+                    this.add_but = false;
                     this.get_data(1);
                 }else{
                     this.$Notice.error({

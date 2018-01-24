@@ -123,6 +123,7 @@ export default {
                             return params.row.publish_admin.name;
                         }
                     },{
+                        title:'操作',
                         width:'150px',
                         render: (h, params) => {
                             return h('div', [
