@@ -35,7 +35,7 @@ b{
 </style>
 <template>
     <div>
-        <Card>
+        <Card :dis-hover="true">
             <p slot="title">
                 运营概况
             </p>
@@ -72,7 +72,7 @@ b{
             </Row>
         </Card><br>
 
-        <Card>
+        <Card :dis-hover="true">
             <p slot="title">
                 待办处理事项
             </p>
@@ -112,7 +112,7 @@ b{
             </Row>
         </Card><br>
 
-        <Card>
+        <Card :dis-hover="true">
             <p slot="title">
                 业绩排行
             </p>
