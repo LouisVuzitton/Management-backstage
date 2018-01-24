@@ -157,7 +157,7 @@ input::-ms-input-placeholder {
                       客户管理
                   </template>
                   <MenuItem name="1-1"  @click.native = "goto('/examineList')">客户列表</MenuItem>
-                  <MenuItem name="1-2"  @click.native = "goto('/ctemrAudit')">客户审核</MenuItem>
+                  <MenuItem name="1-2"  @click.native = "goto('/ctemrAudit/0')">客户审核</MenuItem>
                   <MenuItem name="1-3"  @click.native = "goto('/ctemrLeve')">客户等级</MenuItem>
               </Submenu>
               <Submenu name="2">
@@ -165,8 +165,8 @@ input::-ms-input-placeholder {
                       <Icon type="ios-keypad"></Icon>
                       订单管理
                   </template>
-                  <MenuItem name="2-1"  @click.native = "goto('/xorderList')">销售订单</MenuItem>
-                  <MenuItem name="2-2"  @click.native = "goto('/torderList')">提货订单</MenuItem>
+                  <MenuItem name="2-1"  @click.native = "goto('/xorderList/0')">销售订单</MenuItem>
+                  <MenuItem name="2-2"  @click.native = "goto('/torderList/0')">提货订单</MenuItem>
               </Submenu>
               <Submenu name="3">
                   <template slot="title">
@@ -181,7 +181,7 @@ input::-ms-input-placeholder {
                       账务管理
                   </template>
                   <MenuItem name="4-1"  @click.native = "goto('/accSitu')">账务概况</MenuItem>
-                  <MenuItem name="4-2"  @click.native = "goto('/witdsCash')">提现管理</MenuItem>
+                  <MenuItem name="4-2"  @click.native = "goto('/witdsCash/0')">提现管理</MenuItem>
                   <MenuItem name="4-3"  @click.native = "goto('/rechRecord')">充值记录</MenuItem>
                   <MenuItem name="4-4"  @click.native = "goto('/bonuRecord')">奖励记录</MenuItem>
               </Submenu>
@@ -250,20 +250,25 @@ export default {
             search: {
             },//查询数据
             urls:{
-                "#/":'0-0',
-                "#/examineList":'1-1',
-                "#/ctemrAudit":'1-2',
-                "#/ctemrLeve":'1-3',
-                "#/xorderList":'2-1',
-                "#/torderList":'2-2',
-                "#/shopList":'3-1',
-                "#/accSitu":'4-1',
-                "#/witdsCash":'4-2',
-                "#/rechRecord":'4-3',
-                "#/bonuRecord":'4-4',
-                "#/notice":'5-1',
-                "#/noticeInfo":'5-1',
-                "#/addAdmin":'6-1'
+                "/":'0-0',
+                "/examineList":'1-1',
+                "/ctemrAudit/0":'1-2',
+                "/ctemrLeve":'1-3',
+                "/xorderList/0":'2-1',
+                "/torderList/0":'2-2',
+                "/shopList":'3-1',
+                "/accSitu":'4-1',
+                "/witdsCash/0":'4-2',
+                "/rechRecord":'4-3',
+                "/bonuRecord":'4-4',
+                "/notice":'5-1',
+                "/noticeInfo":'5-1',
+                "/addAdmin":'6-1',
+                "/xorderList/xs":'2-1',
+                "/ctemrAudit/sh":'1-2',
+                "/witdsCash/tx":'4-2',
+                "/torderList/th":'2-2',
+                
             },
             paySta:{
                 "paying":"付款中",
@@ -449,8 +454,9 @@ export default {
   },
   mounted: function() {
     this.init();
-    let name = window.location.hash
-    this.actname = this.urls[name];
+    // let name = window.location.hash
+    // this.actname = this.urls[name];
+
     /*客户端判断管理员是否登录 */
     let login_name = sessionStorage.getItem('name');
     if(login_name = '' || !login_name){
@@ -467,6 +473,11 @@ export default {
     })
 
   },
+  watch:{
+      "$route":function(to,form){
+          this.actname = this.urls[to.path];
+      }
+  }
 
 };
 

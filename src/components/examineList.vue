@@ -174,13 +174,7 @@ export default {
                         }
                     }
       ],
-      datas: [
-                {
-                    name: 'John Brown',
-                    age: 18,
-                    address: 'New York No. 1 Lake Park'
-                },
-      ]
+      datas: []
 
     }
   },

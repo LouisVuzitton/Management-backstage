@@ -42,7 +42,8 @@ b{
             <Row style = 'width:100%;'>
                 <center>
                 <Col class = 'Card' span="8">
-                    <Card dis-hover	 class = 'bak' style="background:url('../../static/rawpixel-com-351765.jpg');background-size:100% 100%;">
+                    <Card dis-hover	 class = 'bak'>
+                        <Icon type="person"></Icon>
                     </Card>   
                     <span>
                         <p>客户总数</p>
@@ -50,7 +51,8 @@ b{
                     </span>
                 </Col>
                 <Col class = 'Card' span="8">
-                    <Card dis-hover	 class = 'bak' style="background:url('../../static/samuel-zeller-118195.jpg');background-size:100% 100%;">
+                    <Card dis-hover	 class = 'bak'>
+                        <Icon type="document-text"></Icon>
                     </Card>   
                     <span>
                         <p>订单总数</p>
@@ -58,7 +60,7 @@ b{
                     </span>
                 </Col>
                 <Col class = 'Card' span="8">
-                    <Card dis-hover	 class = 'bak' style="background:url('../../static/nik-macmillan-280300.jpg');background-size:100% 100%;">
+                    <Card dis-hover	 class = 'bak'>
                     </Card>   
                     <span>
                         <p>销售总额</p>
@@ -74,32 +76,32 @@ b{
                 待办处理事项
             </p>
             <Row style = 'width:100%;text-align:center;'>
-                <Col class = 'Card' span="6">
-                    <Card dis-hover	 style="width:95%;height:110px;float:left;">
+                <Col class = 'Card' span="6" style ='curosr: pointer;' >
+                    <Card  @click.native = "goto('/ctemrAudit/sh')" style="width:95%;height:110px;float:left;curosr: pointer;">
                         <p slot="title" >
                             待审核(客户)
                         </p>
                         <b>50</b>
                     </Card>   
                 </Col>
-                <Col class = 'Card' span="6">
-                    <Card dis-hover	 style="width:95%;height:110px;float:left;">
+                <Col class = 'Card' span="6" style ='curosr: pointer;' >
+                    <Card  @click.native = "goto('/witdsCash/tx')" style="width:95%;height:110px;float:left;curosr: pointer;">
                         <p slot="title">
                             待审核(提现)
                         </p>
                         <b>50</b>
                     </Card>   
                 </Col>
-                <Col class = 'Card' span="6">
-                    <Card dis-hover	 style="width:95%;height:110px;float:left;">
+                <Col class = 'Card' span="6" style ='curosr: pointer;' >
+                    <Card  @click.native = "goto('/xorderList/xs')" style="width:95%;height:110px;float:left;curosr: pointer;">
                         <p slot="title">
                             待发货(销售)
                         </p>
                         <b>50</b>
                     </Card>   
                 </Col>
-                <Col class = 'Card' span="6">
-                    <Card dis-hover	 style="width:95%;height:110px;float:left;">
+                <Col class = 'Card' span="6" style ='curosr: pointer;' >
+                    <Card @click.native = "goto('/torderList/th')" style="width:95%;height:110px;float:left;curosr: pointer;">
                         <p slot="title">
                             待发货(提货)
                         </p>
@@ -162,6 +164,9 @@ export default {
     }
   },
   methods:{
+        goto: function(url) {
+            this.$router.push(url);
+        },
   },
   mounted(){  
       

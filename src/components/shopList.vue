@@ -121,7 +121,7 @@ export default {
                         title: '零售价',
                         key: 'sku_default',
                         render: (h, params) => {
-                            return  '￥'+params.row['sku_default'].partner.price/100
+                            return  '￥'+params.row['price_default'].price_commend/100
                         }
                     },
                     {

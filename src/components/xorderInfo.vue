@@ -175,17 +175,15 @@ export default {
             {
                 title: '数量',
                 key: 'num',
-                // render:function(h,params){
-                //     this.toatl = num;
-                //     return params.row.num;
-                // }
+                render:function(h,params){
+                    return params.row.num;
+                }
             },
             {
                 title: '小计',
-                key: 'rnak',
+                key: 'xiaoji',
                 width:'100px',
                 render:function(h,params){
-                    this.totalnum = params.row.num * params.row.per_price /100;
                     return "¥" +(params.row.num * params.row.per_price /100);
                 }
             },
@@ -232,6 +230,13 @@ export default {
                 this.datas.create_time=moment.unix(self.datas.create_time).format('YYYY-MM-DD HH:mm:ss');
                 if(this.datas.time.ok){
                     this.datas.time.ok=moment.unix(self.datas.time.ok).format('YYYY-MM-DD HH:mm:ss');
+                }
+                //计算总计&几件商品
+                let num = 0;
+                let price = 0;
+                for(let item in this.datas){
+                    num +=item.num;
+                    price += params.row.num * params.row.per_price /100
                 }
                 console.log(this.datas);
             })

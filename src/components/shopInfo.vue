@@ -109,13 +109,29 @@
             <div >
                 <table width = '100%'>
                     <tr>
-                        <td>联创</td>
+                        <td>
+                            <Select v-model="role[0]" >
+                                <Option v-for="item in roles" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                            </Select>
+                        </td>
                         <td><InputNumber  v-model="goods_obj.price_default.price_p0"></InputNumber> ￥</td>
-                        <td>管理合伙人</td>
+                        <td>
+                            <Select v-model="role[1]" >
+                                <Option v-for="item in roles" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                            </Select>
+                        </td>
                         <td><InputNumber v-model="goods_obj.price_default.price_p1"></InputNumber> ￥</td>
-                        <td>城市合伙人</td>
+                        <td>
+                            <Select v-model="role[2]" >
+                                <Option v-for="item in roles" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                            </Select>
+                        </td>
                         <td><InputNumber v-model="goods_obj.price_default.price_p2"></InputNumber> ￥</td>
-                        <td>合伙人</td>
+                        <td>
+                            <Select v-model="role[3]">
+                                <Option v-for="item in roles" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                            </Select>
+                        </td>
                         <td><InputNumber v-model="goods_obj.price_default.price_p3"></InputNumber> ￥</td>
                     </tr>
                 </table>
@@ -128,13 +144,15 @@
             <div >
                 <table>
                     <tr>
-                        <td width ='65'>最小购买</td>
+                        <td width ='80'>建议零售价</td>
+                        <td><InputNumber v-model="goods_obj.price_default.price_commend"></InputNumber> ￥</td>
+                        <td width ='80'>最小购买</td>
                         <td><InputNumber v-model="goods_obj.minprice"></InputNumber> ￥</td>
                     </tr>
                     <tr>
                         <td>商品详情:</td>
                     </tr>
-                </table>
+                </table><br>
                 <div id = 'edit'></div>
             </div>
         </Card>
@@ -155,6 +173,13 @@ export default {
         imgName: '',
         visible: false,
         uploadList: [],
+        role:[],
+        roles:[
+            {value:'price_p0',label:'联创'},
+            {value:'price_p1',label:'管理合伙人'},
+            {value:'price_p2',label:'城市合伙人'},
+            {value:'price_p3',label:'合伙人'},
+        ],
         goods_obj:{
             url:'/product/_x_add_product',
             id:'',
@@ -163,7 +188,7 @@ export default {
             intro:'',
             pics:[],
             mobile_html:'暂无商品简介',
-            price_default:{price_p0:0,price_p1:0,price_p3:0,price_p4:0},
+            price_default:{price_p0:0,price_p1:0,price_p2:0,price_p3:0,price_commend:0,},
             minprice:0,
             skus:[],
         },
@@ -234,18 +259,46 @@ export default {
     publishGoods:function(){
         this.loading = true;
         let data = this.goods_obj;
-        data.price_default.price_p0  = data.price_default.price_p0 * 100;
-        data.price_default.price_p1 = data.price_default.price_p1 * 100;
-        data.price_default.price_p2 = data.price_default.price_p2 * 100;
-        data.price_default.price_p3 = data.price_default.price_p3 * 100;
-        data.skus = [{
-            pics:data.pics,
-            p0:data.price_default.price_p0,
-            p1:data.price_default.price_p1,
-            p2:data.price_default.price_p2,
-            p3:data.price_default.price_p3,
-            variants:{"无规格":"无规格"}
-        }],
+        let flag = false;
+        //判断价格库存是否重复
+        var s = this.role.join(",")+",";
+        for(var i=0;i<this.role.length;i++) {
+            if(s.replace(this.role[i]+",","").indexOf(this.role[i]+",")>-1) {
+                flag = true;
+                break;
+            }
+        }
+        if(flag){
+            this.$Notice.error({
+                title: '价格库存角色不能重复!',
+            });
+            this.loading = false;
+            return;
+        }
+
+        let p0 = this.role[0]
+        let p1 = this.role[1]
+        let p2 = this.role[2]
+        let p3 = this.role[3]
+        
+        data.price_default[p0] = data.price_default.price_p0 * 100;
+        data.price_default[p1] = data.price_default.price_p1 * 100;
+        data.price_default[p2] = data.price_default.price_p2 * 100;
+        data.price_default[p3] = data.price_default.price_p3 * 100;
+        data.price_default['price_commend'] = data.price_default.price_commend * 100;
+
+            let skus = {};
+            skus['pics'] = data.pics;
+            skus[p0] = data.price_default.price_p0;
+            skus[p1] = data.price_default.price_p1;
+            skus[p2] = data.price_default.price_p2;
+            skus[p3] = data.price_default.price_p3;
+            skus['price_commend'] = data.price_default.price_commend;
+            skus['variants'] = {"无规格":"无规格"};
+            data.skus = [];
+            data.skus.push(skus);
+
+        console.log(JSON.stringify(this.role,0,4));
         data.mobile_html =  this.editor.txt.html();
         this.title=="添加商品"?delete data.id:"";
         console.log("goods: "+JSON.stringify(data,0,4));
@@ -270,10 +323,13 @@ export default {
             let shop = res.body.out.product;
             let skus = res.body.out.skus;
             skus[0].pics = shop.pics;
+            this.role = ['price_p0','price_p1','price_p2','price_p3']
             shop.price_default.price_p0  = shop.price_default.price_p0 / 100;
             shop.price_default.price_p1 = shop.price_default.price_p1 / 100;
             shop.price_default.price_p2 = shop.price_default.price_p2 / 100;
             shop.price_default.price_p3 = shop.price_default.price_p3 / 100;
+            shop.price_default.price_commend = shop.price_default.price_commend / 100;
+            
             let data = {};
                 data = {
                     url:this.goods_obj.url,
@@ -287,10 +343,11 @@ export default {
                     minprice:0,
                     skus:[{
                         pics:shop.pics,
-                        price_bulk:p0.price_default.price_p0,
-                        price_commend:p1.price_default.price_p1,
-                        price_partner:p2.price_default.price_p2,
-                        price_shop:p3.price_default.price_p3,
+                        price_p0:shop.price_default.price_p0,
+                        price_p1:shop.price_default.price_p1,
+                        price_p2:shop.price_default.price_p2,
+                        price_p3:shop.price_default.price_p3,
+                        price_commend:shop.price_default.price_commend,
                         variants:{"无规格":"无规格"}
                     }],
                 }

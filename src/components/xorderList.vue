@@ -52,7 +52,7 @@
                         <Option v-for="item in select_data" :value="item.value" :key="item.value">{{ item.label }}</Option>
                     </Select>
                      <Button  type="info" icon="ios-search" @click="get_data(1)">搜索</Button>
-                    <Tabs value="all" :height = 'H' @on-click="setStatus">
+                    <Tabs :value="req_obj.status" :height = 'H' @on-click="setStatus">
                         <TabPane label="全部" name="all">
                             <Table :highlight-row="true" :height = "H" :loading='loading' :stripe="true" :columns="columns" :data="datas"></Table>
                             <Page :total="page_total" style = 'padding:24px 0px' @on-change="get_data"></Page>
@@ -199,7 +199,7 @@ export default {
                                     },
                                     on: {
                                         click: () => {
-                                            this.$router.push('xorderInfo/'+params.row.order_num);
+                                            this.$router.push('/xorderInfo/'+params.row.order_num);
                                         }
                                     }
                                 }, '查看'),
@@ -239,7 +239,10 @@ export default {
         }
   },
   mounted(){
-        this.H = window.innerHeight*0.69 + "px";
+      this.H = window.innerHeight*0.64 + "px";
+      if(this.$route.params.type == 'xs'){
+          this.req_obj.status = 'pay'
+      }
       this.show = true;
       this.get_data(1);
   }

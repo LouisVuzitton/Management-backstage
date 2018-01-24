@@ -136,6 +136,7 @@ export default {
                         key: 'status',
                     },
                     {
+                        title:'操作',
                         width:'125px',
                         render: (h, params) => {
                             return h('div', [

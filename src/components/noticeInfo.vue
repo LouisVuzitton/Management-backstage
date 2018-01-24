@@ -144,6 +144,7 @@ export default {
         console.log(url);
         this.$http.get(url).then(res => {
             console.log(res);
+            this.notice_obj.id = res.body.out.data.id;
             this.notice_obj.content = res.body.out.data.content;
             this.notice_obj.title = res.body.out.data.title;
             this.editor.txt.html(res.body.out.data.content);
@@ -165,7 +166,7 @@ export default {
           this.title = '添加公告'
       }else{
           this.title = '修改公告'
-          this.notice_obj.id = this.$route.params.id;
+          this.info_obj.id = this.$route.params.id;
           this.get_info();
       }
   }
