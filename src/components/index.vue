@@ -43,7 +43,7 @@ b{
                 <center>
                 <Col class = 'Card' span="8">
                     <Card dis-hover	 class = 'bak' style="text-align:center;">
-                        <Icon type="android-contacts" size="50" color="#FFCC99"></Icon>
+                        <Icon type="android-contacts" size="50" color="#ed3f14"></Icon>
                     </Card>   
                     <span>
                         <p>客户总数</p>
@@ -52,7 +52,7 @@ b{
                 </Col>
                 <Col class = 'Card' span="8">
                     <Card dis-hover	 class = 'bak'>
-                        <Icon type="android-cart" size="50" color="#ff9900"></Icon>
+                        <Icon type="android-cart" size="50" color="#ed3f14"></Icon>
                     </Card>   
                     <span>
                         <p>订单总数</p>
