@@ -165,7 +165,7 @@ export default {
           this.title = '添加公告'
       }else{
           this.title = '修改公告'
-          this.info_obj.id = this.$route.params.id;
+          this.notice_obj.id = this.$route.params.id;
           this.get_info();
       }
   }
