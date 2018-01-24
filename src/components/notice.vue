@@ -113,7 +113,7 @@ export default {
                         title: '发布时间',
                         key: 'time',
                         render:(h,params) => {
-                            return moment(params.row.time).format('YYYY-MM-DD HH:mm:ss');
+                            return moment.unix(params.row.time).format('YYYY-MM-DD HH:mm:ss');
                         }
                     },
                     {

@@ -63,12 +63,12 @@
                     </div>
                     <table class='user_table'>
                         <tr>
-                            <td width='30%'>姓名: </td>
+                            <td width='20%'>姓名: </td>
                             <td width='40%'>{{data.realname}}</td>
                             <td width='10%'></td>
                         </tr>
                         <tr>
-                            <td width='35%'>余额:</td>
+                            <td width='20%'>余额:</td>
                             <td v-text="data.settled_money"></td>
                             <td>
                                 <center>
@@ -77,7 +77,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td width='30%'>级别:</td>
+                            <td width='20%'>级别:</td>
                             <td v-if="data.role=='usr_p1'">管理合伙人</td>
                             <td v-else-if="data.role=='usr_p2'">城市合伙人</td>
                             <td v-else>合伙人</td>
@@ -86,16 +86,16 @@
                             </td>
                         </tr>
                         <tr>
-                            <td width='30%'>手机：</td>
+                            <td width='20%'>手机：</td>
                             <td>{{data.phone}}</td>
                         </tr>
                         <tr>
-                            <td width='30%'>状态：</td>
+                            <td width='20%'>状态：</td>
                             <td v-if="data.frozen">正常</td>
                             <td v-else>冻结</td>
                         </tr>
                         <tr>
-                            <td width='30%'>上级：</td>
+                            <td width='20%'>邀请人：</td>
                             <td v-text="data.up_partner"></td>
                             <td></td>
                         </tr>
