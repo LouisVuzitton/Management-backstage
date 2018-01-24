@@ -27,7 +27,7 @@ export default new Router({
       component: resolve => require(['@/components/examineInfo'], resolve)
     },
     {
-      path: '/ctemrAudit',
+      path: '/ctemrAudit/:type',
       name: '客户审核',
       component: resolve => require(['@/components/ctemrAudit'], resolve)
     },
@@ -37,12 +37,12 @@ export default new Router({
       component: resolve => require(['@/components/ctemrLeve'], resolve)
     },
     {
-      path: '/xorderList',
+      path: '/xorderList/:type',
       name: '销售订单',
       component: resolve => require(['@/components/xorderList'], resolve)
     },
     {
-      path: '/torderList',
+      path: '/torderList/:type',
       name: '提货订单',
       component: resolve => require(['@/components/torderList'], resolve)
     },
@@ -72,7 +72,7 @@ export default new Router({
       component: resolve => require(['@/components/accSitu'], resolve)
     },
     {
-      path: '/witdsCash',
+      path: '/witdsCash/:type',
       name: '体现管理',
       component: resolve => require(['@/components/witdsCash'], resolve)
     },

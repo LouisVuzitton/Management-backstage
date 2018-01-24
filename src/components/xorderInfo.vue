@@ -234,7 +234,6 @@ export default {
                         this.datas.time.cancel=moment.unix(self.datas.time.cancel).format('YYYY-MM-DD HH:mm:ss');
                     } 
                 }
-<<<<<<< HEAD
                 //计算总计&几件商品
                 let num = 0;
                 let price = 0;
@@ -243,8 +242,6 @@ export default {
                     price += params.row.num * params.row.per_price /100
                 }
                 console.log(this.datas);
-=======
->>>>>>> b914561b7939dd94c9ff58da79d8b89a8cd3182a
             })
       },
       get_logistics:function(){
