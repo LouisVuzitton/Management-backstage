@@ -42,7 +42,9 @@ b{
             <Row style = 'width:100%;'>
                 <center>
                 <Col class = 'Card' span="8">
-                    <Card dis-hover	 class = 'bak' style="background:url('../../static/rawpixel-com-351765.jpg');background-size:100% 100%;">
+                    <Card dis-hover	 class = 'bak' style="text-align:center;">
+                        <!-- style="background:url('../../static/rawpixel-com-351765.jpg');background-size:100% 100%;" -->
+                        <Icon type="android-contacts" size="50" color="#FFCC99"></Icon>
                     </Card>   
                     <span>
                         <p>客户总数</p>
@@ -50,7 +52,9 @@ b{
                     </span>
                 </Col>
                 <Col class = 'Card' span="8">
-                    <Card dis-hover	 class = 'bak' style="background:url('../../static/samuel-zeller-118195.jpg');background-size:100% 100%;">
+                    <Card dis-hover	 class = 'bak'>
+                        <!-- style="background:url('../../static/samuel-zeller-118195.jpg');background-size:100% 100%;" -->
+                        <Icon type="android-cart" size="50" color="#ff9900"></Icon>
                     </Card>   
                     <span>
                         <p>订单总数</p>
@@ -58,7 +62,9 @@ b{
                     </span>
                 </Col>
                 <Col class = 'Card' span="8">
-                    <Card dis-hover	 class = 'bak' style="background:url('../../static/nik-macmillan-280300.jpg');background-size:100% 100%;">
+                    <Card dis-hover	 class = 'bak'>
+                        <!-- style="background:url('../../static/nik-macmillan-280300.jpg');background-size:100% 100%;" -->
+                        <Icon type="social-yen" size="50" color="#ed3f14"></Icon>
                     </Card>   
                     <span>
                         <p>销售总额</p>

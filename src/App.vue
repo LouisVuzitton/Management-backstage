@@ -422,7 +422,7 @@ export default {
         }
 
         this.user_login();
-        
+        // this.login=true; //测试使用
     },
         user_login(){
             let self = this;
