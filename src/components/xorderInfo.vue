@@ -55,7 +55,7 @@
                     <p>订单状态：{{datas.status}}<Button v-if = "datas.status == '待发货'" style = 'margin-left:10px'type="info" size = 'small' @click = "Delivergoods = true" >发货</Button></p> 
                     <p  style = 'color:#444;font-size:12px;' v-if="datas.status == '待发货'">客户已使用 "{{datas.info_money.pay_type == 'balance' ? '余额支付' : '微信支付'}}" 方式成功付款。</p>
                     <p  style = 'color:#444;font-size:12px;' v-else-if="datas.status == '交易完成'">订单已于 {{datas.time.ok}} 发货完成</p>
-                    <p  style = 'color:#444;font-size:12px;' v-else>如果客户在 {{datas.create_time+1}} 前未进行支付操作，系统将自动关闭该订单。</p>
+                    <p  style = 'color:#444;font-size:12px;' v-else>如果客户在 {{datas.time.cancel}} 前未进行支付操作，系统将自动关闭该订单。</p>
                 </Col> 
             </Row> 
         </Card><br>
@@ -230,7 +230,11 @@ export default {
                 this.datas.create_time=moment.unix(self.datas.create_time).format('YYYY-MM-DD HH:mm:ss');
                 if(this.datas.time.ok){
                     this.datas.time.ok=moment.unix(self.datas.time.ok).format('YYYY-MM-DD HH:mm:ss');
+                    if(this.datas.time.cancel){
+                        this.datas.time.cancel=moment.unix(self.datas.time.cancel).format('YYYY-MM-DD HH:mm:ss');
+                    } 
                 }
+<<<<<<< HEAD
                 //计算总计&几件商品
                 let num = 0;
                 let price = 0;
@@ -239,6 +243,8 @@ export default {
                     price += params.row.num * params.row.per_price /100
                 }
                 console.log(this.datas);
+=======
+>>>>>>> b914561b7939dd94c9ff58da79d8b89a8cd3182a
             })
       },
       get_logistics:function(){

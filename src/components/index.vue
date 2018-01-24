@@ -42,8 +42,14 @@ b{
             <Row style = 'width:100%;'>
                 <center>
                 <Col class = 'Card' span="8">
+<<<<<<< HEAD
                     <Card dis-hover	 class = 'bak'>
                         <Icon type="person"></Icon>
+=======
+                    <Card dis-hover	 class = 'bak' style="text-align:center;">
+                        <!-- style="background:url('../../static/rawpixel-com-351765.jpg');background-size:100% 100%;" -->
+                        <Icon type="android-contacts" size="50" color="#FFCC99"></Icon>
+>>>>>>> b914561b7939dd94c9ff58da79d8b89a8cd3182a
                     </Card>   
                     <span>
                         <p>客户总数</p>
@@ -52,7 +58,12 @@ b{
                 </Col>
                 <Col class = 'Card' span="8">
                     <Card dis-hover	 class = 'bak'>
+<<<<<<< HEAD
                         <Icon type="document-text"></Icon>
+=======
+                        <!-- style="background:url('../../static/samuel-zeller-118195.jpg');background-size:100% 100%;" -->
+                        <Icon type="android-cart" size="50" color="#ff9900"></Icon>
+>>>>>>> b914561b7939dd94c9ff58da79d8b89a8cd3182a
                     </Card>   
                     <span>
                         <p>订单总数</p>
@@ -61,6 +72,11 @@ b{
                 </Col>
                 <Col class = 'Card' span="8">
                     <Card dis-hover	 class = 'bak'>
+<<<<<<< HEAD
+=======
+                        <!-- style="background:url('../../static/nik-macmillan-280300.jpg');background-size:100% 100%;" -->
+                        <Icon type="social-yen" size="50" color="#ed3f14"></Icon>
+>>>>>>> b914561b7939dd94c9ff58da79d8b89a8cd3182a
                     </Card>   
                     <span>
                         <p>销售总额</p>
