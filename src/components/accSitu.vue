@@ -29,7 +29,7 @@
                         <p slot="title">
                             销售总额(元)
                         </p>
-                        <b v-text=""></b>
+                        <b>{{(init['销售总额']/100).toFixed(2)}}</b>
                     </Card>   
                 </Col>
                 <Col class = 'Card' span="6">
@@ -37,7 +37,7 @@
                         <p slot="title">
                             余额总额(元)
                         </p>
-                        <b v-text=""></b>
+                        <b>{{(init['余额总额']/100).toFixed(2)}}</b>
                     </Card>   
                 </Col>
                 <Col class = 'Card' span="6">
@@ -45,7 +45,7 @@
                         <p slot="title">
                             充值总额(元)
                         </p>
-                        <b v-text=""></b>
+                        <b>{{(init['充值总额']/100).toFixed(2)}}</b>
                     </Card>   
                 </Col>
                 <Col class = 'Card' span="6">
@@ -53,7 +53,7 @@
                         <p slot="title">
                             奖励总额(元)
                         </p>
-                        <b v-text=""></b>
+                        <b>{{(init['奖励总额']/100).toFixed(2)}}</b>
                     </Card>   
                 </Col>
             </Row>
@@ -69,7 +69,7 @@
                         <p slot="title">
                             提现总额(元)
                         </p>
-                        <b v-text=""></b>
+                        <b>{{(init['提现总额']/100).toFixed(2)}}</b>
                     </Card>   
                 </Col>
                 <Col class = 'Card' span="6">
@@ -77,7 +77,7 @@
                         <p slot="title">
                             提现手续费(元)
                         </p>
-                        <b v-text=""></b>
+                        <b>{{(init['提现手续费']/100).toFixed(2)}}</b>
                     </Card>   
                 </Col>
                 <Col class = 'Card' span="6">
@@ -85,7 +85,7 @@
                         <p slot="title">
                             提现成功(笔)
                         </p>
-                        <b v-text=""></b>
+                        <b>{{init['提现成功']}}</b>
                     </Card>   
                 </Col>
                 <Col class = 'Card' span="6">
@@ -93,7 +93,7 @@
                         <p slot="title">
                             提现失败(笔)
                         </p>
-                        <b v-text=""></b>
+                        <b>{{init['提现失败']}}</b>
                     </Card>   
                 </Col>
             </Row>
@@ -170,6 +170,7 @@ export default {
                 width:'100px'
             },
         ],
+        init:{},
         data:[]
     }
   },
@@ -195,9 +196,15 @@ export default {
             }
             return url;
         },
+        initData(){
+            this.$http.get('/admin/about_finance').then(function(res){
+                this.init=res.body;
+            })
+        }
   },
   mounted(){
       this.get_data(1);
+      this.initData();
   }
 }
 </script>
