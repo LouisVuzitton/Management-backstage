@@ -122,6 +122,9 @@ input::-ms-input-placeholder {
     padding-left: 5px;
 }
 
+.mefont{
+    font-size:12px;
+}
 
 </style>
 
@@ -148,56 +151,56 @@ input::-ms-input-placeholder {
           <center><div style = 'height:100px;background:#495060;border-right:1px solid #dddee1;'><img style = 'border-radius:100%;width:80px;margin-top:10px;' src = '../static/toux.jpg'></div></center>
           <Menu :active-name="actname" theme="dark" width="auto" :open-names="['0','1','2','3','4','5','6']" style=  'border:0px;'>
               <MenuItem name="0-0" @click.native = "goto('/')">
-                <Icon type="ios-navigate"></Icon>
+                <Icon type="stats-bars"></Icon>
                 首页
               </MenuItem>
               <Submenu name="1">
                   <template slot="title">
-                      <Icon type="ios-navigate"></Icon>
+                      <Icon type="person"></Icon>
                       客户管理
                   </template>
-                  <MenuItem name="1-1"  @click.native = "goto('/examineList')">客户列表</MenuItem>
-                  <MenuItem name="1-2"  @click.native = "goto('/ctemrAudit/0')">客户审核</MenuItem>
-                  <MenuItem name="1-3"  @click.native = "goto('/ctemrLeve')">客户等级</MenuItem>
+                  <MenuItem name="1-1"  @click.native = "goto('/examineList')" class = 'mefont'> <span style=  'font-size:13px;'><Icon type="ios-list"></Icon> 客户列表 </span></MenuItem>
+                  <MenuItem name="1-2"  @click.native = "goto('/ctemrAudit/0')" class = 'mefont'><span style=  'font-size:13px;'><Icon type="eye"></Icon> 客户审核 </span></MenuItem>
+                  <MenuItem name="1-3"  @click.native = "goto('/ctemrLeve')" class = 'mefont'><span style=  'font-size:13px;'><Icon type="person-add"></Icon> 客户等级 </span></MenuItem>
               </Submenu>
               <Submenu name="2">
                   <template slot="title">
-                      <Icon type="ios-keypad"></Icon>
+                      <Icon type="clipboard"></Icon>
                       订单管理
                   </template>
-                  <MenuItem name="2-1"  @click.native = "goto('/xorderList/0')">销售订单</MenuItem>
-                  <MenuItem name="2-2"  @click.native = "goto('/torderList/0')">提货订单</MenuItem>
+                  <MenuItem name="2-1"  @click.native = "goto('/xorderList/0')" class = 'mefont'><span style=  'font-size:13px;'><Icon type="document-text"></Icon> 销售订单 </span></MenuItem>
+                  <MenuItem name="2-2"  @click.native = "goto('/torderList/0')" class = 'mefont'><span style=  'font-size:13px;'><Icon type="clipboard"></Icon> 提货订单 </span></MenuItem>
               </Submenu>
               <Submenu name="3">
                   <template slot="title">
-                      <Icon type="ios-analytics"></Icon>
+                      <Icon type="bag"></Icon>
                       商品管理
                   </template>
-                  <MenuItem name="3-1"  @click.native = "goto('/shopList')">商品列表</MenuItem>
+                  <MenuItem name="3-1"  @click.native = "goto('/shopList')" class = 'mefont'><span style=  'font-size:13px;'><Icon type="ios-cart"></Icon> 商品列表 </span></MenuItem>
               </Submenu>
               <Submenu name="4">
                   <template slot="title">
-                      <Icon type="ios-analytics"></Icon>
+                      <Icon type="social-yen"></Icon>
                       账务管理
                   </template>
-                  <MenuItem name="4-1"  @click.native = "goto('/accSitu')">账务概况</MenuItem>
-                  <MenuItem name="4-2"  @click.native = "goto('/witdsCash/0')">提现管理</MenuItem>
-                  <MenuItem name="4-3"  @click.native = "goto('/rechRecord')">充值记录</MenuItem>
-                  <MenuItem name="4-4"  @click.native = "goto('/bonuRecord')">奖励记录</MenuItem>
+                  <MenuItem name="4-1"  @click.native = "goto('/accSitu')" class = 'mefont'><span style=  'font-size:13px;'><Icon type="arrow-graph-up-right"></Icon> 账务概况 </span></MenuItem>
+                  <MenuItem name="4-2"  @click.native = "goto('/witdsCash/0')" class = 'mefont'><span style=  'font-size:13px;'><Icon type="card"></Icon> 提现管理 </span></MenuItem>
+                  <MenuItem name="4-3"  @click.native = "goto('/rechRecord')" class = 'mefont'><span style=  'font-size:13px;'><Icon type="arrow-graph-down-right"></Icon> 充值记录 </span></MenuItem>
+                  <MenuItem name="4-4"  @click.native = "goto('/bonuRecord')" class = 'mefont'><span style=  'font-size:13px;'><Icon type="pie-graph"></Icon> 奖励记录 </span></MenuItem>
               </Submenu>
               <Submenu name="5">
                   <template slot="title">
-                      <Icon type="ios-analytics"></Icon>
+                      <Icon type="calendar"></Icon>
                       公告管理
                   </template>
-                  <MenuItem name="5-1"  @click.native = "goto('/notice')">公告列表</MenuItem>
+                  <MenuItem name="5-1"  @click.native = "goto('/notice')" class = 'mefont'><span style=  'font-size:13px;'><Icon type="alert"></Icon> 公告列表 </span></MenuItem>
               </Submenu>
              <Submenu name="6">
                   <template slot="title">
-                      <Icon type="ios-analytics"></Icon>
+                      <Icon type="gear-a"></Icon>
                       权限管理
                   </template>
-                  <MenuItem name="6-1"  @click.native = "goto('/addAdmin')">添加管理员</MenuItem>
+                  <MenuItem name="6-1"  @click.native = "goto('/addAdmin')" class = 'mefont'><Icon type="person-add"><span style=  'font-size:13px;'></Icon> 添加管理员 </Submenu></MenuItem>
               </Submenu>
           </Menu>
       </Sider>
@@ -454,8 +457,8 @@ export default {
   },
   mounted: function() {
     this.init();
-    // let name = window.location.hash
-    // this.actname = this.urls[name];
+    let name = window.location.hash
+    this.actname = this.urls[name];
 
     /*客户端判断管理员是否登录 */
     let login_name = sessionStorage.getItem('name');

@@ -5,8 +5,8 @@
 }
 .Card span{
     float:left;
-    margin:0 20px;
-    margin-top:15px;
+    margin:0 30px;
+    margin-top:8px;
 }
 .Card img{
     width:110px;
@@ -16,19 +16,31 @@
     width:110px;
     height:74px;
     float:left;
+    padding-top:10px;
 }
 .Card p{
-    color:#2d8cf0
+    /* color:#2d8cf0 */
 }
 
 .Card span p{
-    color:#2d8cf0;
-    font-weight: bold;
+    /* color:#2d8cf0; */
+    /* font-weight: bold; */
 }
 
 
-b{
+/* b{
     color:#e96900;
+} */
+
+.pfon{
+    font-size: 24px;
+}
+.pfont{
+    font-size:12px;
+}
+.pcolor{
+    color:#2d8cf0;
+    cursor:pointer
 }
 
 
@@ -36,36 +48,42 @@ b{
 <template>
     <div>
         <Card>
-            <p slot="title">
+            <p slot="title" >
                 运营概况
             </p>
             <Row style = 'width:100%;'>
                 <center>
                 <Col class = 'Card' span="8">
-                    <Card dis-hover	 class = 'bak' style="text-align:center;">
-                        <Icon type="android-contacts" size="50" color="#ed3f14"></Icon>
-                    </Card>   
+                    <!-- <Card dis-hover	 class = 'bak' style="text-align:center;"> -->
+                        <div class = 'bak'>
+                            <Icon type="android-contacts" size="50" color="#2d8cf0"></Icon>
+                        </div>
+                    <!-- </Card>    -->
                     <span>
-                        <p>客户总数</p>
-                        <p><b>3,333</b></p>
+                        <p class = 'pfon'>143</p>
+                        <p class = 'pfont'>客户总数</p>
                     </span>
                 </Col>
                 <Col class = 'Card' span="8">
-                    <Card dis-hover	 class = 'bak'>
-                        <Icon type="android-cart" size="50" color="#ed3f14"></Icon>
-                    </Card>   
+                    <!-- <Card dis-hover	 class = 'bak'> -->
+                         <div class = 'bak'>
+                            <Icon type="android-cart" size="50" color="#2d8cf0"></Icon>
+                         </div>
+                    <!-- </Card>    -->
                     <span>
-                        <p>订单总数</p>
-                        <p><b>3,333</b></p>
+                        <p class = 'pfon'>954321</p>
+                        <p class = 'pfont'>订单总数</p>
                     </span>
                 </Col>
                 <Col class = 'Card' span="8">
-                    <Card dis-hover	 class = 'bak'>
-                        <Icon type="social-yen" size="50" color="#ed3f14"></Icon>
-                    </Card>   
+                    <!-- <Card dis-hover	 class = 'bak'> -->
+                        <div class = 'bak'>
+                            <Icon type="social-yen" size="50" color="#2d8cf0"></Icon>
+                        </div>
+                    <!-- </Card>    -->
                     <span>
-                        <p>销售总额</p>
-                        <p><b>12,333,333.00</b></p>
+                        <p class = 'pfon'>12000</p>
+                        <p class = 'pfont'>销售总额</p>
                     </span>
                 </Col>
                 </center>
@@ -79,34 +97,34 @@ b{
             <Row style = 'width:100%;text-align:center;'>
                 <Col class = 'Card' span="6" style ='curosr: pointer;' >
                     <Card  @click.native = "goto('/ctemrAudit/sh')" style="width:95%;height:110px;float:left;curosr: pointer;">
-                        <p slot="title" >
+                        <p slot="title" class = 'pcolor'>
                             待审核(客户)
                         </p>
-                        <b>50</b>
+                        <p style = 'font-size:23px;'>50</p>
                     </Card>   
                 </Col>
                 <Col class = 'Card' span="6" style ='curosr: pointer;' >
                     <Card  @click.native = "goto('/witdsCash/tx')" style="width:95%;height:110px;float:left;curosr: pointer;">
-                        <p slot="title">
+                        <p slot="title"  class = 'pcolor'>
                             待审核(提现)
                         </p>
-                        <b>50</b>
+                        <p style = 'font-size:23px;'>50</p>
                     </Card>   
                 </Col>
                 <Col class = 'Card' span="6" style ='curosr: pointer;' >
                     <Card  @click.native = "goto('/xorderList/xs')" style="width:95%;height:110px;float:left;curosr: pointer;">
-                        <p slot="title">
+                        <p slot="title"  class = 'pcolor'>
                             待发货(销售)
                         </p>
-                        <b>50</b>
+                        <p style = 'font-size:23px;'>50</p>
                     </Card>   
                 </Col>
                 <Col class = 'Card' span="6" style ='curosr: pointer;' >
                     <Card @click.native = "goto('/torderList/th')" style="width:95%;height:110px;float:left;curosr: pointer;">
-                        <p slot="title">
+                        <p slot="title"  class = 'pcolor'>
                             待发货(提货)
                         </p>
-                        <b>50</b>
+                        <p style = 'font-size:23px;'>50</p>
                     </Card>   
                 </Col>
             </Row>
