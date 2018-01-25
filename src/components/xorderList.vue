@@ -185,7 +185,7 @@ export default {
                             return params.row.info_usr.phone;
                         }
                     },{
-                        title:'查看',
+                        title:'操作',
                         width:'80px',
                         render: (h, params) => {
                             return h('div', [

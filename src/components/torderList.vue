@@ -47,16 +47,25 @@
         <Row>
             <transition name="slide-fade">
                 <div>
-                    <Input v-model="req_obj.search_value" placeholder="请输入您要搜索的内容" style="width: 300px"></Input>
+                    <!-- <Input v-model="req_obj.search_value" placeholder="请输入您要搜索的内容" style="width: 300px"></Input>
                     <Select v-model="req_obj.search_key" style="width:200px;padding:5px 0px;">
                         <Option v-for="item in select_data" :value="item.value" :key="item.value">{{ item.label }}</Option>
                     </Select>
-                    <Select v-model="req_obj.status" style="width:200px;padding:5px 0px;">
-                        <Option v-for="item in order_sats" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                    </Select>
-                    <Button  type="info" icon="ios-search" @click = "get_data(1)">搜索</Button>
-                    <Table :highlight-row="true" :height = 'H' :loading='loading' :stripe="true" :columns="columns" :data="datas"></Table>
-                    <Page :total="page_total" style = 'padding:24px 0px' @on-change="get_data"></Page>
+                    <Button  type="info" icon="ios-search" @click = "get_data(1)">搜索</Button> -->
+                    <Tabs :value="req_obj.status" :height = 'H' @on-click="setStatus" >
+                        <TabPane label="全部" name="all">
+                            <Table :highlight-row="true" :height = 'H' :loading='loading' :stripe="true" :columns="columns" :data="datas"></Table>
+                            <Page :total="page_total" style = 'padding:24px 0px' @on-change="get_data"></Page>
+                        </TabPane>
+                        <TabPane label="代发货" name="handing">
+                            <Table :highlight-row="true" :height = 'H' :loading='loading' :stripe="true" :columns="columns" :data="datas"></Table>
+                            <Page :total="page_total" style = 'padding:24px 0px' @on-change="get_data"></Page>
+                        </TabPane>
+                        <TabPane label="交易完成" name="ok">
+                            <Table :highlight-row="true" :height = 'H' :loading='loading' :stripe="true" :columns="columns" :data="datas"></Table>
+                            <Page :total="page_total" style = 'padding:24px 0px' @on-change="get_data"></Page>
+                        </TabPane>
+                    </Tabs>
                 </div>
             </transition>
          </Row>
@@ -110,34 +119,51 @@ export default {
       columns: [
                     {
                         title: '订单号',
-                        key: 'name',
+                        key: 'order_num',
 
                     },
                     {
                         title: '订单金额',
-                        key: 'age',
-
+                        key: 'origin_money',
+                        render:(h,params) => {
+                            return '￥'+(params.row.origin_money/100).toFixed(2);
+                        }
 
                     },
                     {
                         title: '订单状态',
-                        key: 'address',
-
+                        key: 'status',
+                        render:function(){
+                            switch(params.row.status){
+                                case 'raw' : return '待付款';break;
+                                case 'pay' : return '待发货';break;
+                                case 'ok' : return '交易完成';break;
+                                case 'cancel' : return '交易关闭';break; 
+                                default : return '状态异常';break;
+                            }
+                        },
                     },
                     {
                         title: '下单时间',
-                        key: 'address',
+                        key: 'create_time',
+                        render:function(h,params){
+                            return moment.unix(params.row.create_time).format('YYYY-MM-DD HH:mm:ss');
+                        }
 
                     },
                     {
                         title: '姓名',
-                        key: 'address',
-
+                        key: "info_usr",
+                        render: (h, params) => {
+                            return params.row.info_usr.realname;
+                        }
                     },
                     {
                         title: '手机号码',
-                        key: 'address',
-                        width:'180px',
+                        key: 'info_usr',
+                        render: (h, params) => {
+                            return params.row.info_usr.phone;
+                        }
                     },{
                         title:'操作',
                         width:'80px',
@@ -186,6 +212,10 @@ export default {
                 }
             }
             return url;
+        },
+        setStatus:function(name){
+            this.req_obj.status = name;
+            this.get_data(1);
         }
   },
   mounted(){
