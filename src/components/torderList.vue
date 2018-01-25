@@ -186,7 +186,7 @@ export default {
                                     },
                                     on: {
                                         click: () => {
-                                            this.$router.push('torderInfo/1');
+                                            this.$router.push('/torderInfo/1');
                                         }
                                     }
                                 }, '查看'),
