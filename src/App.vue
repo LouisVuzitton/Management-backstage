@@ -135,7 +135,7 @@ input::-ms-input-placeholder {
         <div class = 'hezi' style= 'padding-top:12.5%;'>
           <div class = 'fix_con'>
               <div class = 'fix_title'>
-                      <center><img src= "../static/share_logo.jpg"></center>
+                      <center><img src= "../static/share_logo1.jpg"></center>
               </div>  
               <div class = 'fix_login'>
                   <i-input type = 'text' v-model="user" class = 'fix_input' placeholder="请输入您的账号"></i-input> 
@@ -148,7 +148,7 @@ input::-ms-input-placeholder {
     </div>
     <div class="layout" v-show = "login">
       <Sider :style="{position: 'fixed', height: '100vh', left: 0, overflow: 'auto',background:'#495060','border-left':'1px solid #dddee1'}">
-          <center><div style = 'height:100px;background:#495060;border-right:1px solid #dddee1;'><img style = 'border-radius:100%;width:80px;height:80px;margin-top:10px;' src = '../static/share_logo.jpg'></div></center>
+          <center><div style = 'height:100px;background:#495060;border-right:1px solid #dddee1;'><img style = 'border-radius:100%;width:80px;margin-top:10px;' src = '../static/share_logo1.jpg'></div></center>
           <Menu :active-name="actname" theme="dark" width="auto" :open-names="['0','1','2','3','4','5','6']" style=  'border:0px;'>
               <MenuItem name="0-0" @click.native = "goto('/')">
                 <Icon type="stats-bars"></Icon>
@@ -159,48 +159,48 @@ input::-ms-input-placeholder {
                       <Icon type="person"></Icon>
                       客户管理
                   </template>
-                  <MenuItem name="1-1"  @click.native = "goto('/examineList')" class = 'mefont'> <span style=  'font-size:13px;'><Icon type="ios-list"></Icon> 客户列表 </span></MenuItem>
-                  <MenuItem name="1-2"  @click.native = "goto('/ctemrAudit/0')" class = 'mefont'><span style=  'font-size:13px;'><Icon type="eye"></Icon> 客户审核 </span></MenuItem>
-                  <MenuItem name="1-3"  @click.native = "goto('/ctemrLeve')" class = 'mefont'><span style=  'font-size:13px;'><Icon type="person-add"></Icon> 客户等级 </span></MenuItem>
+                  <MenuItem name="1-1"  @click.native = "goto('/examineList')" class = 'mefont'> <span style=  'font-size:13px;'> 客户列表</span></MenuItem>
+                  <MenuItem name="1-2"  @click.native = "goto('/ctemrAudit/0')" class = 'mefont'><span style=  'font-size:13px;'>客户审核</span></MenuItem>
+                  <MenuItem name="1-3"  @click.native = "goto('/ctemrLeve')" class = 'mefont'><span style=  'font-size:13px;'>客户等级</span></MenuItem>
               </Submenu>
               <Submenu name="2">
                   <template slot="title">
                       <Icon type="clipboard"></Icon>
                       订单管理
                   </template>
-                  <MenuItem name="2-1"  @click.native = "goto('/xorderList/0')" class = 'mefont'><span style=  'font-size:13px;'><Icon type="document-text"></Icon> 销售订单 </span></MenuItem>
-                  <MenuItem name="2-2"  @click.native = "goto('/torderList/0')" class = 'mefont'><span style=  'font-size:13px;'><Icon type="clipboard"></Icon> 提货订单 </span></MenuItem>
+                  <MenuItem name="2-1"  @click.native = "goto('/xorderList/0')" class = 'mefont'><span style=  'font-size:13px;'>销售订单</span></MenuItem>
+                  <MenuItem name="2-2"  @click.native = "goto('/torderList/0')" class = 'mefont'><span style=  'font-size:13px;'>提货订单</span></MenuItem>
               </Submenu>
               <Submenu name="3">
                   <template slot="title">
                       <Icon type="bag"></Icon>
                       商品管理
                   </template>
-                  <MenuItem name="3-1"  @click.native = "goto('/shopList')" class = 'mefont'><span style=  'font-size:13px;'><Icon type="ios-cart"></Icon> 商品列表 </span></MenuItem>
+                  <MenuItem name="3-1"  @click.native = "goto('/shopList')" class = 'mefont'><span style=  'font-size:13px;'>商品列表</span></MenuItem>
               </Submenu>
               <Submenu name="4">
                   <template slot="title">
                       <Icon type="social-yen"></Icon>
                       账务管理
                   </template>
-                  <MenuItem name="4-1"  @click.native = "goto('/accSitu')" class = 'mefont'><span style=  'font-size:13px;'><Icon type="arrow-graph-up-right"></Icon> 账务概况 </span></MenuItem>
-                  <MenuItem name="4-2"  @click.native = "goto('/witdsCash/0')" class = 'mefont'><span style=  'font-size:13px;'><Icon type="card"></Icon> 提现管理 </span></MenuItem>
-                  <MenuItem name="4-3"  @click.native = "goto('/rechRecord')" class = 'mefont'><span style=  'font-size:13px;'><Icon type="arrow-graph-down-right"></Icon> 充值记录 </span></MenuItem>
-                  <MenuItem name="4-4"  @click.native = "goto('/bonuRecord')" class = 'mefont'><span style=  'font-size:13px;'><Icon type="pie-graph"></Icon> 奖励记录 </span></MenuItem>
+                  <MenuItem name="4-1"  @click.native = "goto('/accSitu')" class = 'mefont'><span style=  'font-size:13px;'>账务概况</span></MenuItem>
+                  <MenuItem name="4-2"  @click.native = "goto('/witdsCash/0')" class = 'mefont'><span style=  'font-size:13px;'>提现管理</span></MenuItem>
+                  <MenuItem name="4-3"  @click.native = "goto('/rechRecord')" class = 'mefont'><span style=  'font-size:13px;'>充值记录</span></MenuItem>
+                  <MenuItem name="4-4"  @click.native = "goto('/bonuRecord')" class = 'mefont'><span style=  'font-size:13px;'>奖励记录</span></MenuItem>
               </Submenu>
               <Submenu name="5">
                   <template slot="title">
                       <Icon type="calendar"></Icon>
                       公告管理
                   </template>
-                  <MenuItem name="5-1"  @click.native = "goto('/notice')" class = 'mefont'><span style=  'font-size:13px;'><Icon type="alert"></Icon> 公告列表 </span></MenuItem>
+                  <MenuItem name="5-1"  @click.native = "goto('/notice')" class = 'mefont'><span style=  'font-size:13px;'>公告列表</span></MenuItem>
               </Submenu>
              <Submenu name="6">
                   <template slot="title">
                       <Icon type="gear-a"></Icon>
                       权限管理
                   </template>
-                  <MenuItem name="6-1"  @click.native = "goto('/addAdmin')" class = 'mefont'><Icon type="person-add"><span style=  'font-size:13px;'></Icon> 添加管理员 </Submenu></MenuItem>
+                  <MenuItem name="6-1"  @click.native = "goto('/addAdmin')" class = 'mefont'><span style=  'font-size:13px;'>添加管理员</span></MenuItem>
               </Submenu>
           </Menu>
       </Sider>
@@ -209,7 +209,7 @@ input::-ms-input-placeholder {
             <!-- 根本力管理后台 -->
             <a style=  'float:right;margin: 5px 10px;font-size:13px;' @click = 'user_logout'><b>退出</b></a>
             <b style=  'float:right;margin: 5px 10px;font-size:13px;'>Admin</b>
-            <img style=  'margin-top:10px;float:right;border-radius:50%;' width = '40' src= "../static/share_logo.jpg">
+            <img style=  'margin-top:10px;float:right;border-radius:50%;' width = '40' src= "../static/share_logo1.jpg">
           </Header>
           <Content :style="{padding: '10px 16px 16px',overflow:'auto','margin-top':'2px',background:'#eee'}">
               <Card>
@@ -430,7 +430,7 @@ export default {
         }
 
         this.user_login();
-         //this.login=true; //测试使用
+        // this.login=true; //测试使用
     },
         user_login(){
             let self = this;
@@ -460,20 +460,20 @@ export default {
     let name = window.location.hash
     this.actname = this.urls[name];
 
-    /*客户端判断管理员是否登录 */
-    let login_name = sessionStorage.getItem('name');
-    if(login_name = '' || !login_name){
-        this.login = false;
-    }else{
-        this.login = true;
-    }
-    /*服务端判断用户是否登录 */
-    this.$http.get('/other/is_login').then(function(res){
-        console.log(res.body);
-        if(!res.body.out.result){
-            this.login = false;
-        }
-    })
+    // /*客户端判断管理员是否登录 */
+    // let login_name = sessionStorage.getItem('name');
+    // if(login_name = '' || !login_name){
+    //     this.login = false;
+    // }else{
+    //     this.login = true;
+    // }
+    // /*服务端判断用户是否登录 */
+    // this.$http.get('/other/is_login').then(function(res){
+    //     console.log(res.body);
+    //     if(!res.body.out.result){
+    //         this.login = false;
+    //     }
+    // })
 
   },
   watch:{

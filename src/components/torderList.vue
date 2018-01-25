@@ -47,22 +47,11 @@
         <Row>
             <transition name="slide-fade">
                 <div>
-                    <!-- <ButtonGroup>
-                        <Button type="primary">
-                            全部
-                        </Button>
-                        <Button type="primary">
-                            代发货
-                        </Button>
-                        <Button type="primary">
-                            已完成
-                        </Button>
-                    </ButtonGroup><br> -->
                     <Input v-model="req_obj.search_value" placeholder="请输入您要搜索的内容" style="width: 300px"></Input>
                     <Select v-model="req_obj.search_key" style="width:200px;padding:5px 0px;">
                         <Option v-for="item in select_data" :value="item.value" :key="item.value">{{ item.label }}</Option>
                     </Select>
-                    <Select v-model="req_obj.search_type" style="width:200px;padding:5px 0px;">
+                    <Select v-model="req_obj.status" style="width:200px;padding:5px 0px;">
                         <Option v-for="item in order_sats" :value="item.value" :key="item.value">{{ item.label }}</Option>
                     </Select>
                     <Button  type="info" icon="ios-search" @click = "get_data(1)">搜索</Button>
@@ -84,11 +73,10 @@ export default {
       loading:true,
       page_total:100,
       req_obj:{
-        url:'xxx.com',
-        ordersta:'',
+        url:'/product/get_pickup_list',
         search_value:'',
         search_key:'no',
-        search_type:'no',
+        status:'all',
       },
       roles:[],
       select_data:[
@@ -107,24 +95,16 @@ export default {
       ],
       order_sats:[
             {
-                value: 'no',
+                value: 'all',
                 label: '全部',
             },
             {
-                value: '代收款',
-                label: '代收款',
-            },
-            {
-                value: '代发货',
+                value: 'handing',
                 label: '代发货',
             },
             {
-                value: '交易完成',
+                value: 'ok',
                 label: '交易完成',
-            },
-            {
-                value: '交易关闭',
-                label: '交易关闭',
             },
       ],
       columns: [
