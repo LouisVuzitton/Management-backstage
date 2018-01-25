@@ -119,24 +119,45 @@ export default {
       columns: [
                     {
                         title: '订单号',
-                        key: 'order_num',
+                        key: 'id',
 
                     },
                     {
-                        title: '订单金额',
-                        key: 'origin_money',
-                        render:(h,params) => {
-                            return '￥'+(params.row.origin_money/100).toFixed(2);
-                        }
+                        title: '商品名称',
+                        key: "name",
+                    },
+                    {
+                        title: '商品图片',
+                        key: "pics",
+                        render: (h, params) => {
+                            return h('div', [
+                                h('img', {
+                                    attrs: {
+                                        src: params.row.pics[0]
+                                    },
 
+                                    style: {
+                                        width: '40px',
+                                        height: '40px',
+                                        margin: '3px',
+                                    },
+                                }),
+                            ]);
+                        }
+                    },
+                    {
+                        title: '商品数量',
+                        key: 'info_cloud_store',
+                        render: (h, params) => {
+                            return params.row.info_cloud_store[0].num;
+                        }
                     },
                     {
                         title: '订单状态',
                         key: 'status',
-                        render:function(){
+                        render: (h, params) => {
                             switch(params.row.status){
-                                case 'raw' : return '待付款';break;
-                                case 'pay' : return '待发货';break;
+                                case 'handing' : return '待发货';break;
                                 case 'ok' : return '交易完成';break;
                                 case 'cancel' : return '交易关闭';break; 
                                 default : return '状态异常';break;
@@ -150,20 +171,6 @@ export default {
                             return moment.unix(params.row.create_time).format('YYYY-MM-DD HH:mm:ss');
                         }
 
-                    },
-                    {
-                        title: '姓名',
-                        key: "info_usr",
-                        render: (h, params) => {
-                            return params.row.info_usr.realname;
-                        }
-                    },
-                    {
-                        title: '手机号码',
-                        key: 'info_usr',
-                        render: (h, params) => {
-                            return params.row.info_usr.phone;
-                        }
                     },{
                         title:'操作',
                         width:'80px',
