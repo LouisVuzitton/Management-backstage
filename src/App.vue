@@ -135,7 +135,7 @@ input::-ms-input-placeholder {
         <div class = 'hezi' style= 'padding-top:12.5%;'>
           <div class = 'fix_con'>
               <div class = 'fix_title'>
-                      <center><img src= "../static/toux.jpg"></center>
+                      <center><img src= "../static/share_logo.jpg"></center>
               </div>  
               <div class = 'fix_login'>
                   <i-input type = 'text' v-model="user" class = 'fix_input' placeholder="请输入您的账号"></i-input> 
@@ -148,7 +148,7 @@ input::-ms-input-placeholder {
     </div>
     <div class="layout" v-show = "login">
       <Sider :style="{position: 'fixed', height: '100vh', left: 0, overflow: 'auto',background:'#495060','border-left':'1px solid #dddee1'}">
-          <center><div style = 'height:100px;background:#495060;border-right:1px solid #dddee1;'><img style = 'border-radius:100%;width:80px;margin-top:10px;' src = '../static/toux.jpg'></div></center>
+          <center><div style = 'height:100px;background:#495060;border-right:1px solid #dddee1;'><img style = 'border-radius:100%;width:80px;height:80px;margin-top:10px;' src = '../static/share_logo.jpg'></div></center>
           <Menu :active-name="actname" theme="dark" width="auto" :open-names="['0','1','2','3','4','5','6']" style=  'border:0px;'>
               <MenuItem name="0-0" @click.native = "goto('/')">
                 <Icon type="stats-bars"></Icon>
@@ -209,7 +209,7 @@ input::-ms-input-placeholder {
             <!-- 根本力管理后台 -->
             <a style=  'float:right;margin: 5px 10px;font-size:13px;' @click = 'user_logout'><b>退出</b></a>
             <b style=  'float:right;margin: 5px 10px;font-size:13px;'>Admin</b>
-            <img style=  'margin-top:10px;float:right;border-radius:50%;' width = '40' src= "../static/toux.jpg">
+            <img style=  'margin-top:10px;float:right;border-radius:50%;' width = '40' src= "../static/share_logo.jpg">
           </Header>
           <Content :style="{padding: '10px 16px 16px',overflow:'auto','margin-top':'2px',background:'#eee'}">
               <Card>
@@ -430,7 +430,7 @@ export default {
         }
 
         this.user_login();
-        // this.login=true; //测试使用
+         //this.login=true; //测试使用
     },
         user_login(){
             let self = this;

@@ -47,8 +47,8 @@
 </style>
 <template>
     <div>
-        <Card>
-            <p slot="title" >
+        <Card :dis-hover="true">
+            <p slot="title">
                 运营概况
             </p>
             <Row style = 'width:100%;'>
@@ -90,7 +90,7 @@
             </Row>
         </Card><br>
 
-        <Card>
+        <Card :dis-hover="true">
             <p slot="title">
                 待办处理事项
             </p>
@@ -130,7 +130,7 @@
             </Row>
         </Card><br>
 
-        <Card>
+        <Card :dis-hover="true">
             <p slot="title">
                 业绩排行
             </p>
