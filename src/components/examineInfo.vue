@@ -46,8 +46,8 @@
     text-align: center;
 }
 .user_img{
-    height: 52px;
-    width: 52px;
+    height: 100px;
+    width: 100px;
     border-radius:100%;
 }
 </style>
