@@ -57,7 +57,7 @@
                             <Table :highlight-row="true" :height = 'H' :loading='loading' :stripe="true" :columns="columns" :data="datas"></Table>
                             <Page :total="page_total" style = 'padding:24px 0px' @on-change="get_data"></Page>
                         </TabPane>
-                        <TabPane label="代发货" name="handing">
+                        <TabPane label="待发货" name="handing">
                             <Table :highlight-row="true" :height = 'H' :loading='loading' :stripe="true" :columns="columns" :data="datas"></Table>
                             <Page :total="page_total" style = 'padding:24px 0px' @on-change="get_data"></Page>
                         </TabPane>
@@ -119,7 +119,7 @@ export default {
       columns: [
                     {
                         title: '订单号',
-                        key: 'id',
+                        key: 'pickup_num',
 
                     },
                     {
@@ -186,7 +186,7 @@ export default {
                                     },
                                     on: {
                                         click: () => {
-                                            this.$router.push('/torderInfo/1');
+                                            this.$router.push('/torderInfo/'+params.row.id);
                                         }
                                     }
                                 }, '查看'),
@@ -226,7 +226,7 @@ export default {
         }
   },
   mounted(){
-        this.H = window.innerHeight*0.69 + "px";
+      this.H = window.innerHeight*0.69 + "px";
       this.show = true;
       this.get_data(1);
   }
