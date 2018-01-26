@@ -390,18 +390,19 @@ export default {
             }
         },
 
-  },
-  mounted(){
-      this.edit_swith();
-      this.uploadList = this.$refs.upload.fileList;
-      if(this.$route.params.type == 'add'){
-          this.title = '添加商品'
-      }else{
-          this.title = '修改商品'
-          this.info_obj.id = this.$route.params.id;
-          this.get_info();
-      }
-  }
+
+    },
+    mounted(){
+        this.edit_swith();
+        this.uploadList = this.$refs.upload.fileList;
+        if(this.$route.params.type == 'add'){
+            this.title = '添加商品'
+        }else{
+            this.title = '修改商品'
+            this.info_obj.id = this.$route.params.id;
+            this.get_info();
+        }
+    }
 }
 </script>
 
