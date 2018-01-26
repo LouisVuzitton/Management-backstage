@@ -1,4 +1,5 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
+import { unix } from '_moment@2.20.1@moment';
 <!--账务概况-->
 <style scoped>
 .Card{
@@ -103,8 +104,8 @@
             <p slot="title">
                 资金记录
             </p>
-            <Input v-model="req_obj.search_value" placeholder="请输入您要搜索的内容" style="width: 300px"></Input>
-            <Select v-model="req_obj.search_key" style="width:200px;padding:5px 0px;">
+            <Input v-model="search_value" placeholder="请输入您要搜索的内容" style="width: 300px"></Input>
+            <Select v-model="search_key" style="width:200px;padding:5px 0px;">
                 <Option v-for="item in select_data" :value="item.value" :key="item.value">{{ item.label }}</Option>
             </Select>
             <Button  type="info" icon="ios-search" @click="get_data(1)">搜索</Button>
@@ -120,9 +121,11 @@ export default {
   data () {
     return {
         loading:false,
-        page_total:100,
+        page_total:1,
+        search_key:'',
+        search_value:'',
         req_obj:{
-            url:'xxx.com',
+            url:'/admin/bills',
             ordersta:'',
             search_value:'',
             search_key:'no',
@@ -130,44 +133,61 @@ export default {
         },
         select_data:[
             {
-                value: 'name',
+                value: '',
+                label: '全部'
+            },
+            {
+                value: 'realname',
                 label: '姓名'
             },
             {
                 value: 'phone',
                 label: '手机号'
             },
+            {
+                value: 'out_trade_no',
+                label: '流水号'
+            }
         ],
         columns:[
             {
                 title: '流水号',
-                key: 'rnak'
+                key: 'out_trade_no'
             },
             {
                 title: '类型',
-                key: 'rnak',
+                key: 'account_type',
                 width:'100px'
             },
             {
                 title: '业务  ',
-                key: 'rnak'
+                key: 'opera_type'
             },
             {
                 title: '时间',
-                key: 'rnak'
+                key: 'time',
+                render(h,params){
+                    return moment.unix(params.row.time).format('YYYY-MM-DD HH:mm:ss');
+                }
             },
             {
                 title: '金额',
-                key: 'rnak'
+                key: 'cash',
+                render(h,params){
+                    if(params.row.pay_type=='balance')
+                        return '￥'+(params.row.alter_balance/100).toFixed(2);
+                    else
+                        return '￥'+(params.row.price/100).toFixed(2);   
+                }
             },
             {
                 title: '姓名',
-                key: 'rnak'
+                key: 'realname'
             },
             {
                 title: '手机号',
-                key: 'rnak',
-                width:'100px'
+                key: 'phone',
+                width:'150px'
             },
         ],
         init:{},
@@ -175,16 +195,16 @@ export default {
     }
   },
   methods:{
-        get_data: function (e) {
-            this.loading = true; //开启表格数据加载样式
-            let url = this.get_url(this.req_obj,e);
-            console.log(url);
-            this.$http.get(url).then(res => {
-                this.loading = false;
-                // this.page_total = res.body.out.count;
-                this.datas = res.body.out.datas;
-            })
-        },
+        // get_data: function (e) {
+        //     this.loading = true; //开启表格数据加载样式
+        //     let url = this.get_url(this.req_obj,e);
+        //     console.log(url);
+        //     this.$http.get(url).then(res => {
+        //         this.loading = false;
+        //         // this.page_total = res.body.out.count;
+        //         this.datas = res.body.out.datas;
+        //     })
+        // },
         get_url: function(obj,e){
             e--;
             obj['page'] = e;
@@ -200,6 +220,24 @@ export default {
             this.$http.get('/admin/about_finance').then(function(res){
                 this.init=res.body;
             })
+        },
+        get_data(e){
+            e?e--:e;
+            if(this.search_key!='' && this.search_value!=''){
+                var temp_obj={};
+                temp_obj[this.search_key]=this.search_value;
+                this.$http.post(this.req_obj.url,{page:e+'',len:'10',search_obj:temp_obj}).then(function (res) {
+                    this.data=res.body.out.new_datas.rows;
+                    this.page_total = res.body.out.new_datas.count;
+                    console.log(this.data);
+                })
+            }else{
+                 this.$http.post(this.req_obj.url,{page:e+'',len:'10'}).then(function (res) {
+                    this.data=res.body.out.new_datas.rows;
+                    this.page_total = res.body.out.new_datas.count;
+                    console.log(this.data);
+                })
+            }
         }
   },
   mounted(){

@@ -293,19 +293,19 @@ export default {
       ],
       datas: [
                 {
-                    name: '粉丝',
+                    name: '联创',
                     login: 'John Brown',
                     order: 18,
                     invite: 'New York No. 1 Lake Park'
                 },
                 {
-                    name: '管理合伙人',
+                    name: '省级代理',
                     login: 'John Brown',
                     order: 18,
                     invite: 'New York No. 1 Lake Park'
                 },
                 {
-                    name: '城市合伙人',
+                    name: '市级代理',
                     login: 'John Brown',
                     order: 18,
                     invite: 'New York No. 1 Lake Park'

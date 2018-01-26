@@ -82,9 +82,9 @@ export default {
       modal_loading:false,
       loading:false,
       Role:{
-          usr_p1:'管理合伙人',
-          usr_p2:'城市合伙人',
-          usr_p3:'合伙人',
+          usr_p0:'联合创始人',
+          usr_p1:'省级代理',
+          usr_p2:'市级代理',
       },
       tableLoading:false,
       select_value:'',

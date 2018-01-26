@@ -101,7 +101,7 @@
                         </tr>
                     </table>
                     <div class='user_table user_color'>注册时间：{{data.create_time}}</div>
-                    <div class='user_table user_color'>加入时间：{{data.update_time}}</div>
+                    <div class='user_table user_color'>加入时间：{{data['加入时间']}}</div>
                 </Card>
                 <Card :dis-hover="true" :bordered="false" style='width:65%;height:290px;float:left;margin:0 0 5px 0 '>
                     <p slot="title">业绩情况</p>
@@ -109,29 +109,29 @@
                         <Row :gutter="16">
                             <Col span="8" style='line-height:50px'>
                                 <div class='title_color'>总业绩(盒)</div>
-                                <div class='num_color'>{{data.sell_all}}</div>
+                                <div class='num_color'>{{data.buy_all}}</div>
                             </Col>
                             <Col span="8" style='line-height:50px'>
                                 <div class='title_color'>年业绩(盒)</div>
-                                <div class='num_color'>{{data.sell_per_y}}</div>
+                                <div class='num_color'>{{data.buy_per_y}}</div>
                             </Col>
                             <Col span="8" style='line-height:50px'>
                                 <div class='title_color'>月业绩(盒)</div>
-                                <div class='num_color'>{{data.sell_per_m}}</div>
+                                <div class='num_color'>{{data.buy_per_m}}</div>
                             </Col>
                         </Row>
                         <Row :gutter="16">
                             <Col span="8" style='line-height:50px'>
                                 <div class='title_color'>总业绩(元)</div>
-                                <div class='num_color'>{{data.profit_all}}</div>
+                                <div class='num_color'>{{(data.sell_all/100).toFixed(2)}}</div>
                             </Col>
                             <Col span="8" style='line-height:50px'>
                                 <div class='title_color'>年业绩(元)</div>
-                                <div class='num_color'>{{data.profit_per_y}}</div>
+                                <div class='num_color'>{{(data.sell_per_y/100).toFixed(2)}}</div>
                             </Col>
                             <Col span="8" style='line-height:50px'>
                                 <div class='title_color'>月业绩(元)</div>
-                                <div class='num_color'>{{data.profit_per_m}}</div>
+                                <div class='num_color'>{{(data.sell_per_m/100).toFixed(2)}}</div>
                             </Col>
                         </Row>
                     </center>
@@ -361,10 +361,9 @@ export default {
         get_one: function () {
             console.log('获取单条数据: ID = ' + this.$route.params.id);
             this.$http.get("/admin/get_usr"+ '?id=' + this.$route.params.id).then(res => {
-                console.log("数据" + JSON.stringify(res.body, 0, 4));
                 this.data = res.body.out.data;
                 this.data.create_time = moment.unix(this.data.create_time).format('YYYY-MM-DD HH:mm:ss');
-                this.data.update_time = moment.unix(this.data.update_time).format('YYYY-MM-DD HH:mm:ss');
+                this.data['加入时间'] = moment.unix(this.data['加入时间']).format('YYYY-MM-DD HH:mm:ss');
                 if (this.data.frozen == true) {
                     this.data.frozen = '禁封'
                 } else {
