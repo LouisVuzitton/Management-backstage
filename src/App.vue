@@ -271,141 +271,7 @@ export default {
                 "/ctemrAudit/sh":'1-2',
                 "/witdsCash/tx":'4-2',
                 "/torderList/th":'2-2',
-                
             },
-            paySta:{
-                "paying":"付款中",
-                "ok":"交易完成",
-                "sending":"代收货",
-                "cancel":"交易关闭",
-                "raw":"代付款",
-                "checking":"代审核",
-                "pay":"代发货",
-            }, //订单状态列表
-
-            columns: [
-                {
-                    title: '昵称',
-                    key: 'name'
-                },
-                {
-                    title: '角色',
-                    key: 'role',
-                    render: (h, params) => {
-                        return this.role_map[params.row.role];
-                        // console.log(JSON.stringify(this.role_map,0,4));
-                        // return params.row.role
-
-                    }
-                },
-                {
-                    title: '手机号',
-                    key: 'phone'
-                },
-
-                {
-                    title: '地址',
-                    key: 'address',
-                    render: (h, params) => {
-                        if (params.row.address == '' || params.row.address == null) {
-                            return '用户未填写'
-                        } else {
-                            return params.row.address.province + " " + params.row.address.city + " " + params.row.address.district 
-                        }
-                    }
-                },
-                {
-                    title: '操作',
-                    key: 'level',
-                    width: '90px',
-                    render: (h, params) => {
-                        return h('div', [
-                            h('Button', {
-                                props: {
-                                    type: 'success',
-                                    size: 'small'
-                                },
-                                style: {
-                                    marginRight: '5px'
-                                },
-                                on: {
-                                    click: () => {
-                                        this.click_page();
-                                        this.get_one(params.row.id);
-                                        this.order.id  = params.row.id
-                                        this.get_data2(0);
-                                    }
-                                }
-                            }, '管理'),
-                        ]);
-                    }
-                },
-            ], //数据列表标题1
-
-            columns2: [
-                {
-                    title: '订单号',
-                    key: 'order_num'
-                },
-                {
-                    title: '订单金额',
-                    key: 'status',
-                    render: (h, params) => {
-                        return params.row.origin_money / 100
-                    }
-                },
-                {
-                    title: '订单状态',
-                    key: 'address',
-                    render: (h, params) => {
-                        return this.paySta[params.row.status]
-                    }
-                },
-                {
-                    title: '下单时间',
-                    key: 'address',
-                    render: (h, params) => {
-                        return moment.unix(params.row.create_time).format('YYYY-MM-DD HH:mm:ss');
-                    }
-                },
-                {
-                    title: '姓名',
-                    key: 'address',
-                    render: (h, params) => {
-                        return params.row.info_usr.name
-                    }
-                },
-                {
-                    title: '手机号',
-                    key: 'address',
-                    render: (h, params) => {
-                        return params.row.info_usr.phone;
-                    }
-                },
-                {
-                    title: '操作',
-                    key: 'level',
-                    width: '90px',
-                    render: (h, params) => {
-                        return h('div', [
-                            h('Button', {
-                                props: {
-                                    type: 'success',
-                                    size: 'small'
-                                },
-                                style: {
-                                    marginRight: '5px'
-                                },
-                                on: {
-                                    click: () => {
-                                        this.jump_url('order_list.html?num='+params.row.order_num)
-                                    }
-                                }
-                            }, '管理'),
-                        ]);
-                    }
-                },
-            ], //数据列表标题2
         }
   },
   methods: {
@@ -433,21 +299,33 @@ export default {
         // this.login=true; //测试使用
     },
         user_login(){
-            let self = this;
-            var name = this.user;
-            this.$http.post('/admin/admin_login',{name:this.user,pwd:this.password}).then(res => {
-                if(res.body.out.role){
-                    console.log(res.body.out);
-                    sessionStorage.setItem('name',name);
-                    self.login = true;
-                    
-                }else{
-                    this.$Notice.error({
+            //本地模拟登录
+            if(this.user == 'admin' && this.password == 'admin'){
+                    sessionStorage.setItem('name',this.user);
+                    this.login = true;
+            }else{
+                this.$Notice.error({
                         title: '登录失败',
-                        desc:  res.body.err.msg
-                    });
-                }
-            })
+                       desc:  res.body.err.msg
+                });
+            }
+
+            //以下是正式请求登录接口 ************ 
+            // let self = this;
+            // var name = this.user;
+            // this.$http.post('/admin/admin_login',{name:this.user,pwd:this.password}).then(res => {
+            //     if(res.body.out.role){
+            //         console.log(res.body.out);
+            //         sessionStorage.setItem('name',name);
+            //         self.login = true;
+                    
+            //     }else{
+            //         this.$Notice.error({
+            //             title: '登录失败',
+            //             desc:  res.body.err.msg
+            //         });
+            //     }
+            // })
         },
         user_logout(){
             //清除session并退出
