@@ -54,7 +54,7 @@
                     <Button  type="info" icon="ios-search" @click = "get_data(1)">搜索</Button> -->
                     <Tabs :value="req_obj.status" :height = 'H' @on-click="setStatus" >
                         <TabPane label="全部" name="all">
-                            <Table :highlight-row="true" :height = 'H' :loading='loading' :stripe="true" :columns="columns" :data="datas"></Table>
+                            <Table  :height = 'H' :loading='loading' :stripe="true" :columns="columns" :data="datas"></Table>
                             <Page :total="page_total" style = 'padding:24px 0px' @on-change="get_data"></Page>
                         </TabPane>
                         <TabPane label="待发货" name="handing">
@@ -226,7 +226,7 @@ export default {
         }
   },
   mounted(){
-      this.H = window.innerHeight*0.69 + "px";
+      this.H = window.innerHeight*0.65;
       this.show = true;
       this.get_data(1);
   }

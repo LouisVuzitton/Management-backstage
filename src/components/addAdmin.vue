@@ -231,7 +231,7 @@ export default {
         }
   },
   mounted(){
-      this.H = window.innerHeight*0.69 + "px";
+      this.H = window.innerHeight*0.69;
       this.show = true;
       this.get_data(1);
       this.get_roles(1);
