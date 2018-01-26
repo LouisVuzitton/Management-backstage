@@ -176,9 +176,9 @@ export default {
         role:[],
         roles:[
             {value:'price_p0',label:'联创'},
-            {value:'price_p1',label:'管理合伙人'},
-            {value:'price_p2',label:'城市合伙人'},
-            {value:'price_p3',label:'合伙人'},
+            {value:'price_p1',label:'省级代理'},
+            {value:'price_p2',label:'省级代理'},
+            {value:'price_p3',label:'门店'},
         ],
         goods_obj:{
             url:'/product/_x_add_product',
