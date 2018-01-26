@@ -78,9 +78,9 @@
                         </tr>
                         <tr>
                             <td width='20%'>级别:</td>
-                            <td v-if="data.role=='usr_p1'">管理合伙人</td>
-                            <td v-else-if="data.role=='usr_p2'">城市合伙人</td>
-                            <td v-else>合伙人</td>
+                            <td v-if="data.role=='usr_p0'">联合创始人</td>
+                            <td v-else-if="data.role=='usr_p1'">省级代理</td>
+                            <td v-else>市级代理</td>
                             <td>
                                 
                             </td>
