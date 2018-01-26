@@ -60,7 +60,7 @@
             <div>
                 <table class = 'ortab'>
                     <tr>
-                        <td>订单编号：</td><td>{{datas.pickup_num}}</td>
+                        <td>订单编号：</td><td width = '200'>{{datas.pickup_num}}</td>
                         <td>下单时间：</td><td>{{datas.create_time}}</td>
                     </tr>
                     <tr>

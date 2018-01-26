@@ -239,7 +239,7 @@ export default {
         }
   },
   mounted(){
-      this.H = window.innerHeight*0.64 + "px";
+      this.H = window.innerHeight*0.64;
       if(this.$route.params.type == 'xs'){
           this.req_obj.status = 'pay'
       }

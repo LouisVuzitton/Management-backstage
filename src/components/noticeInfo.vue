@@ -116,7 +116,7 @@ export default {
                         error: function (xhr) { alert('错误'); },
                     }
                     self.editor.create();
-                    self.editor.txt.html("<p style = 'color:#999;font-size:13px;'>　这里填写公告详情信息　</p>");
+                    self.editor.txt.html("");
                 }
         },
         publishNotice:function(){

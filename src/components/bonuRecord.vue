@@ -143,7 +143,7 @@ export default {
         },
   },
   mounted(){
-      this.H = window.innerHeight*0.66 + "px";
+      this.H = window.innerHeight*0.66;
       this.show = true;
       this.get_data(1);
   }

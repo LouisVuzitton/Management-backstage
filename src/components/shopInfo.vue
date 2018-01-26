@@ -127,12 +127,12 @@
                             </Select>
                         </td>
                         <td><InputNumber v-model="goods_obj.price_default.price_p2"></InputNumber> ￥</td>
-                        <td>
+                        <!-- <td>
                             <Select v-model="role[3]">
                                 <Option v-for="item in roles" :value="item.value" :key="item.value">{{ item.label }}</Option>
                             </Select>
-                        </td>
-                        <td><InputNumber v-model="goods_obj.price_default.price_p3"></InputNumber> ￥</td>
+                        </td> -->
+                        <!-- <td><InputNumber v-model="goods_obj.price_default.price_p3"></InputNumber> ￥</td> -->
                     </tr>
                 </table>
             </div>
@@ -175,10 +175,10 @@ export default {
         uploadList: [],
         role:[],
         roles:[
-            {value:'price_p0',label:'联创'},
-            {value:'price_p1',label:'管理合伙人'},
-            {value:'price_p2',label:'城市合伙人'},
-            {value:'price_p3',label:'合伙人'},
+            {value:'price_p0',label:'联合创始人'},
+            {value:'price_p1',label:'省级代理'},
+            {value:'price_p2',label:'市级代理'},
+            // {value:'price_p3',label:'门店'},
         ],
         goods_obj:{
             url:'/product/_x_add_product',
@@ -188,7 +188,7 @@ export default {
             intro:'',
             pics:[],
             mobile_html:'暂无商品简介',
-            price_default:{price_p0:0,price_p1:0,price_p2:0,price_p3:0,price_commend:0,},
+            price_default:{price_p0:0,price_p1:0,price_p2:0,price_p3:99999,price_commend:0,},
             minprice:0,
             skus:[],
         },
@@ -279,7 +279,8 @@ export default {
         let p0 = this.role[0]
         let p1 = this.role[1]
         let p2 = this.role[2]
-        let p3 = this.role[3]
+        // let p3 = this.role[3]
+        let p3 = 'price_p3';
         
         data.price_default[p0] = data.price_default.price_p0 * 100;
         data.price_default[p1] = data.price_default.price_p1 * 100;
@@ -390,18 +391,19 @@ export default {
             }
         },
 
-  },
-  mounted(){
-      this.edit_swith();
-      this.uploadList = this.$refs.upload.fileList;
-      if(this.$route.params.type == 'add'){
-          this.title = '添加商品'
-      }else{
-          this.title = '修改商品'
-          this.info_obj.id = this.$route.params.id;
-          this.get_info();
-      }
-  }
+
+    },
+    mounted(){
+        this.edit_swith();
+        this.uploadList = this.$refs.upload.fileList;
+        if(this.$route.params.type == 'add'){
+            this.title = '添加商品'
+        }else{
+            this.title = '修改商品'
+            this.info_obj.id = this.$route.params.id;
+            this.get_info();
+        }
+    }
 }
 </script>
 
