@@ -178,7 +178,7 @@ export default {
             {value:'price_p0',label:'联合创始人'},
             {value:'price_p1',label:'省级代理'},
             {value:'price_p2',label:'市级代理'},
-            {value:'price_p3',label:'门店'},
+            // {value:'price_p3',label:'门店'},
         ],
         goods_obj:{
             url:'/product/_x_add_product',
